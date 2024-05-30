@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use Illuminate\Support\Facades\Crypt; 
+use Illuminate\Validation\Rule;
+
+
 
 class CustomerController extends Controller
 {
@@ -13,8 +17,13 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customer = Customer::all();
-        return response()->json(['all customer ' => $customer]);
+        try {
+            $customers = Customer::orderBy('id')->get();
+    
+            return response()->json(['customers' => $customers]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred while retrieving the customers'], 500);
+        }
     }
 
     /**
@@ -22,18 +31,26 @@ class CustomerController extends Controller
      */
     public function getByName(Request $request)
     {
-        $request->validate([
-            'Customer_name' => 'required|string|max:255',
-        ]);
+        try{
+            $validateData = $request->validate([
+                'Customer_name' => 'required|string|max:255',
+            ]);
 
-        $customerName = $request->input('Customer_name');
-        $customers = Customer::where('Customer_name', $customerName)->get();
+            $customers = Customer::where('Customer_name', $validateData['Customer_name'])->get();
 
-        if ($customers->isEmpty()) {
-            return response()->json(['message' => 'No customers found with this name'], 404);
+            if ($customers->isEmpty()){
+                return response()->json(['error' => 'No customer found with this name!!!'], 404);
+            }
+
+            // $customers->transform(function ($customer) {
+            //     $customer->Customer_code = Crypt::decryptString($customer->Customer_code);
+            //     return $customer;
+            // });
+
+            return response()->json(['Customer status '=> $customers]);
+        } catch(\Exception $e){
+            return response()->json(['error' => 'An error occurred while retrieving the customers'], 500);
         }
-
-        return response()->json($customers);
     }
 
     /**
@@ -41,20 +58,44 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        // try{
-            $validdateData = $request->validate([
+        try {
+            $validateData = $request->validate([
                 'Customer_name' => 'required|string|max:255',
-                'product_name' => 'required|string|max:255',
-                'size' => 'required|in:small,medium,big',
-                'quantity' => 'required|integer',
-                'total_price' => 'required|numeric',
+                'Customer_code' => [
+                    'required',
+                    'string',
+                    'max:4',
+                    'unique:customers',
+                    // Rule::unique('customers')->where(function ($query) use ($request) {
+                    //     return $query->where('Customer_name', $request->Customer_name);
+                    // })
+                ],
+                'Customer_loyalty' => 'integer|nullable'
             ]);
-            $customer = Customer::create($validdateData);
-            return response()->json(['message' => 'Customer created succesfully...']);
-        // }catch(ValidationException $e){
-        //     return response()->json(['error' => ])
-        // }
+
+            // $validateData['Customer_code'] = Crypt::encryptString($request->Customer_code);
+            $validateData['Customer_loyalty'] = $validateData['Customer_loyalty'] ?? 0;
+
+            $customer = Customer::create($validateData);
+
+            return response()->json([
+                'message' => 'Customer created successfully....',
+                'customer' => [
+                    'id' => $customer->id,
+                    'Customer_name' => $customer->Customer_name,
+                    'Customer_code' => $customer->Customer_code,
+                    'Customer_loyalty' => $customer->Customer_loyalty,
+                    'created_at' => $customer->created_at,
+                    'updated_at' => $customer->updated_at,
+                ]
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e){
+            return response()->json(['error' => $e->errors()] ,422);
+        } catch (\Exception $e){
+            return response()->json(['error' => 'An error occurred while creating the customer'], 500);
+        }
     }
+    
 
     /**
      * Display the specified resource.
@@ -108,20 +149,28 @@ class CustomerController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
-{
-    $customer = Customer::find($id);
-    if (!$customer) {
-        return response()->json(['error' => 'No Customer found with id ' . $id], 404);
+    {
+        $customer = Customer::find($id);
+        if (!$customer) {
+            return response()->json(['error' => 'No Customer found with id ' . $id], 404);
+        }
+
+        $customerName = $customer->Customer_name;
+        $customer->delete();
+
+        return response()->json([
+            'message' => 'Customer id ' . $id . ' has been removed from this system',
+            'customer_id' => $id,
+            'customer_name' => $customerName
+        ]);
     }
 
-    $customerName = $customer->Customer_name;
-    $customer->delete();
-
-    return response()->json([
-        'message' => 'Customer id ' . $id . ' has been removed from this system',
-        'customer_id' => $id,
-        'customer_name' => $customerName
-    ]);
-}
+    public function deleteall(){
+        $cus = Customer::all();
+        foreach ($cus as $customer) {
+            $customer->delete();
+        }
+        return response()->json(['message' => 'all customers has benn removed.']);
+    }
 
 }

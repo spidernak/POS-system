@@ -9,14 +9,19 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-//==== Cutomer =====
-Route::prefix('customers')->group(function(){
-    
-    Route::get('/', [CustomerController::class, 'index']);
-    Route::get('//{id}',[CustomerController::class, 'show']);
-    Route::get('/', [CustomerController::class, 'getByName']);
-    Route::post('/', [CustomerController::class, 'store']);
-    Route::put('//{id}', [CustomerController::class, 'update']);
-    Route::delete('//{id}', [CustomerController::class, 'destroy']);
-
+                    //==== Cutomer =====                    
+Route::prefix('viewcustomers')->group(function(){
+    Route::get('/' , [CustomerController::class , 'index']);
+    Route::get('//{id}', [CustomerController::class, 'show']);
+    Route::get('/', [CustomerController::class, 'getByName']);  
+});
+Route::post('/createcustomer', [CustomerController::class, 'store']);
+Route::put('updatecustomer', [CustomerController::class, 'update']);
+Route::delete('/removecutomer/{id}', [CustomerController::class, 'destroy']);
+Route::delete('/removeallcutomer', [CustomerController::class, 'deleteall']);
+                    
+                    
+                    
+Route::get('/test', function(){
+    return 'hello';
 });

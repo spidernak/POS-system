@@ -11,9 +11,8 @@ class Customer extends Model
 
     protected $fillable = [
         'Customer_name',
-        'product_name',
-        'size',
-        'quantity',
-        'total_price'
+        'Customer_code',
+        'Customer_loyalty',
     ];
+
 }
