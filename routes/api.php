@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\TypeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,7 +22,11 @@ Route::put('updatecustomer/{id}', [CustomerController::class, 'update']);
 Route::delete('/removecutomer/{id}', [CustomerController::class, 'destroy']);
 Route::delete('/removeallcutomer', [CustomerController::class, 'deleteall']);
                     
-                    
+Route::get('/viewtypeofpro', [TypeController::class, 'index']);   
+Route::get('/viewtypeofpro/{id}', [TypeController::class, 'show']);
+Route::post('/createtypofpro' , [TypeController::class, 'store']);
+Route::put('/updatetypeofpro/{id}', [TypeController::class, 'update']);
+Route::delete('/removetypeofpro/{id}', [TypeController::class, 'destroy']);
                     
 Route::get('/test', function(){
     return 'hello';

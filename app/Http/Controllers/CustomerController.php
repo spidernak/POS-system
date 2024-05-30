@@ -14,21 +14,33 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index() //list all customers
     {
         try {
-            $customers = Customer::orderBy('id')->get();
+            $customers = Customer::latest()->get();
     
             return response()->json(['customers' => $customers]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'An error occurred while retrieving the customers'], 500);
         }
     }
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id) //find customer by thier ID
+    {
+        try{
+            $customer = Customer::findOrFail($id);
+            return response()->json(['Client status with id '.$id => $customer]);
+        }catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e){
+            return response()->json(['error' => 'Customer with id '.$id.' not found!!!!']);
+        }
+    }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function getByName(Request $request)
+    public function getByName(Request $request) //find customer by their name
     {
         try{
             $validateData = $request->validate([
@@ -46,7 +58,7 @@ class CustomerController extends Controller
             return response()->json(['error' => 'An error occurred while retrieving the customers'], 500);
         }
     }
-    public function getByCode(Request $request)
+    public function getByCode(Request $request) //find customer by thier unique code
     {
         try{
             $validateData = $request->validate([
@@ -68,7 +80,7 @@ class CustomerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request) //create new customer
     {
         try {
             $validateData = $request->validate([
@@ -105,18 +117,6 @@ class CustomerController extends Controller
     }
     
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        try{
-            $customer = Customer::findOrFail($id);
-            return response()->json(['Client status with id '.$id => $customer]);
-        }catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e){
-            return response()->json(['error' => 'Customer with id '.$id.' not found!!!!']);
-        }
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -129,7 +129,7 @@ class CustomerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id) //update customer infomation
 {
     try {
         $cus = Customer::find($id);
@@ -162,7 +162,7 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id) //remove customer from system
     {
         $customer = Customer::find($id);
         if (!$customer) {
@@ -179,7 +179,8 @@ class CustomerController extends Controller
         ]);
     }
 
-    public function deleteall(){
+    public function deleteall() // remove all customers
+    {
         $cus = Customer::all();
         foreach ($cus as $customer) {
             $customer->delete();
