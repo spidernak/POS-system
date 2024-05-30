@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
 use App\Models\Customer;
-use Illuminate\Support\Facades\Crypt; 
-use Illuminate\Validation\Rule;
+
 
 
 
@@ -42,12 +41,25 @@ class CustomerController extends Controller
                 return response()->json(['error' => 'No customer found with this name!!!'], 404);
             }
 
-            // $customers->transform(function ($customer) {
-            //     $customer->Customer_code = Crypt::decryptString($customer->Customer_code);
-            //     return $customer;
-            // });
-
             return response()->json(['Customer status '=> $customers]);
+        } catch(\Exception $e){
+            return response()->json(['error' => 'An error occurred while retrieving the customers'], 500);
+        }
+    }
+    public function getByCode(Request $request)
+    {
+        try{
+            $validateData = $request->validate([
+                'Customer_code' => 'required|string|max:4',
+            ]);
+
+            $cus = Customer::where('Customer_code', $validateData['Customer_code'])->firstOrFail();
+
+            return response()->json(['Customer status' => $cus]);
+        } catch(\Illuminate\Validation\ValidationException $e){
+            return response()->json(['error' => $e->errors()], 422);
+        } catch(\Illuminate\Database\Eloquent\ModelNotFoundException $e){
+            return response()->json(['error' => 'No customer found with this code!!!'], 404);
         } catch(\Exception $e){
             return response()->json(['error' => 'An error occurred while retrieving the customers'], 500);
         }
@@ -66,14 +78,10 @@ class CustomerController extends Controller
                     'string',
                     'max:4',
                     'unique:customers',
-                    // Rule::unique('customers')->where(function ($query) use ($request) {
-                    //     return $query->where('Customer_name', $request->Customer_name);
-                    // })
                 ],
                 'Customer_loyalty' => 'integer|nullable'
             ]);
 
-            // $validateData['Customer_code'] = Crypt::encryptString($request->Customer_code);
             $validateData['Customer_loyalty'] = $validateData['Customer_loyalty'] ?? 0;
 
             $customer = Customer::create($validateData);
@@ -121,29 +129,35 @@ class CustomerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        $customer = Customer::find($id);
-        if(!$customer){
-            return response()->json(['error' => 'No customer found with id '.$id], 404);
+    public function update(Request $request, $id)
+{
+    try {
+        $cus = Customer::find($id);
+        if (!$cus) {
+            return response()->json(['error' => 'No customer found with this id ' . $id], 404);
         }
 
         $validateData = $request->validate([
             'Customer_name' => 'sometimes|required|string|max:255',
-            'product_name' => 'sometimes|required|string|max:255',
-            'size' => 'sometimes|required|in:small,medium,big',
-            'quantity' => 'sometimes|required|integer',
-            'total_price' => 'sometimes|required|numeric',
+            'Customer_code' => 'sometimes|required|string|max:4|unique:customers,Customer_code,' . $id,
+            'Customer_loyalty' => 'sometimes|integer|nullable',
         ]);
 
-        $customerName = $customer->Customer_name;
-        $customer->update($validateData);
+        $validateData['Customer_loyalty'] = $request->filled('Customer_loyalty') ? $validateData['Customer_loyalty'] : 0;
+
+        $cus->update($validateData);
 
         return response()->json([
-            'message' => 'Customer name ' .$customerName.' with id '.$id.' status has updated...', 
-            'customer' => $customer
+            'message' => 'Customer status has been updated.',
+            'customer' => $cus
         ]);
+    } catch (\Illuminate\Validation\ValidationException $e) {
+        return response()->json(['error' => $e->errors()], 422);
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'An error occurred while updating the customer'], 500);
     }
+}
+
 
     /**
      * Remove the specified resource from storage.
