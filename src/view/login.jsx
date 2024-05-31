@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
@@ -28,7 +29,7 @@ const Login = () => {
         <div className=" max-w-[710px] flex items-center">
           <input
             type="text"
-            className={`w-full p-2 border-[#ABA2A2] h-[55px] shadow-testShadow border-[1px] rounded-md transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#837c7c] ${
+            className={`w-full p-2  border-[#ABA2A2] h-[55px] shadow-testShadow border-[1px] rounded-md transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#837c7c] ${
               usernameFocused || username ? "" : ""
             }`}
             onFocus={() => setUsernameFocused(true)}
@@ -37,9 +38,9 @@ const Login = () => {
             value={username}
           />
           <label
-            className={`absolute pl-1 transition-all duration-300 ease-in-out flex items-center gap-2 ${
+            className={`absolute pl-2 transition-all duration-200 ease-in-out flex items-center gap-2 ${
               usernameFocused || username
-                ? "text-[14px] left-0 text-blue-500 -top-[25px]"
+                ? "text-[14px] -left-2 text-blue-500 -top-[25px]"
                 : " text-base text-[#ABA2A2] "
             }`}
           >
@@ -65,9 +66,9 @@ const Login = () => {
             value={password}
           />
           <label
-            className={`absolute pl-1 transition-all duration-300 ease-in-out flex items-center gap-2 ${
+            className={`absolute pl-2 transition-all duration-200 ease-in-out flex items-center gap-2 ${
               passwordFocused || password
-                ? "top-[-25px] left-0 text-[14px] text-blue-500"
+                ? "top-[-25px] -left-2 text-[14px] text-blue-500"
                 : "top-[15px] text-base text-[#ABA2A2]"
             }`}
           >

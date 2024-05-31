@@ -33,6 +33,9 @@ export default {
       text:{
         colortext:'#ABA2A2',
         logintext:'0F7AC1',
+      },
+      bg:{
+        background:'0071BD',
       }
     },
   },
