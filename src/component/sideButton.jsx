@@ -10,9 +10,9 @@ const SideButton = () => {
   };
 
   return (
-    <div className="w-[120px] h-screen flex flex-col items-center pt-6">
+    <div className="w-[120px] bg-white h-screen flex flex-col items-center pt-6">
       <img
-        className="w-[70px] h-[70px] shadow-testShadow object-cover border border-black rounded-[10px] hover:scale-95"
+        className="animate-bounce w-[70px] h-[70px] shadow-testShadow object-cover border border-black rounded-[10px] hover:scale-95"
         src={logo}
         alt="Login Image"
       />
@@ -26,24 +26,40 @@ const SideButton = () => {
           ].map(({ icon, label }) => (
             <div
               key={icon}
-              className={`flex flex-col items-center w-[70px] h-[70px] cursor-pointer text-[40px] ${
-                activeIcon === icon ? "bg-[#0071BD] rounded-md text-white shadow-testShadow text-[30px] w-[70px] h-[70px] duration-300" : ""
+              className={`flex flex-col items-center w-[70px] h-[70px] cursor-pointer transition-all duration-300 ${
+                activeIcon === icon
+                  ? "bg-[#0071BD] rounded-md text-white shadow-testShadow text-[30px]"
+                  : "text-[40px]"
               }`}
               onClick={() => handleClick(icon)}
             >
-              <i className={`${icon} `}></i>
-              <span className="translate-y-[-10px] text-[14px] font-semibold">{label}</span>
+              <i className={icon}></i>
+              <span
+                className={`translate-y-[-10px] font-semibold transition-all duration-300 ${
+                  activeIcon === icon ? "text-[12px] text-white" : "text-[14px] text-black"
+                }`}
+              >
+                {label}
+              </span>
             </div>
           ))}
         </div>
         <div
-          className={`flex flex-col items-center pb-2 cursor-pointer text-[40px] ${
-            activeIcon === "ri-logout-box-line" ? "text-[#0071BD] rounded-md text-[30px] w-[70px] h-[70px] duration-300" : ""
+          className={`flex flex-col items-center pb-2 cursor-pointer transition-all duration-300 ${
+            activeIcon === "ri-logout-box-line"
+              ? "text-[#0071BD] rounded-md text-[30px]"
+              : "text-[40px]"
           }`}
           onClick={() => handleClick("ri-logout-box-line")}
         >
           <i className="ri-logout-box-line"></i>
-          <span className="translate-y-[-10px] text-[14px] font-semibold">Log out</span>
+          <span
+            className={`translate-y-[-10px] font-semibold transition-all duration-300 ${
+              activeIcon === "ri-logout-box-line" ? "text-[12px] text-[#0071BD]" : "text-[14px] text-black"
+            }`}
+          >
+            Log out
+          </span>
         </div>
       </div>
     </div>

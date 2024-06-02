@@ -21,21 +21,25 @@ export default {
       },
       fontFamily:{
         titleFont : "Roboto",
-        bodyFont : "Poppins"
+        bodyFont : "Poppins",
+        
+        text:'Inter'
       },
       boxShadow:{
         testShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
         InputShadow: "0 0 3px 2px rgb(228 121 17 / 50%)",
+        
       },
       border:{
         borderColor:'#ABA2A2',
       },
       text:{
         colortext:'#ABA2A2',
-        logintext:'0F7AC1',
+        logintext:'#0F7AC1',
       },
-      bg:{
-        background:'0071BD',
+      backgroundColor:{
+        background:'#0071BD',
+        homeBg:'#F8F8F8'
       }
     },
   },
