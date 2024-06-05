@@ -6,3 +6,16 @@ input.pt-6 + label {
 label {
   pointer-events: none; /* Prevent label from being clicked */
 }
+.scroll{
+  overflow-y: auto; /* Enable vertical scrolling */
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For IE and Edge */
+}
+
+/* Hide scrollbar for WebKit browsers */
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+
+
+

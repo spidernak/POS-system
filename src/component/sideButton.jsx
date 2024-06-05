@@ -10,9 +10,9 @@ const SideButton = () => {
   };
 
   return (
-    <div className="w-[120px] bg-white h-screen flex flex-col items-center pt-6">
+    <div className="w-[140px] bg-white h-screen flex flex-col items-center pt-6">
       <img
-        className="animate-bounce w-[70px] h-[70px] shadow-testShadow object-cover border border-black rounded-[10px] hover:scale-95"
+        className=" w-[70px] h-[70px] shadow-testShadow object-cover border border-black rounded-[10px] hover:scale-95"
         src={logo}
         alt="Login Image"
       />
@@ -28,7 +28,7 @@ const SideButton = () => {
               key={icon}
               className={`flex flex-col items-center w-[70px] h-[70px] cursor-pointer transition-all duration-300 ${
                 activeIcon === icon
-                  ? "bg-[#0071BD] rounded-md text-white shadow-testShadow text-[30px]"
+                  ? "bg-mainColor rounded-md text-white shadow-testShadow text-[30px]"
                   : "text-[40px]"
               }`}
               onClick={() => handleClick(icon)}
@@ -47,7 +47,7 @@ const SideButton = () => {
         <div
           className={`flex flex-col items-center pb-2 cursor-pointer transition-all duration-300 ${
             activeIcon === "ri-logout-box-line"
-              ? "text-[#0071BD] rounded-md text-[30px]"
+              ? "text-mainColor  rounded-md text-[30px]"
               : "text-[40px]"
           }`}
           onClick={() => handleClick("ri-logout-box-line")}
@@ -55,7 +55,7 @@ const SideButton = () => {
           <i className="ri-logout-box-line"></i>
           <span
             className={`translate-y-[-10px] font-semibold transition-all duration-300 ${
-              activeIcon === "ri-logout-box-line" ? "text-[12px] text-[#0071BD]" : "text-[14px] text-black"
+              activeIcon === "ri-logout-box-line" ? "text-[12px] text-mainColor" : "text-[14px] text-black"
             }`}
           >
             Log out

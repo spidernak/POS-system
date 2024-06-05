@@ -19,11 +19,17 @@ export default {
         lgl : "1024px ",
         xl : "1200px "
       },
+      color:{
+        customRed:'#FF3838',
+      },
       fontFamily:{
         titleFont : "Roboto",
         bodyFont : "Poppins",
         
-        text:'Inter'
+        text:'Inter',
+        sizeText:'Inria Sans',
+        'inria-sans': ['Inria Sans', 'sans-serif'],
+        'kotta-one': ['"Kotta One"', 'serif'],
       },
       boxShadow:{
         testShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
@@ -36,10 +42,14 @@ export default {
       text:{
         colortext:'#ABA2A2',
         logintext:'#0F7AC1',
+        mainColor:'#0071BD'
       },
       backgroundColor:{
         background:'#0071BD',
-        homeBg:'#F8F8F8'
+        homeBg:'#F8F8F8',
+        bgSize:'#D9D9D9',
+        customRed:'#FF3838',
+        mainColor:'#0071BD'
       }
     },
   },

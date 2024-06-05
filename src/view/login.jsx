@@ -21,7 +21,7 @@ const Login = () => {
           alt="Login Image"
         />
       </div>
-      <div className="w-[87px] h-[70px] text-black text-[32px] font-semibold font-bodyFont">
+      <div className="w-[87px] h-[70px] text-black text-[32px] font-semibold font-inria-sans">
         Login
       </div>
       <section className="h-[300px] flex flex-col gap-[40px] relative w-[450px]">
@@ -82,7 +82,7 @@ const Login = () => {
           </label>
         </div>
 
-        <button className="w-full p-2 h-[50px] bg-[#0F7AC1] text-white font-semibold text-[20px] rounded-md shadow-testShadow hover:scale-105 transition-all duration-300">
+        <button className="w-full p-2 h-[50px] bg-[#0F7AC1] font-inria-sans text-white font-semibold text-[20px] rounded-md shadow-testShadow hover:scale-105 transition-all duration-300">
           Login
         </button>
       </section>
