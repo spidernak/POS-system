@@ -12,4 +12,9 @@ class Type extends Model
     protected $fillable = [
         'Type',
     ];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'Type');
+    }
 }

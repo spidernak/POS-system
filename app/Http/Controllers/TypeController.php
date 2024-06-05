@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Type;
+use App\Models\Product;
+use Illuminate\Validation\ValidationException;
+use Exception;
+
 
 class TypeController extends Controller
 {
@@ -29,20 +33,33 @@ class TypeController extends Controller
      */
     public function store(Request $request) //creaet new type of product
     {
-        try{
-            $request->validate([
+        try {
+            $validatedData = $request->validate([
                 'Type' => 'required|string|max:255|unique:types,Type',
             ]);
+    
             $type = new Type();
-            $type->Type = $request->Type;
-            
+            $type->Type = $validatedData['Type'];
             $type->save();
-            return response()->json(['message' => 'This type of product created successfully....', 'Type' =>$type]);
-        } catch(\Illuminate\Validation\ValidationException $e){
-            return response()->json(['mesaage' => 'This type of poduct has been created!!! '],422);
-        } catch(\Exception $e){
-            return response()->json(['message' => 'An error occurred while creating the type.', 'error' => $e->getMessage()], 500);
+    
+            return response()->json([
+                'message' => 'This type of product created successfully.',
+                'Type' => $type
+            ]);
+    
+        } catch (ValidationException $e) {
+            return response()->json([
+                'message' => 'Validation error.',
+                'errors' => $e->errors()
+            ], 422);
+    
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred while creating the type.',
+                'error' => $e->getMessage()
+            ], 500);
         }
+        
     }
 
     /**
@@ -92,27 +109,38 @@ class TypeController extends Controller
                 'New Type name' => $newName,
             ]);
     
-        } catch (\Illuminate\Validation\ValidationException $e) {
+        } catch (ValidationException $e) {
             return response()->json(['error' => $e->errors()], 422);
         } 
     }
+
+    
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id) // remove type of product from system 
     {
-        try{
+        try {
             $type = Type::find($id);
-
-            if(!$type){
-                return response()->json(['error'=>'No Type found with id '.$id],404);
+    
+            if (!$type) {
+                return response()->json(['error' => 'No Type found with id ' . $id], 404);
             }
+    
+            $relatedProductsCount = Product::where('Type_of_product', $type->Type)->count();
+            if ($relatedProductsCount > 0) {
+                return response()->json(['error' => 'Cannot delete type ' . $type->Type . ' because there are ' . $relatedProductsCount . ' products associated with it.'], 400);
+            }
+    
             $name = $type->Type;
             $type->delete();
-            return response()->json(['message' => 'The new type name '.$name. 'created successfully....'],200);
-        } catch(\Exception $e){
-            return response()->json(['message' => 'The type id '.$id. 'has been removed']);
+    
+            return response()->json(['message' => 'The type name ' . $name . ' removed successfully.'], 200);
+        } catch (Exception $e) {
+            return response()->json(['message' => 'An error occurred while trying to remove the type.'], 500);
         }
     }
 }
+
+
