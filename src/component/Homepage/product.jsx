@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { product } from '../../store/index';
 
@@ -7,9 +5,12 @@ const Product = ({ addToCart }) => {
   const [selectedSizes, setSelectedSizes] = useState({});
 
   const handleSizeClick = (productId, size) => {
+    // Get the first character of the size and make it uppercase
+    const newSize = size.charAt(0).toUpperCase();
+
     setSelectedSizes((prevSizes) => ({
       ...prevSizes,
-      [productId]: size,
+      [productId]: newSize,
     }));
   };
 
@@ -42,11 +43,11 @@ const Product = ({ addToCart }) => {
                 <div
                   key={size}
                   className={`w-[50px] h-[27px] border-none rounded-sm cursor-pointer bg-bgSize flex justify-center ${
-                    selectedSizes[item.id] === size ? 'bg-blue-500 text-white' : ''
+                    selectedSizes[item.id] === size.charAt(0).toUpperCase() ? 'bg-blue-500 text-white' : ''
                   }`}
                   onClick={() => handleSizeClick(item.id, size)}
                 >
-                  {size}
+                  {size.charAt(0).toUpperCase()}
                 </div>
               ))}
             </div>

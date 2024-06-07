@@ -8,6 +8,8 @@ import '../App.css';
 const Cart = ({ cartItems, setCartItems }) => {
   const [dateTime, setDateTime] = useState(null);
   const [isCheckout, setIsCheckout] = useState(false);
+  const [isConfirmed, setIsConfirmed] = useState(false);
+  const [orderDetails, setOrderDetails] = useState(null);
 
   // Function to update date and time
   const updateDateTime = () => {
@@ -50,21 +52,67 @@ const Cart = ({ cartItems, setCartItems }) => {
     updateDateTime();
   }, [cartItems]);
 
+  const handleOrderConfirm = (formData) => {
+    setOrderDetails({
+      ...formData,
+      cartItems,
+      totalPrice: cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2),
+    });
+    setIsConfirmed(true);
+    setIsCheckout(false);
+  };
+
+  const handleBackToOrder = () => {
+    setIsConfirmed(false);
+    setCartItems([]);
+  };
+
+  const handleProceedToCheckout = () => {
+    if (cartItems.length === 0) {
+      alert('Your cart is empty. Please add items to your cart.');
+    } else {
+      setIsCheckout(true);
+    }
+  };
+
   return (
     <div className="max-h-[100vh] bg-white">
       <Profile />
       <div className="bg-white w-[380px] h-[628px] flex flex-col justify-between items-center">
         <div className='w-[360px] flex flex-col justify-center items-center'>
           <h1 className="bg-customRed flex justify-center w-[380px] items-center text-white h-[46px] text-[24px]">
-            {isCheckout ? 'Checkout' : 'Cart'}
+            {isCheckout ? 'Checkout' : isConfirmed ? 'Order Confirmation' : 'Cart'}
           </h1>
           <div className="w-[380px] flex justify-start py-1 font-kotta-one">
             {dateTime && <p>Date and Time: {dateTime}</p>}
           </div>
-          {/* Cart Items */}
-          <div className='h-[350px] '>
+          <div className='h-[350px]'>
             {isCheckout ? (
-              <Checkout cartItems={cartItems} setCartItems={setCartItems} setIsCheckout={setIsCheckout} />
+              <Checkout cartItems={cartItems} setCartItems={setCartItems} setIsCheckout={setIsCheckout} handleOrderConfirm={handleOrderConfirm} />
+            ) : isConfirmed ? (
+              <div className="flex flex-col items-center">
+                <h2 className="text-xl font-semibold">Order Confirmation</h2>
+                <p>Name: {orderDetails.name}</p>
+                <p>Address: {orderDetails.address}</p>
+                <p>Payment Method: {orderDetails.paymentMethod}</p>
+                <h3 className="text-lg font-semibold mt-2">Order Summary</h3>
+                {orderDetails.cartItems.map((item) => (
+                  <div key={item.id} className="flex justify-between w-full">
+                    <div>{item.name} (x{item.quantity})</div>
+                    <div>${(item.price * item.quantity).toFixed(2)}</div>
+                  </div>
+                ))}
+                <div className="flex justify-between w-full mt-2 font-bold">
+                  <div>Total Price:</div>
+                  <div>${orderDetails.totalPrice}</div>
+                </div>
+                <button
+                  className="bg-customRed text-white px-4 py-2 rounded-md mt-2"
+                  onClick={handleBackToOrder}
+                >
+                  Back to Order
+                </button>
+              </div>
             ) : (
               cartItems.map((item) => (
                 <section key={item.id} className="">
@@ -105,18 +153,18 @@ const Cart = ({ cartItems, setCartItems }) => {
             )}
           </div>
         </div>
-        {!isCheckout && (
+        {!isCheckout && !isConfirmed && (
           <div className="flex justify-between w-[380px] px-2 py-2 font-inria-sans">
             <div>Total Price:</div>
             <div>${cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</div>
           </div>
         )}
-        {!isCheckout && (
+        {!isCheckout && !isConfirmed && (
           <button
             className="bg-customRed text-white px-4 py-2 rounded-md"
-            onClick={() => setIsCheckout((prev) => !prev)}
+            onClick={handleProceedToCheckout}
           >
-            Proceed to Checkout
+            Checkout
           </button>
         )}
       </div>

@@ -1,12 +1,14 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
+import qrCodeImage from '../../assets/qr_cod.jpg';
+import '../../App.css'
 
-const Checkout = ({ cartItems, setCartItems, setIsCheckout, isCheckout }) => {
+const Checkout = ({ cartItems, setCartItems, setIsCheckout, handleOrderConfirm }) => {
   const [formData, setFormData] = useState({
     name: '',
     address: '',
-    paymentMethod: 'Credit Card',
+    paymentMethod: 'Qr_code', // Default payment method
   });
 
   // Function to handle form input changes
@@ -20,13 +22,12 @@ const Checkout = ({ cartItems, setCartItems, setIsCheckout, isCheckout }) => {
 
   const handleCheckout = () => {
     if (formData.name && formData.address) {
-      alert('Order placed successfully!');
-      // Perform further actions like API call to place the order
+      handleOrderConfirm(formData);
       setCartItems([]);
       setFormData({
         name: '',
         address: '',
-        paymentMethod: 'Credit Card',
+        paymentMethod: 'Qr_code', // Reset payment method to default
       });
       setIsCheckout(false);
     } else {
@@ -42,64 +43,65 @@ const Checkout = ({ cartItems, setCartItems, setIsCheckout, isCheckout }) => {
   };
 
   return (
-    <div className="w-[380px] flex flex-col justify-center items-center">
+    <div className="w-[380px] h-[550px] py-5 flex flex-col justify-center items-center scroll">
       <h2 className="text-xl font-semibold">Checkout Details</h2>
-      <div className="mt-4">
+      <div className="mt-10 pt-10">
         <label className="block">
           Name:
-          
         </label>
         <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-            className="border p-1 rounded w-full"
-          />
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleInputChange}
+          className="border p-1 rounded w-full"
+        />
         <label className="block mt-2">
           Address:
-          
         </label>
         <input
-            type="text"
-            name="address"
-            value={formData.address}
-            onChange={handleInputChange}
-            className="border p-1 rounded w-full"
-          />
+          type="text"
+          name="address"
+          value={formData.address}
+          onChange={handleInputChange}
+          className="border p-1 rounded w-full"
+        />
         <label className="block mt-2">
           Payment Method:
         </label>
         <select
-            name="paymentMethod"
-            value={formData.paymentMethod}
-            onChange={handleInputChange}
-            className="border p-1 rounded w-full"
-          >
-            <option value="Credit Card">Credit Card</option>
-            <option value="PayPal">PayPal</option>
-            <option value="Cash on Delivery">Cash on Delivery</option>
-          </select>
+          name="paymentMethod"
+          value={formData.paymentMethod}
+          onChange={handleInputChange}
+          className="border p-1 rounded w-full"
+        >
+          <option value="Qr_code">Online Cash</option>
+          <option value="Cash on Delivery">Cash on Delivery</option>
+        </select>
       </div>
-      <div className='flex flex-col h-[300px] justify-end'>
+      {formData.paymentMethod === 'Qr_code' && (
+        <div className="mt-4">
+          <img src={qrCodeImage} alt="QR Code" className="w-[300px] h-[300px]" />
+        </div>
+      )}
+      <div className="flex flex-col h-[300px] justify-end">
         <div className="flex justify-between w-[360px] px-2 py-2 font-inria-sans mt-4">
-        <div>Total Price:</div>
-        <div>${calculateTotalPrice()}</div>
+          <div>Total Price:</div>
+          <div>${calculateTotalPrice()}</div>
+        </div>
+        <button
+          className="bg-green-500 text-white px-4 py-2 rounded-md mt-2"
+          onClick={handleCheckout}
+        >
+          Confirm
+        </button>
+        <button
+          className="bg-customRed text-white px-4 py-2 rounded-md mt-2"
+          onClick={() => setIsCheckout(false)}
+        >
+          Back to Cart
+        </button>
       </div>
-      <button
-        className="bg-green-500 text-white px-4 py-2 rounded-md mt-2"
-        onClick={handleCheckout}
-      >
-        Confrim
-      </button>
-      <button
-        className="bg-customRed text-white px-4 py-2 rounded-md mt-2"
-        onClick={() => setIsCheckout(false)}
-      >
-        Back to Cart
-      </button>
-      </div>
-      
     </div>
   );
 };

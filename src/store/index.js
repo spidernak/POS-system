@@ -11,7 +11,6 @@ export const menu = [
     { id: 13, title: "Food", image: burger },
     { id: 14, title: "Dessert", image: dessert }
 ];
-
 export const product = [
   {
     id: 1,
@@ -20,7 +19,7 @@ export const product = [
     image: 'https://example.com/margherita-pizza.jpg',
     description: 'Classic margherita pizza with fresh mozzarella and basil',
     quantity: 1,
-    sizes: ['S', 'M', 'L']
+    sizes: ['small', 'medium', 'large']
   },
   {
     id: 2,
@@ -29,7 +28,7 @@ export const product = [
     image: 'https://example.com/caesar-salad.jpg',
     description: 'Crisp romaine lettuce with Caesar dressing and croutons',
     quantity: 1,
-    sizes: ['S', 'M', 'L']
+    sizes: ['small', 'medium', 'large']
   },
   {
     id: 3,
@@ -38,7 +37,7 @@ export const product = [
     image: 'https://example.com/spaghetti-carbonara.jpg',
     description: 'Traditional Italian pasta with creamy sauce and pancetta',
     quantity: 1,
-    sizes: ['S', 'M', 'L']
+    sizes: ['small', 'medium', 'large']
   },
   {
     id: 4,
@@ -47,7 +46,7 @@ export const product = [
     image: 'https://example.com/chicken-alfredo.jpg',
     description: 'Fettuccine pasta with creamy Alfredo sauce and grilled chicken',
     quantity: 1,
-    sizes: ['S', 'M', 'L']
+    sizes: ['small', 'medium', 'large']
   },
   {
     id: 5,
@@ -56,7 +55,7 @@ export const product = [
     image: 'https://example.com/garlic-bread.jpg',
     description: 'Toasted bread with garlic butter and parsley',
     quantity: 1,
-    sizes: ['S', 'M', 'L']
+    sizes: ['small', 'medium', 'large']
   },
   {
     id: 6,
@@ -65,7 +64,7 @@ export const product = [
     image: 'https://example.com/tiramisu.jpg',
     description: 'Classic Italian dessert with layers of mascarpone and coffee-soaked ladyfingers',
     quantity: 1,
-    sizes: ['S', 'M', 'L']
+    sizes: ['small', 'medium', 'large']
   },
   {
     id: 7,
@@ -74,7 +73,7 @@ export const product = [
     image: 'https://example.com/pepperoni-pizza.jpg',
     description: 'Pepperoni pizza with mozzarella cheese and tomato sauce',
     quantity: 1,
-    sizes: ['S', 'M', 'L']
+    sizes: ['small', 'medium', 'large']
   },
   {
     id: 8,
@@ -83,7 +82,7 @@ export const product = [
     image: 'https://example.com/minestrone-soup.jpg',
     description: 'Hearty Italian soup with vegetables, beans, and pasta',
     quantity: 1,
-    sizes: ['S', 'M', 'L']
+    sizes: ['small', 'medium', 'large']
   },
   {
     id: 9,
@@ -92,7 +91,7 @@ export const product = [
     image: 'https://example.com/lasagna.jpg',
     description: 'Layers of pasta, meat sauce, and cheese baked to perfection',
     quantity: 1,
-    sizes: ['S', 'M', 'L']
+    sizes: ['small', 'medium', 'large']
   },
   {
     id: 10,
@@ -101,6 +100,6 @@ export const product = [
     image: 'https://example.com/caprese-salad.jpg',
     description: 'Fresh tomatoes, mozzarella, and basil drizzled with balsamic glaze',
     quantity: 1,
-    sizes: ['S', 'M', 'L']
+    sizes: ['small', 'medium', 'large']
   }
 ];

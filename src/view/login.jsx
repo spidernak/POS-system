@@ -1,10 +1,10 @@
-// eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import "../App.css";
-import logo from '../assets/logo.jpg'
+import logo from "../assets/logo.jpg";
 
 const Login = () => {
   const [usernameFocused, setUsernameFocused] = useState(false);
@@ -53,10 +53,10 @@ const Login = () => {
             Username
           </label>
         </div>
-{/* password */}
+        {/* password */}
         <div className="relative w-full">
           <input
-            type='password'
+            type="password"
             className={`w-full p-2 border-[#ABA2A2] h-[55px] shadow-testShadow border-[1px] rounded-md transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#837c7c] ${
               passwordFocused || password ? "" : ""
             }`}
@@ -82,9 +82,11 @@ const Login = () => {
           </label>
         </div>
 
-        <button className="w-full p-2 h-[50px] bg-[#0F7AC1] font-inria-sans text-white font-semibold text-[20px] rounded-md shadow-testShadow hover:scale-105 transition-all duration-300">
-          Login
-        </button>
+        <Link to="/home">
+          <button className="w-full p-2 h-[50px] bg-[#0F7AC1] font-inria-sans text-white font-semibold text-[20px] rounded-md shadow-testShadow hover:scale-105 transition-all duration-300">
+            Login
+          </button>
+        </Link>
       </section>
     </div>
   );

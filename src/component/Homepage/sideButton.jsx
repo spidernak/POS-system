@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import logo from "../../assets/logo.jpg";
 
+import { Link } from "react-router-dom";
+
 const SideButton = () => {
   const [activeIcon, setActiveIcon] = useState(null);
 
@@ -19,12 +21,12 @@ const SideButton = () => {
       <div className="flex flex-col justify-between h-full">
         <div className="flex flex-col items-center gap-7 pt-5">
           {[
-            { icon: "ri-home-office-line", label: "Home" },
+            { icon: "ri-home-office-line", label: "Home",to:'/home' },
             { icon: "ri-menu-search-line", label: "Menu" },
             { icon: "ri-history-line", label: "History" },
             { icon: "ri-wallet-line", label: "Wallet" },
           ].map(({ icon, label }) => (
-            <div
+            <Link
               key={icon}
               className={`flex flex-col items-center w-[70px] h-[70px] cursor-pointer transition-all duration-300 ${
                 activeIcon === icon
@@ -41,7 +43,7 @@ const SideButton = () => {
               >
                 {label}
               </span>
-            </div>
+            </Link>
           ))}
         </div>
         <div
