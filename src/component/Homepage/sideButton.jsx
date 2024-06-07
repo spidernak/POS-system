@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
-import logo from "../assets/logo.jpg";
+import logo from "../../assets/logo.jpg";
 
 const SideButton = () => {
   const [activeIcon, setActiveIcon] = useState(null);

@@ -1,10 +1,17 @@
+import coffee from '../assets/CategoryImage/coffee.png';
+import all from '../assets/CategoryImage/all.png';
+import juice from '../assets/CategoryImage/juice.png';
+import dessert from '../assets/CategoryImage/dessert.png';
+import burger from '../assets/CategoryImage/burger.png';
+
 export const menu = [
-    {id: 10, title: "All"},
-    {id: 11, title: "Snack"},
-    {id: 12, title: "Drink"},
-    {id: 13, title: "Food"},
-    {id: 14, title: "Dessert"}
+    { id: 10, title: "All", image: all },
+    { id: 11, title: "Snack", image: coffee },
+    { id: 12, title: "Drink", image: juice },
+    { id: 13, title: "Food", image: burger },
+    { id: 14, title: "Dessert", image: dessert }
 ];
+
 export const product = [
   {
     id: 1,

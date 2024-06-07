@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-import { product } from '../store/index';
+import { product } from '../../store/index';
 
 const Product = ({ addToCart }) => {
   const [selectedSizes, setSelectedSizes] = useState({});

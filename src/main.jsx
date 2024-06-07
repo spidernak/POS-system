@@ -3,7 +3,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './view/Homepage.jsx';
-import Side from './component/sideButton.jsx'
 import './index.css';
 import Login from './view/login.jsx';
 // import App from './App.jsx';

@@ -1,4 +1,4 @@
-import logo from "../assets/logo.jpg";
+import logo from "../../assets/logo.jpg";
 const profile = () => {
   return (
     <div className="flex px-4 py-4 gap-5 max-h-[100px]">
