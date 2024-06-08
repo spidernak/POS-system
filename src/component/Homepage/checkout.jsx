@@ -43,7 +43,7 @@ const Checkout = ({ cartItems, setCartItems, setIsCheckout, handleOrderConfirm }
   };
 
   return (
-    <div className="w-[380px] h-[550px] py-5 flex flex-col justify-center items-center scroll">
+    <div className="w-[380px] h-[650px] py-5 flex flex-col justify-center items-center ">
       <h2 className="text-xl font-semibold">Checkout Details</h2>
       <div className="mt-10 pt-10">
         <label className="block">

@@ -7,10 +7,11 @@ import Navbar from '../component/Homepage/navBar';
 import Product from '../component/Homepage/product';
 import Cart from './cart';
 import { product } from '../store/index';
-import '../App.css'
+import '../App.css';
 
 const Home = () => {
   const [cartItems, setCartItems] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('All');
 
   const addToCart = (product) => {
     setCartItems((prevItems) => {
@@ -28,16 +29,16 @@ const Home = () => {
   };
 
   return (
-    <div className='flex w-screen bg-homeBg'>
+    <div className='flex w-full h-full bg-homeBg'>
       <SideButton />
-      <div className='flex flex-col items-center  max-h-[100vh]  scroll'>
+      <div className='flex flex-col items-center border max-h-[100vh] scroll'>
         <Navbar />
-        <Category />
-        <Product addToCart={addToCart} />
+        <Category selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+        <Product addToCart={addToCart} selectedCategory={selectedCategory} />
       </div>
       <Cart cartItems={cartItems} setCartItems={setCartItems} />
     </div>
   );
-}
+};
 
 export default Home;

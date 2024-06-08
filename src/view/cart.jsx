@@ -86,7 +86,7 @@ const Cart = ({ cartItems, setCartItems }) => {
           <div className="w-[380px] flex justify-start py-1 font-kotta-one">
             {dateTime && <p>Date and Time: {dateTime}</p>}
           </div>
-          <div className='h-[350px]'>
+          <div className='h-[400px] scroll'>
             {isCheckout ? (
               <Checkout cartItems={cartItems} setCartItems={setCartItems} setIsCheckout={setIsCheckout} handleOrderConfirm={handleOrderConfirm} />
             ) : isConfirmed ? (

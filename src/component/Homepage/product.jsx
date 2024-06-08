@@ -1,11 +1,12 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-import { product } from '../../store/index';
+import { product as allProducts } from '../../store/index';
 
-const Product = ({ addToCart }) => {
+const Product = ({ addToCart, selectedCategory }) => {
   const [selectedSizes, setSelectedSizes] = useState({});
 
   const handleSizeClick = (productId, size) => {
-    // Get the first character of the size and make it uppercase
     const newSize = size.charAt(0).toUpperCase();
 
     setSelectedSizes((prevSizes) => ({
@@ -20,18 +21,21 @@ const Product = ({ addToCart }) => {
       return;
     }
     addToCart({ ...item, selectedSize: selectedSizes[item.id] });
-    // Reset selected size after adding to cart
     setSelectedSizes((prevSizes) => ({
       ...prevSizes,
       [item.id]: undefined,
     }));
   };
 
+  const filteredProducts = selectedCategory === 'All'
+    ? allProducts
+    : allProducts.filter(product => product.category === selectedCategory);
+
   return (
-    <div className="flex flex-col it gap-10 max-w-[1080px] w-[950px] pl-5 mx-auto">
-      <h1 className="text-black -translate-x-[10px] text-3xl font-bold font-text">All</h1>
+    <div className="flex flex-col gap-10 max-w-[1080px] w-[950px] pl-5 mx-auto">
+      <h1 className="text-black -translate-x-[10px] text-3xl font-bold font-text">{selectedCategory}</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 pb-3">
-        {product.map((item) => (
+        {filteredProducts.map((item) => (
           <div
             key={item.id}
             className="w-[200px] h-[250px] flex flex-col font-inria-sans items-center pt-2 bg-white rounded-md shadow-testShadow"
