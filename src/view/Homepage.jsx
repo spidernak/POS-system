@@ -1,17 +1,22 @@
-/* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
-import Login from './login';
+import  { useState, useEffect } from 'react';
 import Category from '../component/Homepage/Category';
-import SideButton from '../component/Homepage/sideButton';
 import Navbar from '../component/Homepage/navBar';
 import Product from '../component/Homepage/product';
 import Cart from './cart';
-import { product } from '../store/index';
 import '../App.css';
 
 const Home = () => {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(() => {
+    const savedCartItems = localStorage.getItem('cartItems');
+    return savedCartItems ? JSON.parse(savedCartItems) : [];
+  });
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [highlightSearch, setHighlightSearch] = useState(true);
+
+  useEffect(() => {
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  }, [cartItems]);
 
   const addToCart = (product) => {
     setCartItems((prevItems) => {
@@ -28,13 +33,16 @@ const Home = () => {
     });
   };
 
+  const handleSearchIconClick = () => {
+    setHighlightSearch(false);
+  };
+
   return (
-    <div className='flex w-full h-full bg-homeBg'>
-      <SideButton />
+    <div className='flex justify-end w-full h-full bg-homeBg'>
       <div className='flex flex-col items-center border max-h-[100vh] scroll'>
-        <Navbar />
+        <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} onSearchIconClick={handleSearchIconClick} />
         <Category selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
-        <Product addToCart={addToCart} selectedCategory={selectedCategory} />
+        <Product addToCart={addToCart} selectedCategory={selectedCategory} searchTerm={searchTerm} highlightSearch={highlightSearch} />
       </div>
       <Cart cartItems={cartItems} setCartItems={setCartItems} />
     </div>

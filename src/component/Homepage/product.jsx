@@ -1,9 +1,8 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { product as allProducts } from '../../store/index';
 
-const Product = ({ addToCart, selectedCategory }) => {
+const Product = ({ add~ToCart, selectedCategory, searchTerm, highlightSearch }) => {
   const [selectedSizes, setSelectedSizes] = useState({});
 
   const handleSizeClick = (productId, size) => {
@@ -27,9 +26,19 @@ const Product = ({ addToCart, selectedCategory }) => {
     }));
   };
 
-  const filteredProducts = selectedCategory === 'All'
-    ? allProducts
-    : allProducts.filter(product => product.category === selectedCategory);
+  const filteredProducts = allProducts.filter(product => {
+    const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
+    const matchesSearchTerm = product.name.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesCategory && matchesSearchTerm;
+  });
+
+  const highlightSearchTerm = (text) => {
+    if (!searchTerm || !highlightSearch) return text;
+    const regex = new RegExp(`(${searchTerm})`, 'gi');
+    return text.split(regex).map((part, index) => 
+      part.toLowerCase() === searchTerm.toLowerCase() ? <span key={index} className="bg-yellow-300">{part}</span> : part
+    );
+  };
 
   return (
     <div className="flex flex-col gap-10 max-w-[1080px] w-[950px] pl-5 mx-auto">
@@ -41,7 +50,7 @@ const Product = ({ addToCart, selectedCategory }) => {
             className="w-[200px] h-[250px] flex flex-col font-inria-sans items-center pt-2 bg-white rounded-md shadow-testShadow"
           >
             <img src={item.image} className="h-[119px] w-[184px]" alt={item.name} />
-            <div className="text-black font-semibold">{item.name}</div>
+            <div className="text-black font-semibold">{highlightSearchTerm(item.name)}</div>
             <div className="flex w-[200px] gap-3 py-3 pl-2 justify-start font-inria-sans font-normal break-words">
               {item.sizes.map((size) => (
                 <div

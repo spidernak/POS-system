@@ -528,3 +528,10 @@ export const product = [
     sizes: ["small", "medium", "large"],
   },
 ];
+export const cashiers = [
+  { username: 'cashier1', password: 'password1', name: 'Rak', role: 'Cashier' },
+  { username: 'cashier2', password: 'password2', name: 'Nak', role: 'Cashier' },
+  { username: 'cashier3', password: 'password3', name: 'Jefferson', role: 'Cashier' },
+  { username: 'cashier4', password: 'password4', name: 'Enghav', role: 'Cashier' },
+  { username: 'cashier5', password: 'password5', name: 'user', role: 'Cashier' },
+];

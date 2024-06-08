@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
-import logo from "../../assets/logo.jpg";
+import logo from "../assets/logo.jpg";
 
 import { Link } from "react-router-dom";
 
@@ -22,9 +22,9 @@ const SideButton = () => {
         <div className="flex flex-col items-center gap-7 pt-5">
           {[
             { icon: "ri-home-office-line", label: "Home",to:'/home' },
-            { icon: "ri-menu-search-line", label: "Menu" },
+            { icon: "ri-menu-search-line", label: "Products" },
             { icon: "ri-history-line", label: "History" },
-            { icon: "ri-wallet-line", label: "Wallet" },
+            { icon: "ri-wallet-line", label: "Customer" },
           ].map(({ icon, label }) => (
             <Link
               key={icon}
