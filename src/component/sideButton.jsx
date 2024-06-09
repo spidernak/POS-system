@@ -1,33 +1,43 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useState } from "react";
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../assets/logo.jpg";
 
-import { Link } from "react-router-dom";
-
 const SideButton = () => {
+  const location = useLocation();
   const [activeIcon, setActiveIcon] = useState(null);
+
+  useEffect(() => {
+    const currentPath = location.pathname;
+    const activeItem = menuItems.find((item) => item.to === currentPath);
+    setActiveIcon(activeItem ? activeItem.icon : null);
+  }, [location]);
 
   const handleClick = (icon) => {
     setActiveIcon(icon);
   };
 
+  const menuItems = [
+    { icon: "ri-home-office-line", label: "Home", to: "/home" },
+    { icon: "ri-menu-search-line", label: "Products", to: "/product" }, 
+    { icon: "ri-history-line", label: "History", to: "/history" },
+    { icon: "ri-wallet-line", label: "Customer", to: "/customer" },
+  ];
+
   return (
-    <div className="w-[140px] bg-white h-screen flex flex-col items-center pt-6">
+    <div className="w-[140px] bg-white h-screen flex flex-col items-center pt-6 absolute">
+      <Link to='/home'>
       <img
-        className=" w-[70px] h-[70px] shadow-testShadow object-cover border border-black rounded-[10px] hover:scale-95"
+        className="w-[70px] h-[70px] shadow-testShadow object-cover border border-black rounded-[10px] hover:scale-95"
         src={logo}
-        alt="Login Image"
-      />
+        alt="Logo"
+      /></Link>
       <div className="flex flex-col justify-between h-full">
         <div className="flex flex-col items-center gap-7 pt-5">
-          {[
-            { icon: "ri-home-office-line", label: "Home",to:'/home' },
-            { icon: "ri-menu-search-line", label: "Products" },
-            { icon: "ri-history-line", label: "History" },
-            { icon: "ri-wallet-line", label: "Customer" },
-          ].map(({ icon, label }) => (
+          {menuItems.map(({ icon, label, to }) => (
             <Link
               key={icon}
+              to={to}
               className={`flex flex-col items-center w-[70px] h-[70px] cursor-pointer transition-all duration-300 ${
                 activeIcon === icon
                   ? "bg-mainColor rounded-md text-white shadow-testShadow text-[30px]"
@@ -49,7 +59,7 @@ const SideButton = () => {
         <div
           className={`flex flex-col items-center pb-2 cursor-pointer transition-all duration-300 ${
             activeIcon === "ri-logout-box-line"
-              ? "text-mainColor  rounded-md text-[30px]"
+              ? "text-mainColor rounded-md text-[30px]"
               : "text-[40px]"
           }`}
           onClick={() => handleClick("ri-logout-box-line")}

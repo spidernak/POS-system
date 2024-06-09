@@ -2,7 +2,7 @@
 import  { useState } from 'react';
 import { product as allProducts } from '../../store/index';
 
-const Product = ({ add~ToCart, selectedCategory, searchTerm, highlightSearch }) => {
+const Product = ({ addToCart, selectedCategory, searchTerm, highlightSearch }) => {
   const [selectedSizes, setSelectedSizes] = useState({});
 
   const handleSizeClick = (productId, size) => {

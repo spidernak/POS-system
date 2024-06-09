@@ -38,7 +38,7 @@ const Home = () => {
   };
 
   return (
-    <div className='flex justify-end w-full h-full bg-homeBg'>
+    <div className='flex justify-end w-full h-full bg-homeBg '>
       <div className='flex flex-col items-center border max-h-[100vh] scroll'>
         <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} onSearchIconClick={handleSearchIconClick} />
         <Category selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />

@@ -1,12 +1,15 @@
 import Homepage from './view/Homepage'
 import SideButton from './component/sideButton'
+import { Outlet } from 'react-router-dom'
 
 function App() {
 
   return (
-    <div className='flex'>
-     <SideButton/>
-    <Homepage/>
+    <div className='ab'>
+     <SideButton/> 
+     <div className='flex-grow'>
+      <Outlet/>
+     </div>
     </div>
   )
 }
