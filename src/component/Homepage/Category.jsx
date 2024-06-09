@@ -3,7 +3,7 @@ import { menu } from '../../store/index';
 
 const Category = ({ selectedCategory, setSelectedCategory }) => {
   return (
-    <div className="w-[1020px] max-w-[1080px] pt-16">
+    <div className="max-w-screen max-h-screen mr-[400px] ml-[140px] pt-14">
       <div className='flex justify-center gap-10 py-10'>
         {menu.map((categoryItem) => (
           <div 

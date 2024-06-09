@@ -76,17 +76,17 @@ const Cart = ({ cartItems, setCartItems }) => {
   };
 
   return (
-    <div className="max-h-[100vh] bg-white">
+    <div className="fixed top-0 right-0 h-full bg-white shadow-lg flex flex-col items-center z-50">
       <Profile />
-      <div className="bg-white w-[380px] h-[628px] flex flex-col justify-between items-center">
+      <div className="w-[380px] h-full flex flex-col justify-between items-center">
         <div className='w-[360px] flex flex-col justify-center items-center'>
-          <h1 className="bg-customRed flex justify-center w-[380px] items-center text-white h-[46px] text-[24px]">
+          <h1 className="bg-customRed flex justify-center w-full items-center text-white h-[46px] text-[24px]">
             {isCheckout ? 'Checkout' : isConfirmed ? 'Order Confirmation' : 'Cart'}
           </h1>
-          <div className="w-[380px] flex justify-start py-1 font-kotta-one">
+          <div className="w-full flex justify-start py-1 font-kotta-one">
             {dateTime && <p>Date and Time: {dateTime}</p>}
           </div>
-          <div className='h-[400px] scroll'>
+          <div className='h-[400px] overflow-y-auto'>
             {isCheckout ? (
               <Checkout cartItems={cartItems} setCartItems={setCartItems} setIsCheckout={setIsCheckout} handleOrderConfirm={handleOrderConfirm} />
             ) : isConfirmed ? (
@@ -96,8 +96,8 @@ const Cart = ({ cartItems, setCartItems }) => {
                 <p>Address: {orderDetails.address}</p>
                 <p>Payment Method: {orderDetails.paymentMethod}</p>
                 <h3 className="text-lg font-semibold mt-2">Order Summary</h3>
-                {orderDetails.cartItems.map((item) => (
-                  <div key={item.id} className="flex justify-between w-full">
+                {orderDetails.cartItems.map((item, index) => (
+                  <div key={`${item.id}-${item.selectedSize}-${index}`} className="flex justify-between w-full">
                     <div>{item.name} (x{item.quantity})</div>
                     <div>${(item.price * item.quantity).toFixed(2)}</div>
                   </div>
@@ -114,8 +114,8 @@ const Cart = ({ cartItems, setCartItems }) => {
                 </button>
               </div>
             ) : (
-              cartItems.map((item) => (
-                <section key={item.id} className="">
+              cartItems.map((item, index) => (
+                <section key={`${item.id}-${item.selectedSize}-${index}`} className="">
                   <div className="flex w-[360px] mb-5 justify-center items-center bg-white border p-2 rounded-md shadow-testShadow gap-2">
                     <div>
                       <img
@@ -154,7 +154,7 @@ const Cart = ({ cartItems, setCartItems }) => {
           </div>
         </div>
         {!isCheckout && !isConfirmed && (
-          <div className="flex justify-between w-[380px] px-2 py-2 font-inria-sans">
+          <div className="flex justify-between w-full px-2 py-2 font-inria-sans">
             <div>Total Price:</div>
             <div>${cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</div>
           </div>

@@ -6,7 +6,6 @@ function App() {
 
   return (
     <div className='ab'>
-     <SideButton/> 
      <div className='flex-grow'>
       <Outlet/>
      </div>

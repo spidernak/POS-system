@@ -528,6 +528,9 @@ export const product = [
     sizes: ["small", "medium", "large"],
   },
 ];
+product.forEach((item) => {
+  item.quantity = 20;
+});
 export const cashiers = [
   { username: 'cashier1', password: 'password1', name: 'Rak', role: 'Cashier' },
   { username: 'cashier2', password: 'password2', name: 'Nak', role: 'Cashier' },

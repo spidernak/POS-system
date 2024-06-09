@@ -3,8 +3,8 @@ import React from 'react';
 
 const Customer = () => {
   return (
-    <div className="max-w-full flex justify-end absolute w-4/5">
-      <div> test</div>
+    <div className="w-screen h-screen flex justify-end absolute bg-homeBg">
+      <div className='max-w-full' style={{ marginLeft: '140px' }}> test</div>
     </div>
   );
 };
