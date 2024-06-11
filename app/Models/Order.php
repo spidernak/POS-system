@@ -11,6 +11,7 @@ class Order extends Model
 
     protected $fillable = [
         'Customer_name',
+        'Customer_code',
         'Product_id',
         'Quantity',
         'Total_price',
@@ -18,6 +19,11 @@ class Order extends Model
 
     public function customer()
     {
-        return $this->belongsTo(Customer::class, 'Customer_name', 'Customer_code');
+        return $this->belongsTo(Customer::class, 'Customer_code', 'Customer_code');
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
     }
 }

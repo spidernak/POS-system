@@ -4,6 +4,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\ProducstController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,12 +15,13 @@ Route::get('/user', function (Request $request) {
 
 
                     //==== Cutomer =====                    
-Route::prefix('viewcustomers')->group(function(){
-    Route::get('/' , [CustomerController::class , 'index']);
-    Route::get('byCode', [CustomerController::class, 'getByCode']);  
-    Route::get('byName', [CustomerController::class, 'getByName']);  
+// Route::middleware('Checkrole')->prefix('viewcustomers')->group(function() {
+Route::prefix('viewcustomers')->group(function() {
+    Route::get('/', [CustomerController::class, 'index']);
+    Route::get('/byCode', [CustomerController::class, 'getByCode']);  
+    Route::get('/byName', [CustomerController::class, 'getByName']);  
     Route::get('/{id}', [CustomerController::class, 'show']);
-});
+  });
 Route::post('/createcustomer', [CustomerController::class, 'store']);
 Route::put('updatecustomer/{id}', [CustomerController::class, 'update']);
 Route::delete('/removecutomer/{id}', [CustomerController::class, 'destroy']);
@@ -48,3 +50,30 @@ Route::get('/viewproductByType', [ProducstController::class, 'getProductByType']
 
 
 Route::get('/getorder', [OrderController::class, 'index']);
+Route::post('/crateorder', [OrderController::class, 'store']);
+Route::get('/getorder/{id}', [OrderController::class, 'show']);
+Route::get('findOrderByCustomerName', [OrderController::class, 'findOrderByCustomerName']);
+Route::delete('removeOder/{id}', [OrderController::class, 'destroy']);
+Route::delete('/removeOderByCustomerName', [OrderController::class, 'DeleteOrderBYCustomerName']);
+
+
+
+Route::middleware('Checkrole')->get('/gettest', function(){
+    return 'test';
+});
+Route::get('/gettestwithoutmiddleware', function(){
+    return 'hello test';
+});
+
+use App\Http\Controllers\CustomerOrderController;
+
+Route::get('/createcustomer', [CustomerOrderController::class, 'store']);
+
+
+//user
+Route::get('/getuser', [UserController::class, 'index']);
+Route::get('/getuser/{id}', [UserController::class, 'show']);
+Route::put('/updateuser/{id}', [UserController::class, 'update']);
+Route::post('/createUser', [UserController::class, 'store']);
+Route::delete('/removeuser/{id}', [UserController::class, 'destroy']);
+Route::delete('/removeuserBYEmail', [UserController::class, 'removeUserByEmail']);

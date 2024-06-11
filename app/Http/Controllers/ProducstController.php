@@ -18,7 +18,7 @@ class ProducstController extends Controller
             $pro = Product::latest()->get();
             return response()->json([
                 'message' => 'Here all created product',
-                'Product information' =>$pro
+                'Product_information' =>$pro
             ]);
         } catch(\Exception $e){
             return response()->json(['error' => 'There are no products found!!!!']);
@@ -115,10 +115,12 @@ class ProducstController extends Controller
         try{
             $validateData = $request->validate([
                 'Type_of_product' => 'required|string|max:255',
-                'size'
+                'size' => 'required|in:small,medium,large',
             ]);
 
-            $findProductByName = Product::where('Type_of_product', $validateData['Type_of_product'])->get();
+            $findProductByName = Product::where('Type_of_product', $validateData['Type_of_product'])
+                                        ->where('size' , $validateData['size'])
+                                        ->get();
 
             if ($findProductByName->isEmpty()){
                 return response()->json(['error' => 'No product found!!!'],404);

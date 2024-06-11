@@ -17,7 +17,7 @@ class Customer extends Model
 
     public function orders()
     {
-        return $this->hasMany(Order::class, 'Customer_name', 'Customer_code');
+        return $this->hasMany(Order::class, 'Customer_code', 'Customer_code');
     }
     
 }

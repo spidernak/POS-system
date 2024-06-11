@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use App\Models\Order;
+use Illuminate\Support\Facades\DB;
+
 
 
 
@@ -114,6 +117,7 @@ class CustomerController extends Controller
         } catch (\Exception $e){
             return response()->json(['error' => 'An error occurred while creating the customer'], 500);
         }
+    
     }
     
 
