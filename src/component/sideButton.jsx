@@ -56,6 +56,7 @@ const SideButton = () => {
             </Link>
           ))}
         </div>
+        <Link to='/login'>
         <div
           className={`flex flex-col items-center pb-2 cursor-pointer transition-all duration-300 ${
             activeIcon === "ri-logout-box-line"
@@ -72,7 +73,7 @@ const SideButton = () => {
           >
             Log out
           </span>
-        </div>
+        </div></Link>
       </div>
     </div>
   );

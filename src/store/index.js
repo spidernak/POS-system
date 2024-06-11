@@ -584,7 +584,7 @@ export const cashiers = [
     username: "cashier3",
     password: "password3",
     name: "Jefferson",
-    role: "Cashier",
+    role: "8-2",
   },
   {
     username: "cashier4",
@@ -599,3 +599,11 @@ export const cashiers = [
     role: "Cashier",
   },
 ];
+export const admins = [
+  { username: "admin1", password: "adminpassword1", name: "Admin 1", role: "Admin" },
+  { username: "admin2", password: "adminpassword2", name: "Admin 2", role: "Admin" },
+  { username: "admin3", password: "adminpassword3", name: "Admin 3", role: "Admin" },
+  { username: "admin4", password: "adminpassword4", name: "Admin 4", role: "Admin" },
+  { username: "admin5", password: "adminpassword5", name: "Admin 5", role: "Admin" }
+];
+

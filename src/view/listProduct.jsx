@@ -54,7 +54,7 @@ const listProduct = () => {
   return (
     <div className="w-screen h-screen absolute bg-homeBg overflow-hidden">
       <div className="ml-[140px]">
-        <h1 className="text-black px-10 py-5 pb-0 text-3xl font-bold font-text">
+        <h1 className="text-black px-10 pl-5 py-5 pb-0 text-3xl font-bold font-text">
           Product
         </h1>
         <div className="bg-white flex m-5 flex-col p-10 overflow-hidden">

@@ -21,7 +21,7 @@ const LayoutWithSideButton = ({ children }) => (
 ReactDOM.render(
   <Router>
     <Routes>
-      <Route path="/" element={<Login />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/home" element={<LayoutWithSideButton><Home /></LayoutWithSideButton>} />
       <Route path="/product" element={<LayoutWithSideButton><Product /></LayoutWithSideButton>} />
       <Route path="/history" element={<LayoutWithSideButton><History /></LayoutWithSideButton>} />
