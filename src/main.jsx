@@ -1,12 +1,14 @@
+/* eslint-disable react/no-deprecated */
+/* eslint-disable react/prop-types */
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './index.css';
+import SideButton from './component/sideButton';
 import Login from './view/login';
 import Home from './view/Homepage';
-import Product from './view/Product';
-import History from './view/History.jsx';
-import Customer from './view/Customer.jsx';
-import SideButton from './component/sideButton';
+import Product from './view/listProduct';
+import History from './view/History';
+import Customer from './view/Customer';
 
 // Layout component with SideButton
 const LayoutWithSideButton = ({ children }) => (

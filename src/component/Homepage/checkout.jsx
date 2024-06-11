@@ -1,8 +1,6 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import qrCodeImage from '../../assets/qr_cod.jpg';
-import '../../App.css'
+import '../../App.css';
 
 const Checkout = ({ cartItems, setCartItems, setIsCheckout, handleOrderConfirm }) => {
   const [formData, setFormData] = useState({
@@ -20,10 +18,22 @@ const Checkout = ({ cartItems, setCartItems, setIsCheckout, handleOrderConfirm }
     }));
   };
 
+  // Function to handle checkout
   const handleCheckout = () => {
     if (formData.name && formData.address) {
+      // Reduce the quantity of each item in the cart
+      const updatedCartItems = cartItems.map((item) => ({
+        ...item,
+        quantity: item.quantity - 1, // Decrease quantity by 1
+      })).filter((item) => item.quantity > 0); // Remove items with quantity 0
+
+      // Call the function to handle order confirmation
       handleOrderConfirm(formData);
-      setCartItems([]);
+
+      // Update the cart items with the reduced quantities
+      setCartItems(updatedCartItems);
+
+      // Reset form data and checkout state
       setFormData({
         name: '',
         address: '',

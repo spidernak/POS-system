@@ -20,8 +20,8 @@ export const product = [
     price: 8.99,
     image: "https://example.com/margherita-pizza.jpg",
     description: "Classic margherita pizza with fresh mozzarella and basil",
-    quantity: 1,
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 2,
@@ -30,8 +30,9 @@ export const product = [
     price: 5.99,
     image: "https://example.com/caesar-salad.jpg",
     description: "Crisp romaine lettuce with Caesar dressing and croutons",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 3,
@@ -40,8 +41,9 @@ export const product = [
     price: 10.99,
     image: "https://example.com/spaghetti-carbonara.jpg",
     description: "Traditional Italian pasta with creamy sauce and pancetta",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 4,
@@ -51,8 +53,9 @@ export const product = [
     image: "https://example.com/chicken-alfredo.jpg",
     description:
       "Fettuccine pasta with creamy Alfredo sauce and grilled chicken",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 5,
@@ -61,8 +64,9 @@ export const product = [
     price: 3.99,
     image: "https://example.com/garlic-bread.jpg",
     description: "Toasted bread with garlic butter and parsley",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 6,
@@ -72,8 +76,9 @@ export const product = [
     image: "https://example.com/tiramisu.jpg",
     description:
       "Classic Italian dessert with layers of mascarpone and coffee-soaked ladyfingers",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 7,
@@ -82,8 +87,9 @@ export const product = [
     price: 9.99,
     image: "https://example.com/pepperoni-pizza.jpg",
     description: "Pepperoni pizza with mozzarella cheese and tomato sauce",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 8,
@@ -92,8 +98,9 @@ export const product = [
     price: 4.99,
     image: "https://example.com/minestrone-soup.jpg",
     description: "Hearty Italian soup with vegetables, beans, and pasta",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 9,
@@ -102,8 +109,9 @@ export const product = [
     price: 11.99,
     image: "https://example.com/lasagna.jpg",
     description: "Layers of pasta, meat sauce, and cheese baked to perfection",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 10,
@@ -113,8 +121,9 @@ export const product = [
     image: "https://example.com/caprese-salad.jpg",
     description:
       "Fresh tomatoes, mozzarella, and basil drizzled with balsamic glaze",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
 
   // Snack
@@ -126,8 +135,9 @@ export const product = [
     image: "https://example.com/nachos.jpg",
     description:
       "Crispy tortilla chips topped with melted cheese and jalapenos",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 12,
@@ -137,8 +147,9 @@ export const product = [
     image: "https://example.com/mozzarella-sticks.jpg",
     description:
       "Breaded and fried mozzarella sticks served with marinara sauce",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 13,
@@ -148,8 +159,9 @@ export const product = [
     image: "https://example.com/spring-rolls.jpg",
     description:
       "Crispy spring rolls filled with vegetables and served with dipping sauce",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 14,
@@ -158,8 +170,9 @@ export const product = [
     price: 7.99,
     image: "https://example.com/chicken-wings.jpg",
     description: "Spicy chicken wings served with blue cheese dressing",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 15,
@@ -168,8 +181,9 @@ export const product = [
     price: 6.49,
     image: "https://example.com/potato-skins.jpg",
     description: "Crispy potato skins topped with cheese and bacon",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 16,
@@ -178,8 +192,9 @@ export const product = [
     price: 5.99,
     image: "https://example.com/stuffed-mushrooms.jpg",
     description: "Mushrooms stuffed with cheese and herbs",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 17,
@@ -188,8 +203,9 @@ export const product = [
     price: 4.99,
     image: "https://example.com/onion-rings.jpg",
     description: "Crispy fried onion rings served with dipping sauce",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 18,
@@ -198,8 +214,9 @@ export const product = [
     price: 5.49,
     image: "https://example.com/pretzel-bites.jpg",
     description: "Soft pretzel bites served with cheese sauce",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 19,
@@ -208,8 +225,9 @@ export const product = [
     price: 8.99,
     image: "https://example.com/cheese-platter.jpg",
     description: "Assorted cheeses served with crackers and fruit",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 20,
@@ -218,8 +236,9 @@ export const product = [
     price: 4.99,
     image: "https://example.com/hummus-pita.jpg",
     description: "Creamy hummus served with warm pita bread",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
 
   // Drink
@@ -230,8 +249,9 @@ export const product = [
     price: 3.99,
     image: "https://example.com/latte.jpg",
     description: "Rich and creamy latte with steamed milk",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 22,
@@ -240,8 +260,9 @@ export const product = [
     price: 3.49,
     image: "https://example.com/cappuccino.jpg",
     description: "Espresso with steamed milk and a thick layer of foam",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 23,
@@ -250,8 +271,9 @@ export const product = [
     price: 2.99,
     image: "https://example.com/americano.jpg",
     description: "Espresso with hot water",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 24,
@@ -260,8 +282,9 @@ export const product = [
     price: 2.49,
     image: "https://example.com/espresso.jpg",
     description: "Strong and rich espresso",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 25,
@@ -270,8 +293,9 @@ export const product = [
     price: 3.99,
     image: "https://example.com/iced-coffee.jpg",
     description: "Cold brewed coffee served over ice",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 26,
@@ -280,8 +304,9 @@ export const product = [
     price: 2.99,
     image: "https://example.com/green-tea.jpg",
     description: "Refreshing green tea",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 27,
@@ -290,8 +315,9 @@ export const product = [
     price: 4.99,
     image: "https://example.com/smoothie.jpg",
     description: "Fresh fruit smoothie",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 28,
@@ -300,8 +326,9 @@ export const product = [
     price: 4.49,
     image: "https://example.com/milkshake.jpg",
     description: "Thick and creamy milkshake",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 29,
@@ -310,8 +337,9 @@ export const product = [
     price: 3.49,
     image: "https://example.com/lemonade.jpg",
     description: "Refreshing lemonade",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 30,
@@ -320,8 +348,9 @@ export const product = [
     price: 3.99,
     image: "https://example.com/hot-chocolate.jpg",
     description: "Rich and creamy hot chocolate",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
 
   // Food
@@ -332,8 +361,9 @@ export const product = [
     price: 9.99,
     image: "https://example.com/burger.jpg",
     description: "Juicy beef burger with lettuce, tomato, and cheese",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 32,
@@ -342,8 +372,9 @@ export const product = [
     price: 6.99,
     image: "https://example.com/grilled-cheese.jpg",
     description: "Toasted bread with melted cheese",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 33,
@@ -352,8 +383,9 @@ export const product = [
     price: 8.99,
     image: "https://example.com/chicken-tacos.jpg",
     description: "Soft tacos filled with grilled chicken and toppings",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 34,
@@ -362,8 +394,9 @@ export const product = [
     price: 11.99,
     image: "https://example.com/fish-and-chips.jpg",
     description: "Crispy battered fish served with fries",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 35,
@@ -372,8 +405,9 @@ export const product = [
     price: 15.99,
     image: "https://example.com/steak.jpg",
     description: "Grilled steak served with vegetables",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 36,
@@ -382,8 +416,9 @@ export const product = [
     price: 13.99,
     image: "https://example.com/bbq-ribs.jpg",
     description: "Tender ribs with BBQ sauce",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 37,
@@ -392,8 +427,9 @@ export const product = [
     price: 10.99,
     image: "https://example.com/fried-chicken.jpg",
     description: "Crispy fried chicken served with sides",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 38,
@@ -402,8 +438,9 @@ export const product = [
     price: 9.49,
     image: "https://example.com/vegetable-stir-fry.jpg",
     description: "Stir-fried vegetables served with rice",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 39,
@@ -412,8 +449,9 @@ export const product = [
     price: 11.49,
     image: "https://example.com/pasta-primavera.jpg",
     description: "Pasta with fresh vegetables and a light sauce",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 40,
@@ -422,8 +460,9 @@ export const product = [
     price: 14.99,
     image: "https://example.com/grilled-salmon.jpg",
     description: "Grilled salmon served with a side of vegetables",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
 
   // Dessert
@@ -434,8 +473,9 @@ export const product = [
     price: 5.99,
     image: "https://example.com/chocolate-cake.jpg",
     description: "Rich and moist chocolate cake",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 42,
@@ -444,8 +484,9 @@ export const product = [
     price: 6.99,
     image: "https://example.com/cheesecake.jpg",
     description: "Creamy cheesecake with a graham cracker crust",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 43,
@@ -454,8 +495,9 @@ export const product = [
     price: 4.99,
     image: "https://example.com/apple-pie.jpg",
     description: "Classic apple pie with a flaky crust",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 44,
@@ -464,8 +506,9 @@ export const product = [
     price: 3.99,
     image: "https://example.com/brownies.jpg",
     description: "Fudgy chocolate brownies",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 45,
@@ -474,8 +517,9 @@ export const product = [
     price: 5.49,
     image: "https://example.com/ice-cream-sundae.jpg",
     description: "Ice cream sundae with toppings",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 46,
@@ -484,8 +528,9 @@ export const product = [
     price: 6.49,
     image: "https://example.com/panna-cotta.jpg",
     description: "Creamy panna cotta with fruit sauce",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 47,
@@ -494,18 +539,20 @@ export const product = [
     price: 6.99,
     image: "https://example.com/creme-brulee.jpg",
     description: "Rich custard with a caramelized sugar top",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 48,
     category: "Dessert",
     name: "Fruit Tart",
     price: 5.99,
-    image: "https://example.com/fruit-tart.jpg",
+    image: "https://hips.hearstapps.com/hmg-prod/images/fruit-tart-index-65ef54d972bb1.jpg?crop=0.502xw:1.00xh;0.463xw,0&resize=1200:*",
     description: "Fresh fruit tart with a pastry crust",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 49,
@@ -514,8 +561,9 @@ export const product = [
     price: 5.99,
     image: "https://example.com/lemon-meringue-pie.jpg",
     description: "Lemon pie with a meringue topping",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
   {
     id: 50,
@@ -524,17 +572,30 @@ export const product = [
     price: 5.49,
     image: "https://example.com/banana-split.jpg",
     description: "Banana split with ice cream and toppings",
-    quantity: 1,
+
     sizes: ["small", "medium", "large"],
+    quantity: { small: 20, medium: 20, large: 20 },
   },
 ];
-product.forEach((item) => {
-  item.quantity = 20;
-});
 export const cashiers = [
-  { username: 'cashier1', password: 'password1', name: 'Rak', role: 'Cashier' },
-  { username: 'cashier2', password: 'password2', name: 'Nak', role: 'Cashier' },
-  { username: 'cashier3', password: 'password3', name: 'Jefferson', role: 'Cashier' },
-  { username: 'cashier4', password: 'password4', name: 'Enghav', role: 'Cashier' },
-  { username: 'cashier5', password: 'password5', name: 'user', role: 'Cashier' },
+  { username: "cashier1", password: "password1", name: "Rak", role: "Cashier" },
+  { username: "cashier2", password: "password2", name: "Nak", role: "Cashier" },
+  {
+    username: "cashier3",
+    password: "password3",
+    name: "Jefferson",
+    role: "Cashier",
+  },
+  {
+    username: "cashier4",
+    password: "password4",
+    name: "Enghav",
+    role: "Cashier",
+  },
+  {
+    username: "cashier5",
+    password: "password5",
+    name: "user",
+    role: "Cashier",
+  },
 ];

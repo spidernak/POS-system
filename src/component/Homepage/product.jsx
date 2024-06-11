@@ -2,20 +2,13 @@
 import { useState } from "react";
 import { product as allProducts } from "../../store/index";
 
-const Product = ({
-  addToCart,
-  selectedCategory,
-  searchTerm,
-  highlightSearch,
-}) => {
+const Product = ({ addToCart, selectedCategory, searchTerm, highlightSearch }) => {
   const [selectedSizes, setSelectedSizes] = useState({});
 
   const handleSizeClick = (productId, size) => {
-    const newSize = size.charAt(0).toUpperCase();
-
     setSelectedSizes((prevSizes) => ({
       ...prevSizes,
-      [productId]: newSize,
+      [productId]: size.charAt(0).toUpperCase(),
     }));
   };
 
@@ -55,12 +48,12 @@ const Product = ({
   };
 
   return (
-    <div className=" max-w-screen w-sc ml-[140px] mr-[400px] ">
-      <div className="flex flex-col  gap-10 px-10">
-        <h1 className="text-black  text-3xl font-bold font-text">
+    <div className="max-w-screen w-sc ml-[140px] mr-[400px]">
+      <div className="flex flex-col gap-10 px-10">
+        <h1 className="text-black text-3xl font-bold font-text">
           {selectedCategory}
         </h1>
-        <div className="grid grid-cols-1 pl-10 sm:grid-cols-2 md:grid-cols-4  gap-5 pb-5">
+        <div className="grid grid-cols-1 pl-10 sm:grid-cols-2 md:grid-cols-4 gap-5 pb-5">
           {filteredProducts.map((item) => (
             <div
               key={item.id}

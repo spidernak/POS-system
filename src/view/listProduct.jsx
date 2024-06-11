@@ -1,16 +1,20 @@
 /* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from "react";
 import { menu, product } from "../store/index";
+import '../App.css';
 
-const Product = () => {
+const listProduct = () => {
   const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
   const [isSizeDropdownOpen, setIsSizeDropdownOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [selectedSize, setSelectedSize] = useState("All Size");
+  const [selectedSize, setSelectedSize] = useState("Large");
   const [searchFocus, setSearchFocus] = useState(false); // State to handle search input focus
+  const [searchTerm, setSearchTerm] = useState(""); // State for search term
 
   const sizes = ["All Size", "Small", "Medium", "Large"];
   const lists = ["Name", "Category", "Size", "Quantity", "Price", "Status"];
+
   const toggleCategoryDropdown = () => {
     setIsCategoryDropdownOpen(!isCategoryDropdownOpen);
   };
@@ -32,21 +36,28 @@ const Product = () => {
   const handleSearchIconClick = () => {
     setSearchFocus(true); // Change the background color of the search input
   };
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value.toLowerCase());
+  };
+
   const productList = product.filter((item) => {
-    return (
-      (selectedCategory === "All" || item.category === selectedCategory) &&
-      (selectedSize === "All Size" ||
-        item.sizes.includes(selectedSize.toLowerCase()))
-    );
+    const matchesCategory = selectedCategory === "All" || item.category === selectedCategory;
+    const matchesSize = selectedSize === "All Size" || item.sizes.includes(selectedSize.toLowerCase());
+    const matchesSearchTerm = item.name.toLowerCase().includes(searchTerm);
+
+    return matchesCategory && matchesSize && matchesSearchTerm;
   });
 
+  console.log("Product List:", productList);
+
   return (
-    <div className="w-screen h-screen absolute bg-homeBg">
+    <div className="w-screen h-screen absolute bg-homeBg overflow-hidden">
       <div className="ml-[140px]">
-        <h1 className="text-black px-5 py-5 pb-0 text-3xl font-bold font-text">
+        <h1 className="text-black px-10 py-5 pb-0 text-3xl font-bold font-text">
           Product
         </h1>
-        <div className=" bg-white flex m-5 flex-col p-10">
+        <div className="bg-white flex m-5 flex-col p-10 overflow-hidden">
           <section className="flex">
             <div className="relative">
               <div
@@ -103,13 +114,15 @@ const Product = () => {
               )}
             </div>
 
-            <div className="relative w-[415px] max-h-[45px] flex ">
+            <div className="relative w-[415px] max-h-[45px] flex">
               <input
                 type="text"
                 placeholder="Search"
                 className={`h-full w-full py-3 pl-4 pr-10 shadow-testShadow text-base text-[#333333] outline-none rounded-md border-none ${
                   searchFocus ? "bg-yellow-300" : ""
                 }`}
+                value={searchTerm}
+                onChange={handleSearchChange}
               />
               <i
                 className="ri-search-line cursor-pointer absolute right-3 top-1/2 transform -translate-y-1/2"
@@ -118,36 +131,42 @@ const Product = () => {
             </div>
           </section>
           {/* product */}
-          {/* <section className="flex flex-col">
-            <div className="flex justify-between text-center w-full text-xl pt-10  font-semibold font-text">
+          <div className="flex justify-between text-center w-full text-xl pt-10 font-semibold font-text">
               {lists.map((list) => (
                 <div key={list} className="w-full">
                   {list}
                 </div>
               ))}
             </div>
+          <section className="flex flex-col overflow-auto max-h-[500px]"> {/* Added overflow-auto and max-height */}
+           
 
-            {productList.map((item) => (
-              <div
-                key={item.id}
-                className="flex justify-between text-center text-lg py-3 px-10 border-t"
-              >
-                <div>
-                  <img src={item.image} alt={item.name} />
-                  <div>{item.name}</div>
-                </div>
-                <div>{item.category}</div>
-                <div>{item.sizes.join(", ")}</div>
-                <div>{item.quantity}</div>
-                <div>${item.price}</div>
-                <div></div>
-              </div>
-            ))}
-          </section> */}
+            <div className="w-full">
+              {productList.map((item) => {
+                const sizeToShow = selectedSize === "All Size" ? item.sizes : [selectedSize.toLowerCase()];
+                return sizeToShow.map((size) => (
+                  <div
+                    key={`${item.id}-${size}`}
+                    className="flex justify-between items-center text-center text-lg py-1 border-t"
+                  >
+                    <div className="flex items-center w-1/6">
+                      <img src={item.image} className="w-[50px] h-[50px] border rounded-sm mr-2" alt={item.name} />
+                      <div>{item.name}</div>
+                    </div>
+                    <div className="w-1/6">{item.category}</div>
+                    <div className="w-1/6">{size.charAt(0).toUpperCase() + size.slice(1)}</div>
+                    <div className="w-1/6">{item.quantity[size]}</div>
+                    <div className="w-1/6">${item.price}</div>
+                    <div className="w-1/6"></div>
+                  </div>
+                ));
+              })}
+            </div>
+          </section>
         </div>
       </div>
     </div>
   );
 };
 
-export default Product;
+export default listProduct;

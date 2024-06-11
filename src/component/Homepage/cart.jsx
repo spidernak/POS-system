@@ -1,11 +1,9 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
-import Profile from '../component/Homepage/profile';
-import Checkout from '../component/Homepage/checkout';
-import '../App.css';
+import Profile from './profile';
+import Checkout from './checkout';
+import '../../App.css';
 
-const Cart = ({ cartItems, setCartItems }) => {
+const Cart = ({ cartItems, setCartItems, updateProductQuantities }) => {
   const [dateTime, setDateTime] = useState(null);
   const [isCheckout, setIsCheckout] = useState(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
@@ -60,6 +58,9 @@ const Cart = ({ cartItems, setCartItems }) => {
     });
     setIsConfirmed(true);
     setIsCheckout(false);
+
+    // Update product quantities after checkout
+    updateProductQuantities(cartItems);
   };
 
   const handleBackToOrder = () => {
@@ -76,7 +77,7 @@ const Cart = ({ cartItems, setCartItems }) => {
   };
 
   return (
-    <div className="fixed top-0 right-0 h-full bg-white shadow-lg flex flex-col items-center z-50">
+    <div className="fixed top-0 right-0 h-full bg-white shadow-lg flex flex-col  z-50">
       <Profile />
       <div className="w-[380px] h-full flex flex-col justify-between items-center">
         <div className='w-[360px] flex flex-col justify-center items-center'>
@@ -116,7 +117,7 @@ const Cart = ({ cartItems, setCartItems }) => {
             ) : (
               cartItems.map((item, index) => (
                 <section key={`${item.id}-${item.selectedSize}-${index}`} className="">
-                  <div className="flex w-[360px] mb-5 justify-center items-center bg-white border p-2 rounded-md shadow-testShadow gap-2">
+                  <div className="flex w-[360px] mb-5 p-1 items-center bg-white border  rounded-md shadow-testShadow gap-2">
                     <div>
                       <img
                         className="w-[65px] rounded-[10px]"
@@ -124,13 +125,13 @@ const Cart = ({ cartItems, setCartItems }) => {
                         alt="Product Logo"
                       />
                     </div>
-                    <div className="flex text-[15px] flex-col">
+                    <div className="flex text-[15px] font-inria-sans font-semibold flex-col">
                       <div>
-                        {item.name} (Size: {item.selectedSize})
+                        {item.name} (Size: {item.selectedSize.charAt(0)})
                       </div>
-                      <div className="w-[200px] flex justify-between">
+                      <div className="w-[280px] flex justify-between">
                         <div>${item.price}</div>
-                        <div className="flex items-center">
+                        <div className="flex pl-10">
                           <div
                             className="cursor-pointer"
                             onClick={() => decrementQuantity(item.id, item.selectedSize)}

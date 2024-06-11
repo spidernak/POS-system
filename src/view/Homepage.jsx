@@ -1,8 +1,9 @@
-import  { useState, useEffect } from 'react';
+import{ useState, useEffect } from 'react';
 import Category from '../component/Homepage/Category';
 import Navbar from '../component/Homepage/navBar';
 import Product from '../component/Homepage/product';
-import Cart from './cart';
+import Cart from '../component/Homepage/cart';
+import { product as initialProducts } from '../store/index'; // Import initial product data
 import '../App.css';
 
 const Home = () => {
@@ -13,6 +14,9 @@ const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
   const [highlightSearch, setHighlightSearch] = useState(true);
+
+  // Use initial products to avoid modifying the original data
+  const [products, setProducts] = useState(initialProducts);
 
   useEffect(() => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
@@ -33,6 +37,19 @@ const Home = () => {
     });
   };
 
+  const updateProductQuantities = (cartItems) => {
+    const updatedProducts = products.map(product => {
+      const updatedProduct = { ...product };
+      cartItems.forEach(cartItem => {
+        if (cartItem.id === updatedProduct.id && cartItem.selectedSize in updatedProduct.quantity) {
+          updatedProduct.quantity[cartItem.selectedSize] -= cartItem.quantity;
+        }
+      });
+      return updatedProduct;
+    });
+    setProducts(updatedProducts);
+  };
+
   const handleSearchIconClick = () => {
     setHighlightSearch(false);
   };
@@ -44,7 +61,7 @@ const Home = () => {
         <Category selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
         <Product addToCart={addToCart} selectedCategory={selectedCategory} searchTerm={searchTerm} highlightSearch={highlightSearch} />
       </div>
-      <Cart cartItems={cartItems} setCartItems={setCartItems} />
+      <Cart cartItems={cartItems} setCartItems={setCartItems} updateProductQuantities={updateProductQuantities} />
     </div>
   );
 };
