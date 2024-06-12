@@ -152,24 +152,31 @@ class UserController extends Controller
     public function removeUserByEmail(Request $request)
     {
         try{
+            $adminEmail = 'admin@gmail.com';
+
             $validateData = $request->validate([
                 'email' => 'required|email|max:255',
             ]);
 
-            DB::beginTransaction();
-
-            $user = User::where('email', $validateData['email']);
-
-            if(!$user){
-                return response()->json(['error' => 'Customer not found'], 404);
+            if($validateData['email'] == $adminEmail){
+                return response()->json([ 'error' => 'User with this email are not allow to delete']);
             }
 
-            User::where('email', $validateData['email'])->delete();
+            DB::beginTransaction();
+
+            $user = User::where('email' , $validateData['email'])->first();
+
+            if(!$user){
+                DB::rollBack();
+                return response()->json([ 'error' => 'User not found']);
+            }
+
+            $user->delete();
             DB::commit();
-            return response()->json(['message' => 'User have been deleted'], 200);
-        } catch(\Exception $d){
+            return response()->json(['message' => 'Has been deleted successfully']);
+        } catch(\Exception $e){
             DB::rollBack();
-            return response()->json(['message' => 'All orders by the customer have been deleted'], 200);
+            return response()->json(['error' => 'An error occurred while deleting the user.']);
         }
     }
 }

@@ -52,7 +52,8 @@ Route::get('/viewproductByType', [ProducstController::class, 'getProductByType']
 Route::get('/getorder', [OrderController::class, 'index']);
 Route::post('/crateorder', [OrderController::class, 'store']);
 Route::get('/getorder/{id}', [OrderController::class, 'show']);
-Route::get('findOrderByCustomerName', [OrderController::class, 'findOrderByCustomerName']);
+Route::get('findOrderByCustomerName', [OrderController::class, 'findOrderByCustomerCode']);
+Route::get('getorderDailyDay', [OrderController::class, 'getOrderDailyDay']);
 Route::delete('removeOder/{id}', [OrderController::class, 'destroy']);
 Route::delete('/removeOderByCustomerName', [OrderController::class, 'DeleteOrderBYCustomerName']);
 

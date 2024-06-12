@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Customer;
@@ -43,7 +44,7 @@ class OrderController extends Controller
         $validator = Validator::make($request->all(), [
             'Customer_name' => 'required|string|max:255',
             'Customer_code' => 'required|string|max:255|exists:customers,Customer_code',
-            'Product_id' => 'required',
+            'Product_id' => 'required|integer|exists:products,id',
             'Quantity' => 'required|integer|min:1',
             'Total_price' => 'required|numeric|min:0',
         ]);
@@ -55,7 +56,24 @@ class OrderController extends Controller
             ], 422);
         }
     
+        $product = DB::table('products')->where('id', $request->input('Product_id'))->first();
+        if (!$product) {
+            return response()->json([
+                'error' => 'Product not found in the database.',
+                'Product_id' => $request->input('Product_id')
+            ], 404);
+        }
+    
+        if ($product->Product_Quantity < $request->input('Quantity')) {
+            return response()->json([
+                'error' => 'Insufficient product quantity available.',
+                'available_quantity' => $product->Product_Quantity
+            ], 400);
+        }
+    
         try {
+            DB::beginTransaction();
+    
             $order = new Order();
             $order->Customer_name = $request->input('Customer_name');
             $order->Customer_code = $request->input('Customer_code');
@@ -64,17 +82,24 @@ class OrderController extends Controller
             $order->Total_price = $request->input('Total_price');
             $order->save();
     
+            DB::table('products')->where('id', $request->input('Product_id'))->decrement('Product_Quantity', $request->input('Quantity'));
+    
+            DB::commit();
+    
             return response()->json([
                 'message' => 'Order created successfully',
                 'order' => $order
             ], 201);
         } catch (\Exception $e) {
+            DB::rollBack();
             return response()->json([
                 'error' => 'Something went wrong while creating the order',
                 'message' => $e->getMessage()
             ], 500);
         }
     }
+
+
 
 
     /**
@@ -97,28 +122,55 @@ class OrderController extends Controller
     }
 
     public function findOrderByCustomerCode(Request $request)
-{
-    try {
-        $validateData = $request->validate([
-            'Customer_code' => 'required|string|max:255|exists:customers,Customer_code',
-        ]);
+    {
+        try{
+            $validateData = $request->validate([
+                'Customer_name' => 'required|string|max:255',
+                'Customer_code' => 'required|string|max:4|exists:customers,Customer_code',
+            ]);
 
-        $orderByCustomer = Order::where('Customer_code', $validateData['Customer_code'])->get();
-        $customerCode = $validateData['Customer_code'];
+            $orderByCustomerName = Order::where('Customer_name', $validateData['Customer_name'])
+                                        ->where('Customer_code', $validateData['Customer_code'])
+                                        ->get();
+            
+            if($orderByCustomerName->isEmpty()){
+                return response()->json(['error' => 'No order found with this name or code.']);
+            }
 
-        if ($orderByCustomer->isEmpty()) {
-            return response()->json([
-                'error' => 'There is no order found related to the name: ' . $customerCode,
-            ], 404);
+            return response()->json(['Order list' => $orderByCustomerName]);
+        } catch(\Exception $e){
+            return response()->json([ 'error' => 'something went wrong', $e->getMessage()]);
         }
-
-        return response()->json([
-            'Order list' => $orderByCustomer,
-        ]);
-    } catch (\Exception $e) {
-        return response()->json(['error' => 'Something went wrong while retrieving orders: ' . $e->getMessage()], 422);
     }
-}
+
+
+    public function getOrderDailyDay(Request $request){
+        try {
+            $validator = Validator::make($request->all(), [
+                'date' => 'required|date_format:Y-m-d',
+            ]);
+    
+            if ($validator->fails()) {
+                return response()->json([
+                    'error' => 'Validation error',
+                    'messages' => $validator->errors()
+                ], 422);
+            }
+    
+            $date = Carbon::createFromFormat('Y-m-d', $request->input('date'));
+    
+            $orders = Order::whereDate('created_at', $date)->get();
+    
+            return response()->json([
+                'message' => 'Orders for ' . $date->toDateString(),
+                'orders' => $orders
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Something went wrong while retrieving orders: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 
 
     /**
@@ -160,12 +212,12 @@ class OrderController extends Controller
     {
         try {
             $validateData = $request->validate([
-                'Customer_name' => 'required|string|max:255|exists:customers,Customer_name',
+                'Customer_name' => 'required|string|max:255',
             ]);
 
             DB::beginTransaction();
 
-            $customer = Customer::where('Customer_name', $validateData['Customer_name'])->first();
+            $customer = Order::where('Customer_name', $validateData['Customer_name'])->first();
 
             if (!$customer) {
                 return response()->json(['error' => 'Customer not found'], 404);
