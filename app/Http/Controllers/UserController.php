@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -50,6 +51,25 @@ class UserController extends Controller
             ],500);
         }
     }
+
+    public function login(Request $request)
+{
+    $validateData = $request->validate([
+        'name' => 'required|string|max:255',
+        'password' => 'required|string|max:255',
+    ]);
+
+    // Find the user by name
+    $user = User::where('name', $validateData['name'])->first();
+
+    // Check if the user exists and the provided password matches the hashed password
+    if ($user && Hash::check($validateData['password'], $user->password)) {
+        return response()->json(['message' => 'Login successful', 'user' => $user]);
+    } else {
+        return response()->json(['message' => 'Invalid credentials'], 401);
+    }
+}
+
 
     /**
      * Display the specified resource.

@@ -75,5 +75,6 @@ Route::get('/getuser', [UserController::class, 'index']);
 Route::get('/getuser/{id}', [UserController::class, 'show']);
 Route::put('/updateuser/{id}', [UserController::class, 'update']);
 Route::post('/createUser', [UserController::class, 'store']);
+Route::post('/login', [UserController::class, 'login']);
 Route::delete('/removeuser/{id}', [UserController::class, 'destroy']);
 Route::delete('/removeuserBYEmail', [UserController::class, 'removeUserByEmail']);
