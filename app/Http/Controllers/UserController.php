@@ -59,10 +59,8 @@ class UserController extends Controller
         'password' => 'required|string|max:255',
     ]);
 
-    // Find the user by name
     $user = User::where('name', $validateData['name'])->first();
 
-    // Check if the user exists and the provided password matches the hashed password
     if ($user && Hash::check($validateData['password'], $user->password)) {
         return response()->json(['message' => 'Login successful', 'user' => $user]);
     } else {

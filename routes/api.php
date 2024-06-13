@@ -62,6 +62,9 @@ Route::delete('/removeOderByCustomerName', [OrderController::class, 'DeleteOrder
 Route::middleware('Checkrole')->get('/gettest', function(){
     return 'test';
 });
+// Route::middleware('auth:api')->get('/gettest', function(){
+//     return 'test';
+// });
 Route::get('/gettestwithoutmiddleware', function(){
     return 'hello test';
 });
