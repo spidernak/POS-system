@@ -21,7 +21,7 @@ export const product = [
     image: "https://example.com/margherita-pizza.jpg",
     description: "Classic margherita pizza with fresh mozzarella and basil",
     sizes: ["small", "medium", "large"],
-    quantity: { small: 20, medium: 20, large: 20 },
+    quantity: { small: 0, medium: 5, large: 11 },
   },
   {
     id: 2,
@@ -30,9 +30,9 @@ export const product = [
     price: 5.99,
     image: "https://example.com/caesar-salad.jpg",
     description: "Crisp romaine lettuce with Caesar dressing and croutons",
-
     sizes: ["small", "medium", "large"],
-    quantity: { small: 20, medium: 20, large: 20 },
+    quantity: { small: 20, medium: 20, large: 10 },
+    
   },
   {
     id: 3,

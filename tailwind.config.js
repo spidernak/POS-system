@@ -49,7 +49,10 @@ export default {
         homeBg:'#F8F8F8',
         bgSize:'#D9D9D9',
         customRed:'#FF3838',
-        mainColor:'#0071BD'
+        mainColor:'#0071BD',
+        Red:'#FF0B0B',
+        Green:'#0BB726',
+        Yellow:'#eed202'
       }
     },
   },

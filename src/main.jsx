@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable react/no-deprecated */
+/* eslint-disable react/prop-types */
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './index.css';

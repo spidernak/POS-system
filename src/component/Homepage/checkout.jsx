@@ -1,10 +1,20 @@
-import React, { useState, useContext } from 'react';
+/* eslint-disable react/prop-types */
+import { useState, useContext, useEffect } from 'react';
 import qrCodeImage from '../../assets/qr_cod.jpg';
 import '../../App.css';
-import { OrderContext } from '../Context/OrderContext'; // Ensure this path is correct
+import { OrderContext } from '../Context/OrderContext';
+import { getNextInvoiceNumber } from '../../utils/invoiceGen';
 
 const Checkout = ({ cartItems, setCartItems, setIsCheckout, handleOrderConfirm }) => {
   const { setOrderDetails } = useContext(OrderContext);
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem("user"));
+    setUser(userData);
+  }, []);
+
   const [formData, setFormData] = useState({
     name: '',
     address: '',
@@ -28,11 +38,23 @@ const Checkout = ({ cartItems, setCartItems, setIsCheckout, handleOrderConfirm }
         }))
         .filter((item) => item.quantity > 0);
 
+      const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+      const invoiceNumber = getNextInvoiceNumber();
+
+      setOrderDetails((prevOrders) => [
+        ...prevOrders,
+        {
+          ...formData,
+          totalPrice,
+          date: new Date().toLocaleString(),
+          invoice: invoiceNumber,
+          cashier: user?.name,
+        },
+      ]);
+
       handleOrderConfirm(formData);
 
       setCartItems(updatedCartItems);
-      setOrderDetails(formData); // Update the context with order details
-
       setFormData({
         name: '',
         address: '',
