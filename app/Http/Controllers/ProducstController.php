@@ -42,7 +42,7 @@ class ProducstController extends Controller
             $validatedData = $request->validate([
                 'Product_name' => 'required|string|max:255',
                 'Type_of_product' => 'required|string|exists:types,Type',
-                'Image' => 'required|string',
+                'Image' => 'required|file|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'size' => 'required|in:small,medium,large',
                 'Price' => 'required|numeric',
                 'Product_Quantity' => 'required|integer',
@@ -142,7 +142,7 @@ class ProducstController extends Controller
             $validatedData = $request->validate([
                 'Product_name' => 'sometimes|required|string|max:255',
                 'Type_of_product' => 'sometimes|required|string|max:255|exists:types,Type',
-                'Image' => 'sometimes|required|string',
+                'Image' => 'sometimes|required|file|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'size' => 'sometimes|required|in:small,medium,large',
                 'Price' => 'sometimes|required|numeric',
                 'Product_Quantity' => 'sometimes|required|integer',
