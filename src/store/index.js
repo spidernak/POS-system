@@ -584,7 +584,7 @@ export const cashiers = [
     username: "cashier3",
     password: "password3",
     name: "Jefferson",
-    role: "8-2",
+    role: "Cashier",
   },
   {
     username: "cashier4",

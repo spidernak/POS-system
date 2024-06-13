@@ -48,12 +48,12 @@ const Product = ({ addToCart, selectedCategory, searchTerm, highlightSearch }) =
   };
 
   return (
-    <div className="max-w-screen w-sc ml-[140px] mr-[400px]">
-      <div className="flex flex-col gap-10 px-10">
+    <div className="max-w-screen ml-[140px]   mr-[400px]">
+      <div className="flex flex-col w-full  gap-10 px-10">
         <h1 className="text-black text-3xl font-bold font-text">
           {selectedCategory}
         </h1>
-        <div className="grid grid-cols-1 pl-10 sm:grid-cols-2 md:grid-cols-4 gap-5 pb-5">
+        <div className="w-full grid grid-cols-1 pl-10 sm:grid-cols-2 md:grid-cols-4  xl:grid-cols-5 gap-5 pb-5">
           {filteredProducts.map((item) => (
             <div
               key={item.id}

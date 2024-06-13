@@ -57,8 +57,8 @@ const listProduct = () => {
         <h1 className="text-black px-10 pl-5 py-5 pb-0 text-3xl font-bold font-text">
           Product
         </h1>
-        <div className="bg-white flex m-5 flex-col p-10 overflow-hidden">
-          <section className="flex">
+        <div className="bg-white h-full flex m-5 flex-col p-10 overflow-hidden">
+          <section className="flex ">
             <div className="relative">
               <div
                 className="w-[220px] max-h-[60px] py-2 border shadow-testShadow flex justify-between rounded-md items-center cursor-pointer"
@@ -100,11 +100,11 @@ const listProduct = () => {
                 </div>
               </div>
               {isSizeDropdownOpen && (
-                <div className="absolute left-0 w-[180px] bg-white border shadow-testShadow z-10 rounded-md">
+                <div className="absolute left-3 rounded-b-none w-[180px] bg-white border shadow-testShadow z-10 rounded-md">
                   {sizes.map((size) => (
                     <div
                       key={size}
-                      className="px-3 py-2 hover:bg-gray-200 cursor-pointer"
+                      className="px-3 py-2  hover:bg-gray-200 cursor-pointer"
                       onClick={() => handleSizeSelect(size)}
                     >
                       {size}
@@ -112,13 +112,13 @@ const listProduct = () => {
                   ))}
                 </div>
               )}
+              
             </div>
-
-            <div className="relative w-[415px] max-h-[45px] flex">
+            <div className="relative  ml-4  w-[415px] max-h-[45px] flex">
               <input
                 type="text"
                 placeholder="Search"
-                className={`h-full w-full py-3 pl-4 pr-10 shadow-testShadow text-base text-[#333333] outline-none rounded-md border-none ${
+                className={`h-full  w-full py-3 pl-4 pr-10 shadow-testShadow border rounded text-base text-[#333333] outline-none  ${
                   searchFocus ? "bg-yellow-300" : ""
                 }`}
                 value={searchTerm}
@@ -129,6 +129,7 @@ const listProduct = () => {
                 onClick={handleSearchIconClick}
               ></i>
             </div>
+           
           </section>
           {/* product */}
           <div className="flex justify-between text-center w-full text-xl pt-10 font-semibold font-text">
@@ -138,7 +139,7 @@ const listProduct = () => {
                 </div>
               ))}
             </div>
-          <section className="flex flex-col overflow-auto max-h-[500px]"> {/* Added overflow-auto and max-height */}
+          <section className="flex flex-col scroll ">
            
 
             <div className="w-full">

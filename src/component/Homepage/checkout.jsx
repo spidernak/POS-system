@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import qrCodeImage from '../../assets/qr_cod.jpg';
 import '../../App.css';
+import { OrderContext } from '../Context/OrderContext'; // Ensure this path is correct
 
 const Checkout = ({ cartItems, setCartItems, setIsCheckout, handleOrderConfirm }) => {
+  const { setOrderDetails } = useContext(OrderContext);
   const [formData, setFormData] = useState({
     name: '',
     address: '',
-    paymentMethod: 'Qr_code', // Default payment method
+    paymentMethod: 'Qr_code',
   });
 
-  // Function to handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
@@ -18,26 +19,24 @@ const Checkout = ({ cartItems, setCartItems, setIsCheckout, handleOrderConfirm }
     }));
   };
 
-  // Function to handle checkout
   const handleCheckout = () => {
     if (formData.name && formData.address) {
-      // Reduce the quantity of each item in the cart
-      const updatedCartItems = cartItems.map((item) => ({
-        ...item,
-        quantity: item.quantity - 1, // Decrease quantity by 1
-      })).filter((item) => item.quantity > 0); // Remove items with quantity 0
+      const updatedCartItems = cartItems
+        .map((item) => ({
+          ...item,
+          quantity: item.quantity - 1,
+        }))
+        .filter((item) => item.quantity > 0);
 
-      // Call the function to handle order confirmation
       handleOrderConfirm(formData);
 
-      // Update the cart items with the reduced quantities
       setCartItems(updatedCartItems);
+      setOrderDetails(formData); // Update the context with order details
 
-      // Reset form data and checkout state
       setFormData({
         name: '',
         address: '',
-        paymentMethod: 'Qr_code', // Reset payment method to default
+        paymentMethod: 'Qr_code',
       });
       setIsCheckout(false);
     } else {
@@ -45,7 +44,6 @@ const Checkout = ({ cartItems, setCartItems, setIsCheckout, handleOrderConfirm }
     }
   };
 
-  // Function to calculate total price
   const calculateTotalPrice = () => {
     return cartItems
       .reduce((total, item) => total + item.price * item.quantity, 0)
@@ -53,10 +51,10 @@ const Checkout = ({ cartItems, setCartItems, setIsCheckout, handleOrderConfirm }
   };
 
   return (
-    <div className="w-[380px] h-[650px] py-5 flex flex-col justify-center items-center ">
+    <div className="w-[380px] scroll mb-[160px] h-full py-5 flex flex-col justify-start items-center">
       <h2 className="text-xl font-semibold">Checkout Details</h2>
-      <div className="mt-10 pt-10">
-        <label className="block">
+      <div className="pt-10">
+        <label className="block" htmlFor="name">
           Name:
         </label>
         <input
@@ -65,8 +63,10 @@ const Checkout = ({ cartItems, setCartItems, setIsCheckout, handleOrderConfirm }
           value={formData.name}
           onChange={handleInputChange}
           className="border p-1 rounded w-full"
+          id="name"
+          aria-label="Name"
         />
-        <label className="block mt-2">
+        <label className="block mt-2" htmlFor="address">
           Address:
         </label>
         <input
@@ -75,8 +75,10 @@ const Checkout = ({ cartItems, setCartItems, setIsCheckout, handleOrderConfirm }
           value={formData.address}
           onChange={handleInputChange}
           className="border p-1 rounded w-full"
+          id="address"
+          aria-label="Address"
         />
-        <label className="block mt-2">
+        <label className="block mt-2" htmlFor="paymentMethod">
           Payment Method:
         </label>
         <select
@@ -84,6 +86,8 @@ const Checkout = ({ cartItems, setCartItems, setIsCheckout, handleOrderConfirm }
           value={formData.paymentMethod}
           onChange={handleInputChange}
           className="border p-1 rounded w-full"
+          id="paymentMethod"
+          aria-label="Payment Method"
         >
           <option value="Qr_code">Online Cash</option>
           <option value="Cash on Delivery">Cash on Delivery</option>
@@ -91,11 +95,11 @@ const Checkout = ({ cartItems, setCartItems, setIsCheckout, handleOrderConfirm }
       </div>
       {formData.paymentMethod === 'Qr_code' && (
         <div className="mt-4">
-          <img src={qrCodeImage} alt="QR Code" className="w-[300px] h-[300px]" />
+          <img src={qrCodeImage} alt="QR code for online payment" className="w-[300px] h-[300px]" />
         </div>
       )}
-      <div className="flex flex-col h-[300px] justify-end">
-        <div className="flex justify-between w-[360px] px-2 py-2 font-inria-sans mt-4">
+      <div className="w-[360px] flex flex-col fixed bg-white h-[150px] pb-2 bottom-0">
+        <div className="flex justify-between w-[360px] px-2 py-2 font-inria-sans">
           <div>Total Price:</div>
           <div>${calculateTotalPrice()}</div>
         </div>

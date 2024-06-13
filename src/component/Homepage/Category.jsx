@@ -3,8 +3,8 @@ import { menu } from '../../store/index';
 
 const Category = ({ selectedCategory, setSelectedCategory }) => {
   return (
-    <div className="max-w-screen max-h-screen mr-[400px] ml-[140px] pt-14">
-      <div className='flex justify-center gap-10 py-10'>
+    <div className="max-w-screen h-screen mr-[400px] ml-[140px] pt-14">
+      <div className='flex w-full justify-center gap-10 py-10 px-10'>
         {menu.map((categoryItem) => (
           <div 
             key={categoryItem.id} 
