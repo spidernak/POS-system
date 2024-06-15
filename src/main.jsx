@@ -9,8 +9,10 @@ import Home from './view/Homepage';
 import Product from './view/listProduct';
 import History from './view/History';
 import Customer from './view/Customer';
-import AddEmployee from './view/addemployee';
-import { OrderProvider } from './component/Context/OrderContext'; // Ensure the path is correct
+import AddEmployee from './view/Admin/addemployee';
+import EmployeeList from './view/Admin/Employee';
+import { OrderProvider } from './component/Context/OrderContext';
+import { EmployeeProvider } from './component/Context/EmployeeContext'; // Ensure the path is correct
 
 const LayoutWithSideButton = ({ children }) => (
   <>
@@ -21,16 +23,19 @@ const LayoutWithSideButton = ({ children }) => (
 
 ReactDOM.render(
   <OrderProvider>
-    <Router>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/home" element={<LayoutWithSideButton><Home /></LayoutWithSideButton>} />
-        <Route path="/product" element={<LayoutWithSideButton><Product /></LayoutWithSideButton>} />
-        <Route path="/history" element={<LayoutWithSideButton><History /></LayoutWithSideButton>} />
-        <Route path="/customer" element={<LayoutWithSideButton><Customer /></LayoutWithSideButton>} />
-        <Route path="/admin/addemy" element={<LayoutWithSideButton><AddEmployee /></LayoutWithSideButton>} />
-      </Routes>
-    </Router>
+    <EmployeeProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/home" element={<LayoutWithSideButton><Home /></LayoutWithSideButton>} />
+          <Route path="/product" element={<LayoutWithSideButton><Product /></LayoutWithSideButton>} />
+          <Route path="/history" element={<LayoutWithSideButton><History /></LayoutWithSideButton>} />
+          <Route path="/customer" element={<LayoutWithSideButton><Customer /></LayoutWithSideButton>} />
+          <Route path="/admin/addemy" element={<LayoutWithSideButton><AddEmployee /></LayoutWithSideButton>} />
+          <Route path="/admin/stuff" element={<LayoutWithSideButton><EmployeeList /></LayoutWithSideButton>} />
+        </Routes>
+      </Router>
+    </EmployeeProvider>
   </OrderProvider>,
   document.getElementById('root')
 );

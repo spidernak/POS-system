@@ -15,20 +15,20 @@ export const product = [
   // All
   {
     id: 1,
-    category: "All",
+    category: "Food",
     name: "Margherita Pizza",
     price: 8.99,
-    image: "https://example.com/margherita-pizza.jpg",
+    image: "https://uk.ooni.com/cdn/shop/articles/20220211142645-margherita-9920.jpg?crop=center&height=915&v=1660843558&width=1200",
     description: "Classic margherita pizza with fresh mozzarella and basil",
     sizes: ["small", "medium", "large"],
     quantity: { small: 0, medium: 5, large: 11 },
   },
   {
     id: 2,
-    category: "All",
+    category: "Food",
     name: "Caesar Salad",
     price: 5.99,
-    image: "https://example.com/caesar-salad.jpg",
+    image: "https://www.seriouseats.com/thmb/Fi_FEyVa3_-_uzfXh6OdLrzal2M=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/the-best-caesar-salad-recipe-06-40e70f549ba2489db09355abd62f79a9.jpg",
     description: "Crisp romaine lettuce with Caesar dressing and croutons",
     sizes: ["small", "medium", "large"],
     quantity: { small: 20, medium: 20, large: 10 },
@@ -36,7 +36,7 @@ export const product = [
   },
   {
     id: 3,
-    category: "All",
+    category: "Food",
     name: "Spaghetti Carbonara",
     price: 10.99,
     image: "https://example.com/spaghetti-carbonara.jpg",
@@ -47,7 +47,7 @@ export const product = [
   },
   {
     id: 4,
-    category: "All",
+    category: "Food",
     name: "Chicken Alfredo",
     price: 12.99,
     image: "https://example.com/chicken-alfredo.jpg",
@@ -59,7 +59,7 @@ export const product = [
   },
   {
     id: 5,
-    category: "All",
+    category: "Food",
     name: "Garlic Bread",
     price: 3.99,
     image: "https://example.com/garlic-bread.jpg",
@@ -70,7 +70,7 @@ export const product = [
   },
   {
     id: 6,
-    category: "All",
+    category: "Food",
     name: "Tiramisu",
     price: 6.99,
     image: "https://example.com/tiramisu.jpg",
@@ -82,7 +82,7 @@ export const product = [
   },
   {
     id: 7,
-    category: "All",
+    category: "Food",
     name: "Pepperoni Pizza",
     price: 9.99,
     image: "https://example.com/pepperoni-pizza.jpg",
@@ -93,7 +93,7 @@ export const product = [
   },
   {
     id: 8,
-    category: "All",
+    category: "Food",
     name: "Minestrone Soup",
     price: 4.99,
     image: "https://example.com/minestrone-soup.jpg",
@@ -104,7 +104,7 @@ export const product = [
   },
   {
     id: 9,
-    category: "All",
+    category: "Food",
     name: "Lasagna",
     price: 11.99,
     image: "https://example.com/lasagna.jpg",
@@ -115,7 +115,7 @@ export const product = [
   },
   {
     id: 10,
-    category: "All",
+    category: "Food",
     name: "Caprese Salad",
     price: 7.99,
     image: "https://example.com/caprese-salad.jpg",
@@ -570,7 +570,7 @@ export const product = [
     category: "Dessert",
     name: "Banana Split",
     price: 5.49,
-    image: "https://example.com/banana-split.jpg",
+    image: "https://hips.hearstapps.com/hmg-prod/images/banana-split-index-6478e3976e52d.jpg?crop=0.7501754385964912xw:1xh;center,top&resize=1200:*",
     description: "Banana split with ice cream and toppings",
 
     sizes: ["small", "medium", "large"],
@@ -578,32 +578,15 @@ export const product = [
   },
 ];
 export const cashiers = [
-  { username: "cashier1", password: "password1", name: "Rak", role: "Cashier" },
-  { username: "cashier2", password: "password2", name: "Nak", role: "Cashier" },
-  {
-    username: "cashier3",
-    password: "password3",
-    name: "Jefferson",
-    role: "Cashier",
-  },
-  {
-    username: "cashier4",
-    password: "password4",
-    name: "Enghav",
-    role: "Cashier",
-  },
-  {
-    username: "cashier5",
-    password: "password5",
-    name: "user",
-    role: "Cashier",
-  },
+  { username: "cashier1", password: "password1", name: "Cashier1", role: "Cashier" },
+  { username: "cashier2", password: "password2", name: "Cashier2", role: "Cashier" },
+  
 ];
 export const admins = [
   { username: "admin1", password: "adminpassword1", name: "Admin 1", role: "Admin" },
   { username: "admin2", password: "adminpassword2", name: "Admin 2", role: "Admin" },
-  { username: "admin3", password: "adminpassword3", name: "Admin 3", role: "Admin" },
-  { username: "admin4", password: "adminpassword4", name: "Admin 4", role: "Admin" },
-  { username: "admin5", password: "adminpassword5", name: "Admin 5", role: "Admin" }
 ];
-
+export const stocks = [
+  { password: "12345678", name: "Stock 1", role: "Stock" },
+  { password: "12345678", name: "Stock 2", role: "Stock" },
+];

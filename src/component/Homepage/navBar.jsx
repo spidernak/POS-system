@@ -11,12 +11,12 @@ const NavBar = ({ searchTerm, setSearchTerm, onSearchIconClick }) => {
   }, [localSearchTerm, setSearchTerm]);
 
   return (
-    <div className="w-screen flex absolute justify-between ">
-      <div className="max-w-full w-screen h-[80px] border-b flex justify-between fixed bg-homeBg ml-[140px]  px-10 py-5" >
+    <div className="w-screen  ">
+      <div className="max-w-full ml-[140px] mr-[450px] w-screen h-[80px] border-b flex justify-between fixed bg-homeBg   px-10 py-5" >
       <div className="text-black text-3xl font-bold font-text">
             Choose Category
           </div>
-          <div className="relative w-[415px] mr-[500px]">
+          <div className="relative w-[415px] mr-[550px]">
             <input
               type="text"
               placeholder="Search"

@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import { useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import { EmployeeContext } from '../../component/Context/EmployeeContext';
 
 const AddEmployee = () => {
+  const { addEmployee, employees } = useContext(EmployeeContext);
+
   const [formData, setFormData] = useState({
     name: "",
     dob: "",
@@ -8,22 +12,26 @@ const AddEmployee = () => {
     sex: "",
     password: "",
   });
-  const [totalEmployees, setTotalEmployees] = useState(0); // Initial total employee count
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    const { name, value, type } = e.target;
+    if (type === "radio") {
+      setFormData({
+        ...formData,
+        sex: value,
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Increase the total employee count by 1 on form submission
-    setTotalEmployees(totalEmployees + 1);
+    addEmployee(formData);
     console.log("Form Data Submitted:", formData);
-    // Optionally, reset the form after submission
     setFormData({
       name: "",
       dob: "",
@@ -37,26 +45,21 @@ const AddEmployee = () => {
     <div className="w-screen h-screen flex absolute bg-homeBg">
       <div className="w-full flex flex-col ml-[140px] px-10 pl-5 py-5 gap-10">
         <div className="w-full flex">
-          <div className="flex border w-[290px] text-black text-xl justify-center font-inria-sans py-2  px-2 rounded shadow-testShadow">
+          <Link to='/admin/stuff' className="flex items-center justify-center cursor-pointer bg-Blue w-[80px] text-white text-xl">
+            <i className="ri-arrow-left-fill"></i>
+          </Link>
+          <div className="flex border w-[290px] text-black text-xl justify-center font-inria-sans py-2 px-2 rounded shadow-testShadow">
             <h1>Total Employee:</h1>
-            <div className="font-bold">{totalEmployees}</div>
+            <div className="font-bold">{employees.length}</div>
           </div>
         </div>
-        <div className="w-full h-full flex-col py-5 px-10 flex bg-white shadow-testShadow rounded border ">
-            
-        <h1 className="text-black text-3xl font-bold font-text pb-10 ">
-              Add Employee
-            </h1>
-          <form
-            onSubmit={handleSubmit}
-            className="w-full justify-center flex gap-10"
-          >
-              <div className="w-[300px] h-[340px] bg-black"></div>
-              <div className="p-6 w-full max-w-lg rounded-lg ">
+        <div className="w-full h-full flex-col py-5 px-10 flex bg-white shadow-testShadow rounded border">
+          <h1 className="text-black text-3xl font-bold font-text pb-10">Add Employee</h1>
+          <form onSubmit={handleSubmit} className="w-full justify-center flex gap-10">
+            <div className="w-[300px] h-[340px] bg-black"></div>
+            <div className="p-6 w-full max-w-lg rounded-lg">
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Name:
-                </label>
+                <label className="block text-gray-700 text-sm font-bold mb-2">Name:</label>
                 <input
                   type="text"
                   name="name"
@@ -66,9 +69,7 @@ const AddEmployee = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Date of Birth:
-                </label>
+                <label className="block text-gray-700 text-sm font-bold mb-2">Date of Birth:</label>
                 <input
                   type="text"
                   name="dob"
@@ -79,9 +80,7 @@ const AddEmployee = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Role:
-                </label>
+                <label className="block text-gray-700 text-sm font-bold mb-2">Role:</label>
                 <select
                   name="role"
                   value={formData.role}
@@ -89,14 +88,12 @@ const AddEmployee = () => {
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 >
                   <option value="Cashier">Cashier</option>
-                  <option value=""></option>
-                  <option value=""></option>
+                  <option value="Admin">Admin</option>
+                  <option value="Stock">Stock</option>
                 </select>
               </div>
               <div className="mb-4">
-                <span className="block text-gray-700 text-sm font-bold mb-2">
-                  Sex:
-                </span>
+                <span className="block text-gray-700 text-sm font-bold mb-2">Gender:</span>
                 <div className="inline-flex items-center mr-4">
                   <input
                     type="radio"
@@ -121,9 +118,7 @@ const AddEmployee = () => {
                 </div>
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Password:
-                </label>
+                <label className="block text-gray-700 text-sm font-bold mb-2">Password:</label>
                 <input
                   type="password"
                   name="password"
@@ -140,7 +135,7 @@ const AddEmployee = () => {
                   Add
                 </button>
               </div>
-              </div>
+            </div>
           </form>
         </div>
       </div>

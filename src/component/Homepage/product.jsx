@@ -48,26 +48,28 @@ const Product = ({ addToCart, selectedCategory, searchTerm, highlightSearch }) =
   };
 
   return (
-    <div className="max-w-screen ml-[140px]   mr-[400px]">
-      <div className="flex flex-col w-full  gap-10 px-10">
-        <h1 className="text-black text-3xl font-bold font-text">
+    <div className="w-screen">
+      <div className="max-w-full  ml-[140px]   mr-[450px]">
+      <h1 className="text-black text-3xl pl-12 pb-10 font-bold font-text">
           {selectedCategory}
         </h1>
-        <div className="w-full grid grid-cols-1 pl-10 sm:grid-cols-2 md:grid-cols-4  xl:grid-cols-5 gap-5 pb-5">
+      <div className="flex flex-col w-full items-center  gap-10 px-10">
+        
+        <div className="  w-full grid grid-cols-1 pl-10 sm:grid-cols-2 md:grid-cols-4  xl:grid-cols-5 gap-10 pb-10">
           {filteredProducts.map((item) => (
             <div
               key={item.id}
-              className="w-[200px] h-[250px] flex flex-col font-inria-sans items-center pt-2 bg-white rounded-md shadow-testShadow"
+              className="cursor-pointer hover:scale-110 w-[220px] h-[270px] flex flex-col font-inria-sans items-center pt-2 bg-white rounded-md shadow-testShadow"
             >
               <img
                 src={item.image}
-                className="h-[119px] w-[184px]"
+                className="h-[140px] border-dashed w-[210px] rounded border"
                 alt={item.name}
               />
-              <div className="text-black font-semibold">
+              <div className="text-black font-semibold text-xl">
                 {highlightSearchTerm(item.name)}
               </div>
-              <div className="flex w-[200px] gap-3 py-3 pl-2 justify-start font-inria-sans font-normal break-words">
+              <div className="flex w-[200px] gap-3 py-3 pl-0  justify-start font-inria-sans font-normal break-words">
                 {item.sizes.map((size) => (
                   <div
                     key={size}
@@ -82,10 +84,10 @@ const Product = ({ addToCart, selectedCategory, searchTerm, highlightSearch }) =
                   </div>
                 ))}
               </div>
-              <div className="flex justify-between w-[200px] px-2 font-inria-sans font-normal break-words">
+              <div className="flex justify-between w-[200px] px-2  font-inria-sans font-normal text-[20px] break-words">
                 <div>${item.price}</div>
                 <div
-                  className="flex w-[88px] h-[30px] border-none object-none bg-customRed px-4 rounded-sm shadow-testShadow cursor-pointer"
+                  className="flex gap-2 w-[88px] h-[30px] border-none object-none bg-customRed px-4 rounded-sm shadow-testShadow cursor-pointer"
                   onClick={() => handleAddToCart(item)}
                 >
                   <div>Add</div>
@@ -97,6 +99,7 @@ const Product = ({ addToCart, selectedCategory, searchTerm, highlightSearch }) =
             </div>
           ))}
         </div>
+      </div>
       </div>
     </div>
   );

@@ -52,7 +52,8 @@ export default {
         mainColor:'#0071BD',
         Red:'#FF0B0B',
         Green:'#0BB726',
-        Yellow:'#eed202'
+        Yellow:'#eed202',
+        Blue:'#4692DD'
       }
     },
   },
