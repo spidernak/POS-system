@@ -151,7 +151,7 @@ const CartItem = ({ item, incrementQuantity, decrementQuantity }) => (
             </div>
             <div className="px-2">{item.quantity}</div>
             <div
-              className="cursor-pointer"
+              className="cursor-pointer bg-"
               onClick={() => incrementQuantity(item.id, item.selectedSize)}
             >
               <i className="ri-add-line"></i>

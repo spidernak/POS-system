@@ -72,7 +72,7 @@ const ListProduct = () => {
         <div>
           <h1 className="text-black text-3xl font-bold font-text">Product List</h1>
         </div>
-        <div className="w-full px-5 py-5 mt-5 flex flex-col bg-white border border-b-none rounded-t-md">
+        <div className="w-full px-5 py-5 mt-5 flex flex-col bg-white shadow-testShadow border border-b-none rounded-t-md">
           <section className="flex">
             {/* Category Dropdown */}
             <div className="relative">
@@ -86,7 +86,7 @@ const ListProduct = () => {
                 </div>
               </div>
               {isCategoryDropdownOpen && (
-                <div className="absolute left-0 w-[220px] bg-white border shadow-testShadow z-10 rounded-md mt-1">
+                <div className="absolute left-0 w-[220px] bg-white  border shadow-testShadow z-10 rounded-md mt-1">
                   {menu.map((category) => (
                     <div
                       key={category.id}
@@ -156,7 +156,7 @@ const ListProduct = () => {
             ))}
           </div>
         </div>
-        <div className="h-full scroll bg-white border border-t-none rounded-b-md">
+        <div className="h-full scroll bg-white shadow-testShadow border border-t-none rounded-b-md">
           {productList.map((item) => {
             const sizeToShow =
               selectedSize === "All Size" ? item.sizes : [selectedSize.toLowerCase()];

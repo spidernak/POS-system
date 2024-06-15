@@ -23,14 +23,14 @@ const DisplayOrderDetails = () => {
             <i className="ri-search-line cursor-pointer absolute right-3 top-1/2 transform -translate-y-1/2"></i>
           </div>
         </div>
-        <div className="w-full px-5 py-5 mt-5 flex bg-white border border-b-none rounded-t-md">
+        <div className="w-full px-5 py-5 mt-5 flex bg-white shadow-testShadow border border-b-none rounded-t-md">
           {status.map((item, index) => (
             <div key={index} className="flex-1 text-center">
               <span className="text-base text-black font-medium">{item}</span>
             </div>
           ))}
         </div>
-        <div className='h-full scroll bg-white border border-t-none rounded-b-md'>
+        <div className='h-full scroll bg-white shadow-testShadow border border-t-none rounded-b-md'>
         {orderDetails.map((order, index) => (
           <div key={index} className="w-full px-5 py-5 flex border-b">
             <div className="flex-1 text-center">{order.date}</div>

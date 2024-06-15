@@ -56,7 +56,7 @@ const Home = () => {
 
   return (
     <div className='flex bg-homeBg absolute'>
-      <div className='flex flex-col max-h-[100vh] scroll'>
+      <div className='flex flex-col items-center max-h-[100vh] scroll'>
         <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} onSearchIconClick={handleSearchIconClick} />
         <Category selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
         <Product addToCart={addToCart} selectedCategory={selectedCategory} searchTerm={searchTerm} highlightSearch={highlightSearch} />
