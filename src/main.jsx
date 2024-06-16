@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './index.css';
 import SideButton from './component/sideButton';
+import AdminButton from './component/Admin/sideButton';
 import Login from './view/login';
 import Home from './view/Homepage';
 import Product from './view/listProduct';
@@ -20,7 +21,12 @@ const LayoutWithSideButton = ({ children }) => (
     <SideButton />
   </>
 );
-
+const AdminSideButton = ({ children }) => (
+  <>
+    {children}
+    <AdminButton/>
+  </>
+);
 ReactDOM.render(
   <OrderProvider>
     <EmployeeProvider>
@@ -31,8 +37,8 @@ ReactDOM.render(
           <Route path="/product" element={<LayoutWithSideButton><Product /></LayoutWithSideButton>} />
           <Route path="/history" element={<LayoutWithSideButton><History /></LayoutWithSideButton>} />
           <Route path="/customer" element={<LayoutWithSideButton><Customer /></LayoutWithSideButton>} />
-          <Route path="/admin/addemy" element={<LayoutWithSideButton><AddEmployee /></LayoutWithSideButton>} />
-          <Route path="/admin/stuff" element={<LayoutWithSideButton><EmployeeList /></LayoutWithSideButton>} />
+          <Route path="/admin/addemy" element={<AdminSideButton><AddEmployee /></AdminSideButton>} />
+          <Route path="/admin/employee" element={<AdminSideButton><EmployeeList /></AdminSideButton>} />
         </Routes>
       </Router>
     </EmployeeProvider>

@@ -65,7 +65,14 @@ const EmployeeList = () => {
       employeeData.photo = photoPreview;
     }
 
-    editEmployee(currentEmployee.id, employeeData);
+    if (currentEmployee) {
+      // If editing existing employee, include password if it's provided
+      if (formData.password.trim() !== "") {
+        employeeData.password = formData.password;
+      }
+      editEmployee(currentEmployee.id, employeeData);
+    }
+
     setIsEditing(false);
     setCurrentEmployee(null);
     setFormData({
@@ -79,18 +86,21 @@ const EmployeeList = () => {
     setPhotoPreview(null);
   };
 
-  const listHeaders = ["Name","ID",  "Gender", "Position", "Edit", "Delete"];
+  const listHeaders = ["Name", "ID", "Gender", "Position", "Edit", "Delete"];
 
   return (
     <div className="w-screen h-screen flex absolute bg-homeBg">
-      <div className="w-full flex flex-col ml-[140px] px-10 pl-5 py-5 gap-10">
-        <div className="w-full flex gap-10">
+      <div className="w-full flex flex-col ml-[140px] px-10 pl-5 py-5 gap-5">
+        <div className="w-full flex gap-5">
           <div className="flex border w-[290px] text-black text-xl justify-center font-inria-sans py-2 px-2 rounded shadow-testShadow">
             <h1>Total Employees:</h1>
             <div className="font-bold">{employees.length}</div>
           </div>
-          <Link to='/admin/addemy' className="flex items-center justify-center cursor-pointer bg-Blue w-[80px] text-white text-xl">
-            <i className="ri-user-add-fill"></i>
+          <Link
+            to="/admin/addemy"
+            className="flex items-center justify-center cursor-pointer bg-Blue w-[80px] h-[60px] rounded shadow-testShadow border border-gray-300"
+          >
+            <i className="ri-user-add-fill text-3xl text-white"></i>
           </Link>
         </div>
         <div className="w-full h-full flex-col  flex  ">
@@ -101,7 +111,7 @@ const EmployeeList = () => {
               </div>
             ))}
           </div>
-          <div className="h-full  overflow-y-auto  border border-t-none rounded-b-md">
+          <div className="h-full shadow-testShadow  scroll  border border-t-none rounded-b-md">
             {employees.map((employee) => (
               <div key={employee.id} className="w-full max-h-[80px] px-5 py-5 flex border-b text-black font-medium text-2xl font-inria-sans">
                 <div className="flex-1 flex items-center  text-center">
@@ -115,8 +125,8 @@ const EmployeeList = () => {
                     )}
                   </div>
                   <div className="">{employee.name}</div>
-                </div><div className="flex-1 text-center ">{employee.id}</div>
-                
+                </div>
+                <div className="flex-1 text-center ">{employee.id}</div>
                 <div className="flex-1 text-center">{employee.sex}</div>
                 <div className="flex-1 text-center">{employee.role}</div>
                 <div className="flex-1 text-center cursor-pointer text-3xl  text-[#4692DD]" onClick={() => handleEditClick(employee)}>
@@ -169,29 +179,35 @@ const EmployeeList = () => {
               <div>
                 <label className="block text-gray-700">Gender:</label>
                 <div className="flex items-center">
-                  <label className="mr-4">
-                    <input
-                      type="radio"
-                      name="sex"
-                      value="male"
-                      checked={formData.sex === "male"}
-                      onChange={handleChange}
-                      className="form-radio"
-                    />
-                    Male
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="sex"
-                      value="female"
-                      checked={formData.sex === "female"}
-                      onChange={handleChange}
-                      className="form-radio"
-                    />
-                    Female
-                  </label>
+                  <input
+                    type="radio"
+                    name="sex"
+                    value="male"
+                    checked={formData.sex === "male"}
+                    onChange={handleChange}
+                    className="form-radio"
+                  />
+                  <label className="mr-4">Male</label>
+                  <input
+                    type="radio"
+                    name="sex"
+                    value="female"
+                    checked={formData.sex === "female"}
+                    onChange={handleChange}
+                    className="form-radio"
+                  />
+                  <label>Female</label>
                 </div>
+              </div>
+              <div>
+                <label className="block text-gray-700">Password:</label>
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
               </div>
               <div>
                 <label className="block text-gray-700">Photo:</label>

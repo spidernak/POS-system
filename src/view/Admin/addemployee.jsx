@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import { useEmployeeContext } from "../../component/Context/EmployeeContext";
 import { useState, useEffect } from "react";
+import '../../App.css'
 
 const AddEmployee = () => {
-  const { addEmployee, editEmployee, employees } = useEmployeeContext();
+  const { addEmployee, editEmployee } = useEmployeeContext();
   const [formData, setFormData] = useState({
     name: "",
     dob: "",
@@ -13,7 +14,7 @@ const AddEmployee = () => {
   });
   const [currentEmployee, setCurrentEmployee] = useState(null);
   const [errors, setErrors] = useState({});
-  const [photoFile, setPhotoFile] = useState(null);
+  const [, setPhotoFile] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
 
   useEffect(() => {
@@ -23,9 +24,18 @@ const AddEmployee = () => {
         dob: currentEmployee.dob,
         role: currentEmployee.role,
         sex: currentEmployee.sex,
-        password: "", // Assuming password is not editable in this form
+        password: currentEmployee.password, // Display the current password
       });
       setPhotoPreview(currentEmployee.photo); // Set current employee's photo as preview
+    } else {
+      setFormData({
+        name: "",
+        dob: "",
+        role: "Cashier",
+        sex: "",
+        password: "",
+      });
+      setPhotoPreview(null);
     }
   }, [currentEmployee]);
 
@@ -89,26 +99,23 @@ const AddEmployee = () => {
 
   return (
     <div className="w-screen h-screen flex absolute bg-homeBg">
-      <div className="w-full flex flex-col ml-[140px] px-10 pl-5 py-5 gap-10">
-        <div className="w-full flex">
+      <div className="w-full flex flex-col ml-[140px] px-10 pl-5 py-5 gap-5">
+        <div className="w-full flex gap-5 items-center">
           <Link
-            to="/admin/stuff"
-            className="flex items-center justify-center cursor-pointer bg-Blue w-[80px] text-white text-xl"
+            to="/admin/employee"
+            className="flex items-center justify-center cursor-pointer hover:scale-105 bg-Blue w-[80px] h-[60px] rounded shadow-testShadow border border-gray-300"
           >
-            <i className="ri-arrow-left-fill"></i>
+            <i className="ri-arrow-left-fill text-3xl text-white"></i>
           </Link>
 
-          <div className="flex border w-[290px] text-black text-xl justify-center font-inria-sans py-2 px-2 rounded shadow-testShadow">
-            <h1>Total Employee:</h1>
-            <div className="font-bold">{employees.length}</div>
-          </div>
-        </div>
-        <div className="w-full h-full flex-col py-5 px-10 flex bg-white shadow-testShadow rounded border">
-          <h1 className="text-black text-3xl font-bold font-text pb-10">
+          <h1 className="text-black text-3xl font-bold font-text">
             {currentEmployee ? "Edit Employee" : "Add Employee"}
           </h1>
-          <form onSubmit={handleSubmit} className="w-full justify-center flex gap-10">
-            <div className="w-[300px] h-[340px] bg-black">
+        </div>
+        <div className="w-full h-full flex-col py-5 px-10 flex bg-white shadow-testShadow rounded border">
+          
+          <form onSubmit={handleSubmit} className="w-full justify-center items-center flex gap-10">
+            <div className="w-[300px] h-[340px]  border rounded shadow-testShadow cursor-pointer hover:bg-gray-200 ">
               {photoPreview ? (
                 <img src={photoPreview} alt="Preview" className="h-full w-full object-cover rounded-lg" />
               ) : (
@@ -117,7 +124,7 @@ const AddEmployee = () => {
                 </div>
               )}
             </div>
-            <div className="p-6 w-full max-w-lg rounded-lg">
+            <div className="p-6 w-full max-w-lg rounded-lg border bg-homeBg">
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">Name:</label>
                 <input
@@ -218,4 +225,4 @@ const AddEmployee = () => {
   );
 };
 
-export default AddEmployee
+export default AddEmployee;
