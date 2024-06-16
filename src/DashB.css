@@ -1,0 +1,124 @@
+.dash-container{
+    display: flex;
+    flex-direction: column;
+    width: 1070px;
+    height: 560px;
+    flex-shrink: 0;
+    border-radius: 15px;
+background: #FFF;
+box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+justify-content:end;
+align-items: center;
+padding: 15px 35px;
+
+}
+.dash-name{
+    color: var(--Text-Neutral-primary, #344054);
+
+/* Text lg/Medium */
+font-family: Manrope;
+font-size: 25px;
+font-style: normal;
+font-weight: 500;
+line-height: px; /* 155.556% */
+}
+.dash-board{
+    display: flex;
+width: 1000px;
+height: 530px;
+padding: 32px;
+flex-direction: column;
+align-items: flex-start;
+gap: 10px;
+flex-shrink: 0;
+}
+.box-border{
+width: 330px;
+height: 120px;
+border-radius: 10px;
+border: 1px solid #FFF7F7;
+background: #FFF;
+box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+padding-left: 40px;
+padding-top: 29px;
+
+}
+.Bar-text{
+color: #000;
+-webkit-text-stroke-width: 1;
+-webkit-text-stroke-color: #FFF7F7;
+font-family: Inter;
+font-size: 24px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+.Value{
+color: #24FF01;
+-webkit-text-stroke-width: 1;
+-webkit-text-stroke-color: #FFF7F7;
+font-family: 'Times New Roman', Times, serif;
+font-size: 32px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+.Board-best-selling{
+    width: 575px;
+height: 370px;
+flex-shrink: 0;
+border-radius: 15px;
+border: 1px solid #FFF8F8;
+background: #FFF;
+box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+padding-left: 40px;
+padding-top: 25px;
+}
+.best-selling-text{
+    color: #000;
+-webkit-text-stroke-width: 1;
+-webkit-text-stroke-color: #FFF7F7;
+font-family: Inter;
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+.Best-product{
+    width: 494.874px;
+height: 55px;
+border-radius: 5px;
+border: 1px solid #FCEAEA;
+background: #FFF;
+box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+display: flex;
+align-items: center;
+padding-left: 20px;
+}
+.pic{
+    width: 38.562px;
+height: 30px;
+border-radius: 5px;
+border: 1px solid #F59A9A;
+}
+.Board-recent-add{
+    width: 471px;
+height: 370px;
+border-radius: 15px;
+border: 1px solid #FFF8F8;
+background: #FFF;
+box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+padding-left: 40px;
+padding-top: 25px;
+}
+.recent-product{
+    width: 401.238px;
+height: 55px;
+border-radius: 5px;
+border: 1px solid #FCEAEA;
+background: #FFF;
+box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+display: flex;
+align-items: center;
+padding-left: 20px;
+}

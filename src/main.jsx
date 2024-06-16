@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './view/Homepage.jsx';
 import './index.css';
 import Login from './view/login.jsx';
+import Dashboard from './view/AdminDashboard.jsx';
 // import App from './App.jsx';
 
 // eslint-disable-next-line react/no-deprecated
@@ -14,6 +15,7 @@ ReactDOM.render(
       {/* <Route path="/" element={<App />} /> */}
       <Route path="/" element={<Login />} />
       <Route path='/home' element={<Home/>} />
+      <Route path='/dashboard' element={<Dashboard/>}/>
       
     </Routes>
   </Router>,
