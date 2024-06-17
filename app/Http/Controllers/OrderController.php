@@ -42,7 +42,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'Customer_name' => 'required|string|max:255',
+            'Customer_name' => 'required|string|max:255|nullable',
             'Customer_code' => 'required|string|max:255|exists:customers,Customer_code',
             'Product_id' => 'required|integer|exists:products,id',
             'Quantity' => 'required|integer|min:1',

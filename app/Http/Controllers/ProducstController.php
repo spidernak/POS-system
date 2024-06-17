@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 
 
@@ -47,6 +48,11 @@ class ProducstController extends Controller
                 'Price' => 'required|numeric',
                 'Product_Quantity' => 'required|integer',
             ]);
+    
+            $imagePath = $request->file('Image')->store('public/product_images');
+            $imagePath = str_replace('public/', 'storage/', $imagePath);
+    
+            $validatedData['Image'] = $imagePath;
     
             $product = Product::create($validatedData);
     

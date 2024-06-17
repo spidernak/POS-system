@@ -35,7 +35,9 @@ class UserController extends Controller
             $validateData = $request->validate([
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
-                'password' => 'required|string|max:8',
+                'password' => 'required|string|min:8',
+                'image' => 'required|file|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'gender' => 'required|in:M,Male,F,Female'
             ]);
 
             $user = User::create($validateData);
@@ -53,20 +55,20 @@ class UserController extends Controller
     }
 
     public function login(Request $request)
-{
-    $validateData = $request->validate([
-        'name' => 'required|string|max:255',
-        'password' => 'required|string|max:255',
-    ]);
+    {
+        $validateData = $request->validate([
+            'name' => 'required|string|max:255',
+            'password' => 'required|string|max:255',
+        ]);
 
-    $user = User::where('name', $validateData['name'])->first();
+        $user = User::where('name', $validateData['name'])->first();
 
-    if ($user && Hash::check($validateData['password'], $user->password)) {
-        return response()->json(['message' => 'Login successful', 'user' => $user]);
-    } else {
-        return response()->json(['message' => 'Invalid credentials'], 401);
+        if ($user && Hash::check($validateData['password'], $user->password)) {
+            return response()->json(['message' => 'Login successful', 'user' => $user]);
+        } else {
+            return response()->json(['message' => 'Invalid credentials'], 401);
+        }
     }
-}
 
 
     /**
@@ -93,31 +95,36 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        try{
-            $validateData = $request->validate([
-                'password' => 'sometimes|required|string|max:8',
-            ]);
+    public function update(Request $request, $id)
+{
+    try {
+        $validateData = $request->validate([
+            'password' => 'sometimes|required|string|max:8',
+            'role' => 'sometimes|required|string|in:cashier,admin',
+        ]);
 
-            $user = User::find($id);
-            if(!$user){
-                return response()->json([
-                    'error' => 'There no user found with id '.$id
-                ]);
-            }
-
-            $user->update($validateData);
-            return response()->json(['message' => 'User has been updated successfully...']);
-        } catch(\Illuminate\Validation\ValidationException $e){
-            return response()->json(['error' => $e->errors()],422);
-        } catch(\Exception $d){
+        $user = User::find($id);
+        if (!$user) {
             return response()->json([
-                'message' => 'Something went wrong while retrieving ...',
-                'error' => $e->getMessage(),
+                'error' => 'No user found with id ' . $id
             ]);
         }
+
+        $user->fill($validateData);
+        $user->save();
+
+        return response()->json(['message' => 'User has been updated successfully...']);
+    } catch (\Illuminate\Validation\ValidationException $e) {
+        return response()->json(['error' => $e->errors()], 422);
+    } catch (\Exception $e) {
+        return response()->json([
+            'message' => 'Something went wrong while updating the user...',
+            'error' => $e->getMessage(),
+        ], 500);
     }
+}
+
+
 
     /**
      * Remove the specified resource from storage.
