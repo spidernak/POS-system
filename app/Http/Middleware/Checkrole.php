@@ -15,10 +15,12 @@ class Checkrole
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, $role = null): Response
+    public function handle(Request $request, Closure $next,String $role = null): Response
     {
-        if(Auth::check() && (Auth::user()->role == $role || Auth::user()->role == "admin"))
-        return $next($request);
+        if(Auth::check()){
+            if(Auth::user()->role == "admin")
+            return $next($request);
+        }
 
         return response("You don't have the permission to access this page!");
     }

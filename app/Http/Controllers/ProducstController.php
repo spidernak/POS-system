@@ -43,16 +43,18 @@ class ProducstController extends Controller
             $validatedData = $request->validate([
                 'Product_name' => 'required|string|max:255',
                 'Type_of_product' => 'required|string|exists:types,Type',
-                'Image' => 'required|file|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'Image' => 'required|image|max:2048',  
                 'size' => 'required|in:small,medium,large',
                 'Price' => 'required|numeric',
                 'Product_Quantity' => 'required|integer',
             ]);
     
-            $imagePath = $request->file('Image')->store('public/product_images');
-            $imagePath = str_replace('public/', 'storage/', $imagePath);
-    
-            $validatedData['Image'] = $imagePath;
+            if ($request->hasFile('Image')) {
+                $file = $request->file('Image');
+                $originalName = $file->getClientOriginalName();
+                $filePath = $file->storeAs('product_images', $originalName, 'public');
+                $validatedData['Image'] = $filePath;
+            }
     
             $product = Product::create($validatedData);
     
@@ -74,6 +76,8 @@ class ProducstController extends Controller
             ], 500);
         }
     }
+    
+
 
     public function findByName(Request $request)
     {

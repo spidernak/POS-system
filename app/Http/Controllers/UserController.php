@@ -31,28 +31,38 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        try{
+        try {
             $validateData = $request->validate([
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
                 'password' => 'required|string|min:8',
-                'image' => 'required|file|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'image' => 'required|image|max:2048',
                 'gender' => 'required|in:M,Male,F,Female'
             ]);
 
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $originalName = $file->getClientOriginalName();
+                $filePath = $file->storeAs('product_images', $originalName, 'public');
+                $validateData['image'] = $filePath;
+            }
+
+            // Hash the password before storing it
+            $validateData['password'] = bcrypt($validateData['password']);
+
             $user = User::create($validateData);
 
-            return response()->json(['message' => 'New User creaetd successfully..', 'User ' => $user]);
-        } catch(\Illuminate\Validation\ValidationException $e){
-            return response()->json([ 'message' => 'Validation error.',
-            'errors' => $e->errors()],422);
-        } catch(\Exception $e){
+            return response()->json(['message' => 'New User created successfully.', 'user' => $user]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json(['message' => 'Validation error.', 'errors' => $e->errors()], 422);
+        } catch (\Exception $e) {
             return response()->json([
-                'message' => 'An error occureed while creating new user',
+                'message' => 'An error occurred while creating a new user.',
                 'error' => $e->getMessage(),
-            ],500);
+            ], 500);
         }
     }
+
 
     public function login(Request $request)
     {
@@ -64,7 +74,7 @@ class UserController extends Controller
         $user = User::where('name', $validateData['name'])->first();
 
         if ($user && Hash::check($validateData['password'], $user->password)) {
-            return response()->json(['message' => 'Login successful', 'user' => $user]);
+            return response()->json(['message' => 'Login successful', 'user' => $user, 'token' => $user->createToken('API Token')->plainTextToken]);
         } else {
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
@@ -132,9 +142,9 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         try {
-            if ($id == 1) {
+            if ($id == 1 || $id == 2 ) {
                 return response()->json([
-                    'error' => 'Deletion of user with ID 1 is not allowed.',
+                    'error' => 'Deletion of user with ID is not allowed.',
                 ], 403); 
             }
     

@@ -5,6 +5,7 @@ use App\Http\Controllers\TypeController;
 use App\Http\Controllers\ProducstController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\Checkrole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,16 +37,17 @@ Route::delete('/removetypeofpro/{id}', [TypeController::class, 'destroy']);
                     
 
 
-
-Route::get('/listproducts' , [ProducstController::class, 'index']);
-Route::get('/findprobyName', [ProducstController::class, 'findByName']);
-Route::get('/listproducts/{id}', [ProducstController::class, 'show']);
-Route::post('/createpro', [ProducstController::class, 'store']);
-Route::put('/updatepro/{id}', [ProducstController::class, 'update']);
-Route::delete('/removepro/{id}', [ProducstController::class , 'destroy']);
-Route::get('/viewquantityofpro' , [ProducstController::class, 'viewQuantityOfProduct']);
-Route::get('/viewquantityofprobytype' , [ProducstController::class, 'viewQuantityOfProductbytype']);
-Route::get('/viewproductByType', [ProducstController::class, 'getProductByType']);
+// Route::middleware(['auth:sanctum',Checkrole::class])->group(function(){
+    Route::get('/listproducts' , [ProducstController::class, 'index']);
+    Route::get('/findprobyName', [ProducstController::class, 'findByName']);
+    Route::get('/listproducts/{id}', [ProducstController::class, 'show']);
+    Route::post('/createpro', [ProducstController::class, 'store']);
+    Route::put('/updatepro/{id}', [ProducstController::class, 'update']);
+    Route::delete('/removepro/{id}', [ProducstController::class , 'destroy']);
+    Route::get('/viewquantityofpro' , [ProducstController::class, 'viewQuantityOfProduct']);
+    Route::get('/viewquantityofprobytype' , [ProducstController::class, 'viewQuantityOfProductbytype']);
+    Route::get('/viewproductByType', [ProducstController::class, 'getProductByType']);
+// });
 
 
 
@@ -65,13 +67,14 @@ Route::middleware('Checkrole')->get('/gettest', function(){
 // Route::middleware('auth:api')->get('/gettest', function(){
 //     return 'test';
 // });
-Route::get('/gettestwithoutmiddleware', function(){
+Route::get('/testing', function(){
     return 'hello test';
 });
 
 use App\Http\Controllers\CustomerOrderController;
 
-Route::get('/createcustomer', [CustomerOrderController::class, 'store']);
+Route::post('/customer-order', [CustomerOrderController::class, 'store']);
+
 
 
 //user

@@ -13,9 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // $middleware->use([
-        //     App\Http\Middleware\Checkrole::class,
-        // ]);
+        // $middleware->append(Checkrole::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
