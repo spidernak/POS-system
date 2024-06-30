@@ -17,15 +17,19 @@ class Product extends Model
         'Price',
         'Product_Quantity',
     ];
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class)
+                    ->withPivot('quantity', 'price_at_order');
+    }
+
+
     public function type()
     {
         return $this->belongsTo(Type::class, 'Type');
     }
     
-    public function orders()
-    {
-        return $this->hasMany(Order::class);
-    }
-
+    
 
 }

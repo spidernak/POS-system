@@ -11,13 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Schema::create('orders', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('Customer_name')->nullable();
+        //     $table->string('Customer_code');
+        //     $table->foreign('Customer_code')->references('Customer_code')->on('customers')->onDelete('cascade');
+        //     $table->unsignedBigInteger('Product_id'); 
+        //     $table->foreign('Product_id')->references('id')->on('products')->onDelete('cascade');
+        //     $table->integer('Quantity');
+        //     $table->double('Total_price');
+        //     $table->timestamps();
+        // });
+
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('Customer_name')->nullable();
-            $table->string('Customer_code');
+            $table->string('Customer_code')->nullable();
             $table->foreign('Customer_code')->references('Customer_code')->on('customers')->onDelete('cascade');
-            $table->unsignedBigInteger('Product_id'); 
-            $table->foreign('Product_id')->references('id')->on('products')->onDelete('cascade');
             $table->integer('Quantity');
             $table->double('Total_price');
             $table->timestamps();
