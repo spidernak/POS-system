@@ -46,3 +46,4 @@ class Order extends Model
         return $this->belongsTo(Customer::class, 'Customer_code', 'Customer_code');
     }
 }
+

@@ -53,7 +53,7 @@ Route::delete('/removetypeofpro/{id}', [TypeController::class, 'destroy']);
 
 Route::get('/getorder', [OrderController::class, 'index']);
 Route::get('/getorder/{customer_id}', [OrderController::class, 'indexes']);
-Route::post('/crateorder', [OrderController::class, 'store']);
+Route::post('/createorder', [OrderController::class, 'store']);
 Route::get('/getorder/{id}', [OrderController::class, 'show']);
 Route::get('findOrderByCustomerName', [OrderController::class, 'findOrderByCustomerCode']);
 Route::get('getorderDailyDay', [OrderController::class, 'getOrderDailyDay']);
