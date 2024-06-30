@@ -61,6 +61,22 @@ Route::delete('removeOder/{id}', [OrderController::class, 'destroy']);
 Route::delete('/removeOderByCustomerName', [OrderController::class, 'DeleteOrderBYCustomerName']);
 Route::get('/orders/{orderId}', [OrderController::class, 'getOrderWithProducts']);
 
+
+
+
+
+Route::get('orders/{orderId}', [OrderController::class, 'getOrderWithProducts']);
+
+
+
+
+
+
+
+
+
+
+
 Route::middleware('Checkrole')->get('/gettest', function(){
     return 'test';
 });
@@ -73,7 +89,7 @@ Route::get('/testing', function(){
 
 use App\Http\Controllers\CustomerOrderController;
 
-Route::post('/customer-order', [CustomerOrderController::class, 'store']);
+// Route::post('/customer-order', [CustomerOrderController::class, 'store']);
 
 
 
