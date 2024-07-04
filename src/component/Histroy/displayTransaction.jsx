@@ -9,7 +9,7 @@ const DisplayOrderDetails = () => {
 
   return (
     <div className="w-screen h-screen flex absolute ">
-      <div className="w-full flex flex-col ml-[140px]  px-10 pl-5 py-5 bg-homeBg">
+      <div className="w-full flex flex-col ml-[140px]  px-5 pl-5 py-5 bg-homeBg">
         <div className="w-full flex justify-between ">
           <div>
             <h1 className="text-black text-3xl font-bold font-text">Order History</h1>
@@ -26,7 +26,7 @@ const DisplayOrderDetails = () => {
         <div className="w-full px-5 py-5 mt-5 flex bg-white shadow-testShadow border border-b-none rounded-t-md">
           {status.map((item, index) => (
             <div key={index} className="flex-1 text-center">
-              <span className="text-base text-black font-medium">{item}</span>
+              <span className=" text-black font-inria-sans text-2xl font-bold">{item}</span>
             </div>
           ))}
         </div>

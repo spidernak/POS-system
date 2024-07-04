@@ -19,6 +19,23 @@ label {
 html {
   scroll-behavior: smooth;
 }
+.backdrop-blur-sm {
+  backdrop-filter: blur(5px);
+}
+.bottom-component {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s ease, top 0.3s ease;
+}
+
+.bottom-component.visible {
+  opacity: 1;
+  top: 50%;
+}
+
 
 
 

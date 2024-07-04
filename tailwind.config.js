@@ -43,8 +43,7 @@ export default {
         colortext:'#ABA2A2',
         logintext:'#0F7AC1',
         mainColor:'#0071BD',
-        
-        Blue:'#4692DD'
+        Green:'#24FF01'
       },
       backgroundColor:{
         background:'#0071BD',

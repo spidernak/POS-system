@@ -172,7 +172,7 @@ const OrderHistory = () => {
                 </p>
                 <p>
                   <strong>Date:</strong>{" "}
-                  {new Date(selectedOrder.updated_at).toLocaleDateString()}
+                  {new Date(selectedOrder.created_at).toLocaleDateString()}
                 </p>
               </div>
 

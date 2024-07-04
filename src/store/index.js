@@ -577,16 +577,16 @@ export const product = [
     quantity: { small: 20, medium: 20, large: 20 },
   },
 ];
-export const cashiers = [
-  { username: "cashier1", password: "password1", name: "Cashier1", role: "Cashier" },
-  { username: "cashier2", password: "password2", name: "Cashier2", role: "Cashier" },
+// export const cashiers = [
+//   { username: "cashier1", password: "password1", name: "Cashier1", role: "Cashier" },
+//   { username: "cashier2", password: "password2", name: "Cashier2", role: "Cashier" },
   
-];
-export const admins = [
-  { username: "admin1", password: "adminpassword1", name: "Admin 1", role: "Admin" },
-  { username: "admin2", password: "adminpassword2", name: "Admin 2", role: "Admin" },
-];
-export const stocks = [
-  { password: "12345678", name: "Stock 1", role: "Stock" },
-  { password: "12345678", name: "Stock 2", role: "Stock" },
-];
+// ];
+// export const admins = [
+//   { username: "admin1", password: "adminpassword1", name: "Admin1", role: "Admin" },
+//   { username: "admin2", password: "adminpassword2", name: "Admin2", role: "Admin" },
+// ];
+// export const stocks = [
+//   { password: "12345678", name: "Stock 1", role: "Stock" },
+//   { password: "12345678", name: "Stock 2", role: "Stock" },
+// ];
