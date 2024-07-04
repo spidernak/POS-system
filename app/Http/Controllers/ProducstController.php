@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 
 class ProducstController extends Controller
@@ -145,32 +146,53 @@ class ProducstController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        try{
+        try {
+            Log::info('Incoming request data:', $request->all());
 
             $validatedData = $request->validate([
-                'Product_name' => 'sometimes|required|string|max:255',
-                'Type_of_product' => 'sometimes|required|string|max:255|exists:types,Type',
-                'Image' => 'sometimes|required|file|image|mimes:jpeg,png,jpg,gif|max:2048',
-                'size' => 'sometimes|required|in:small,medium,large',
-                'Price' => 'sometimes|required|numeric',
-                'Product_Quantity' => 'sometimes|required|integer',
+                'Product_name' => 'required|string|max:255',
+                'Type_of_product' => 'required|string|exists:types,Type',
+                'Image' => 'sometimes|image|max:2048', 
+                'size' => 'required|in:small,medium,large',
+                'Price' => 'required|numeric',
+                'Product_Quantity' => 'required|integer',
             ]);
 
-            $product = Product::find($id);
-            if (!$product){
-                return response()->json(['error' => 'There no product found!!!'],404);
+            $product = Product::findOrFail($id);
+
+            Log::info('Product before update:', $product->toArray());
+
+            if ($request->hasFile('Image')) {
+                $file = $request->file('Image');
+                $originalName = $file->getClientOriginalName();
+                $filePath = $file->storeAs('product_images', $originalName, 'public');
+                $validatedData['Image'] = $filePath;
+
+                if ($product->Image) {
+                    Storage::disk('public')->delete($product->Image);
+                }
             }
+
             $product->update($validatedData);
 
+            Log::info('Product after update:', $product->toArray());
+
             return response()->json([
-                'message' => 'Product updated successfully....',
-                'Product status' => $product,
-            ],200);
-        } catch(\Illuminate\Validation\ValidationException $e){
-            return response()->json(['error' => $e->errors()], 422);
+                'message' => 'Product updated successfully',
+                'Product' => $product
+            ]);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            Log::error('Validation error:', $e->errors());
+            return response()->json([
+                'message' => 'Validation error.',
+                'errors' => $e->errors(),
+            ], 422);
+
         } catch (\Exception $e) {
+            Log::error('Error:', ['message' => $e->getMessage()]);
             return response()->json([
                 'message' => 'An error occurred while updating the product.',
                 'error' => $e->getMessage(),

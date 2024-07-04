@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Customer;
-use Illuminate\Database\QueryException;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -32,146 +31,115 @@ class OrderController extends Controller
         }
     }
 
-    public function getOrderWithProducts($orderId)
-    {
-        $order = Order::with('products')
-                      ->where('id', $orderId)
-                      ->first();
     
-        // Accessing products with pivot data
-        foreach ($order->products as $product) {
-            echo "Product Name: {$product->Product_name}<br>";
-            echo "Quantity: {$product->pivot->quantity}<br>";
-            echo "Price at Order: {$product->pivot->price_at_order}<br>";
-        }
-    
-        return $order;
-    }
-
-
     /**
      * Display a listing of orders for a specific customer by customer code with product details.
      */
-    public function indexes($customer_id)
+    public function indexes()
     {
         try {
-            $orders = Order::with('products')
-                           ->where("Customer_code", $customer_id)
-                           ->latest()
-                           ->get();
+            $orderCounts = Order::select('Customer_code', DB::raw('count(*) as total_orders'))
+                                ->groupBy('Customer_code')
+                                ->get();
 
             return response()->json([
-                'message' => 'Orders for customer ' . $customer_id,
-                'orders' => $orders
+                'message' => 'Order count for each customer',
+                'order_counts' => $orderCounts
             ]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Something went wrong'], 500);
         }
     }
 
+
     /**
      * Store a newly created order in storage.
      */
     public function store(Request $request)
-{
-    try {
-        $validateData = $request->validate([
-            'Customer_name' => 'required|string|max:255',
-            'Customer_code' => 'required|string|max:4',
-            'Customer_loyalty' => 'integer|nullable',
-            'products' => 'required|array|min:1',
-            'products.*.id' => 'required|exists:products,id',
-            'products.*.quantity' => 'required|integer|min:1',
-        ]);
+    {
+        try {
+            $validateData = $request->validate([
+                'Customer_name' => 'required|string|max:255',
+                'Customer_code' => 'required|string|max:4',
+                'Customer_loyalty' => 'integer|nullable',
+                'products' => 'required|array|min:1',
+                'products.*.id' => 'required|exists:products,id',
+                'products.*.quantity' => 'required|integer|min:1',
+            ]);
 
-        $validateData['Customer_loyalty'] = $validateData['Customer_loyalty'] ?? 0;
-        $productsData = $validateData['products'];
+            $validateData['Customer_loyalty'] = $validateData['Customer_loyalty'] ?? 0;
+            $productsData = $validateData['products'];
 
-        DB::beginTransaction();
+            DB::beginTransaction();
 
-        $customer = Customer::firstOrCreate(
-            ['Customer_code' => $validateData['Customer_code']],
-            ['Customer_name' => $validateData['Customer_name'], 'Customer_loyalty' => $validateData['Customer_loyalty']]
-        );
+            $customer = Customer::firstOrCreate(
+                ['Customer_code' => $validateData['Customer_code']],
+                ['Customer_name' => $validateData['Customer_name'], 'Customer_loyalty' => $validateData['Customer_loyalty']]
+            );
 
-        $orders = [];
-        $totalProductsOrdered = 0;
-        $existingOrder = null;
-
-        $existingOrder = Order::where('Customer_code', $validateData['Customer_code'])
-            ->where('Customer_name', $validateData['Customer_name'])
-            ->first();
-
-        if (!$existingOrder) {
-            $existingOrder = Order::create([
+            $order = Order::create([
                 'Customer_name' => $customer->Customer_name,
                 'Customer_code' => $customer->Customer_code,
                 'Quantity' => 0,
                 'Total_price' => 0,
             ]);
-        }
 
-        foreach ($productsData as $productData) {
-            $product = Product::findOrFail($productData['id']);
+            $totalProductsOrdered = 0;
 
-            if ($product->Product_Quantity < $productData['quantity']) {
-                DB::rollBack();
-                return response()->json([
-                    'error' => 'Insufficient product quantity available.',
-                    'available_quantity' => $product->Product_Quantity
-                ], 400);
-            }
+            foreach ($productsData as $productData) {
+                $product = Product::findOrFail($productData['id']);
 
-            $product->decrement('Product_Quantity', $productData['quantity']);
+                if ($product->Product_Quantity < $productData['quantity']) {
+                    DB::rollBack();
+                    return response()->json([
+                        'error' => 'Insufficient product quantity available.',
+                        'available_quantity' => $product->Product_Quantity
+                    ], 400);
+                }
 
-            $totalProductsOrdered += $productData['quantity'];
+                $product->decrement('Product_Quantity', $productData['quantity']);
 
-            $existingOrderProduct = $existingOrder->products()->where('product_id', $productData['id'])->first();
+                $totalProductsOrdered += $productData['quantity'];
 
-            if ($existingOrderProduct) {
-                $existingOrderProduct->pivot->quantity += $productData['quantity'];
-                $existingOrderProduct->pivot->save();
-            } else {
-                $existingOrder->products()->attach($product->id, [
+                $order->products()->attach($product->id, [
                     'quantity' => $productData['quantity'],
                     'price_at_order' => $product->Price,
                 ]);
+
+                $order->Quantity += $productData['quantity'];
+                $order->Total_price += $product->Price * $productData['quantity'];
             }
 
-            $existingOrder->Quantity += $productData['quantity'];
-            $existingOrder->Total_price += $product->Price * $productData['quantity'];
-            $existingOrder->save();
+            $order->save();
+
+            if ($totalProductsOrdered > 3) {
+                $customer->Customer_loyalty += 2;
+            } elseif ($totalProductsOrdered > 2) {
+                $customer->Customer_loyalty += 1;
+            }
+
+            $customer->save();
+
+            DB::commit();
+
+            return response()->json([
+                'id' => $order->id,
+                'Customer_name' => $order->Customer_name,
+                'Customer_code' => $order->Customer_code,
+                'Quantity' => $order->Quantity,
+                'Total_price' => $order->Total_price,
+                'created_at' => $order->created_at,
+                'updated_at' => $order->updated_at,
+                'products' => $order->products,
+            ], 201);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json(['error' => $e->errors()], 422);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => 'An error occurred while creating the customer and orders'], 500);
         }
-
-        $orders[] = [
-            'id' => $existingOrder->id,
-            'Customer_name' => $existingOrder->Customer_name,
-            'Customer_code' => $existingOrder->Customer_code,
-            'Quantity' => $existingOrder->Quantity,
-            'Total_price' => $existingOrder->Total_price,
-            'created_at' => $existingOrder->created_at,
-            'updated_at' => $existingOrder->updated_at,
-            'products' => $existingOrder->products, 
-        ];
-
-        if ($totalProductsOrdered > 3) {
-            $customer->Customer_loyalty += 2;  
-        } elseif ($totalProductsOrdered > 2) {
-            $customer->Customer_loyalty += 1;  
-        }
-
-        $customer->save();
-
-        DB::commit();
-
-        return response()->json($orders, 201);
-    } catch (\Illuminate\Validation\ValidationException $e) {
-        return response()->json(['error' => $e->errors()], 422);
-    } catch (\Exception $e) {
-        DB::rollBack();
-        return response()->json(['error' => 'An error occurred while creating the customer and orders'], 500);
     }
-}
+
 
 
 
@@ -199,12 +167,12 @@ class OrderController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'Customer_name' => 'required|string|max:255',
+                // 'Customer_name' => 'required|string|max:255',
                 'Customer_code' => 'required|string|max:255|exists:customers,Customer_code',
             ]);
 
             $orders = Order::with('products')
-                            ->where('Customer_name', $validatedData['Customer_name'])
+                            // ->where('Customer_name', $validatedData['Customer_name'])
                             ->where('Customer_code', $validatedData['Customer_code'])
                             ->get();
 

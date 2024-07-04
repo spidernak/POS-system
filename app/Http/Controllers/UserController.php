@@ -47,7 +47,6 @@ class UserController extends Controller
                 $validateData['image'] = $filePath;
             }
 
-            // Hash the password before storing it
             $validateData['password'] = bcrypt($validateData['password']);
 
             $user = User::create($validateData);

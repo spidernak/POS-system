@@ -28,26 +28,46 @@ Route::put('updatecustomer/{id}', [CustomerController::class, 'update']);
 Route::delete('/removecutomer/{id}', [CustomerController::class, 'destroy']);
 Route::delete('/removeallcutomer', [CustomerController::class, 'deleteall']);
 
-                    //===== Type of proudct
-Route::get('/viewtypeofpro', [TypeController::class, 'index']);   
-Route::get('/viewtypeofpro/{id}', [TypeController::class, 'show']);
-Route::post('/createtypofpro' , [TypeController::class, 'store']);
-Route::put('/updatetypeofpro/{id}', [TypeController::class, 'update']);
-Route::delete('/removetypeofpro/{id}', [TypeController::class, 'destroy']);
-                    
 
+     
 
-// Route::middleware(['auth:sanctum',Checkrole::class])->group(function(){
-    Route::get('/listproducts' , [ProducstController::class, 'index']);
-    Route::get('/findprobyName', [ProducstController::class, 'findByName']);
-    Route::get('/listproducts/{id}', [ProducstController::class, 'show']);
-    Route::post('/createpro', [ProducstController::class, 'store']);
-    Route::put('/updatepro/{id}', [ProducstController::class, 'update']);
-    Route::delete('/removepro/{id}', [ProducstController::class , 'destroy']);
-    Route::get('/viewquantityofpro' , [ProducstController::class, 'viewQuantityOfProduct']);
-    Route::get('/viewquantityofprobytype' , [ProducstController::class, 'viewQuantityOfProductbytype']);
-    Route::get('/viewproductByType', [ProducstController::class, 'getProductByType']);
+// Route::get('/testingmiddleware', function(){
+//     return 'hello';
 // });
+
+Route::get('/listproducts' , [ProducstController::class, 'index']);
+Route::get('/findprobyName', [ProducstController::class, 'findByName']);
+Route::get('/listproducts/{id}', [ProducstController::class, 'show']);
+Route::get('/viewquantityofpro' , [ProducstController::class, 'viewQuantityOfProduct']);
+Route::get('/viewquantityofprobytype' , [ProducstController::class, 'viewQuantityOfProductbytype']);
+Route::get('/viewproductByType', [ProducstController::class, 'getProductByType']);
+
+Route::middleware(['auth:sanctum',Checkrole::class])->group(function(){
+
+
+                        //===== Type of proudct
+    Route::get('/viewtypeofpro', [TypeController::class, 'index']);   
+    Route::get('/viewtypeofpro/{id}', [TypeController::class, 'show']);
+    Route::post('/createtypofpro' , [TypeController::class, 'store']);
+    Route::put('/updatetypeofpro/{id}', [TypeController::class, 'update']);
+    Route::delete('/removetypeofpro/{id}', [TypeController::class, 'destroy']);
+
+
+    Route::put('/updatepro/{id}', [ProducstController::class, 'update']);    
+    Route::post('/createpro', [ProducstController::class, 'store']);
+    Route::delete('/removepro/{id}', [ProducstController::class , 'destroy']);
+
+
+
+    //user
+    Route::get('/getuser', [UserController::class, 'index']);
+    Route::get('/getuser/{id}', [UserController::class, 'show']);
+    Route::put('/updateuser/{id}', [UserController::class, 'update']);
+    Route::post('/createUser', [UserController::class, 'store']);
+    Route::post('/login', [UserController::class, 'login']);
+    Route::delete('/removeuser/{id}', [UserController::class, 'destroy']);
+    Route::delete('/removeuserBYEmail', [UserController::class, 'removeUserByEmail']);
+});
 
 
 
@@ -65,39 +85,8 @@ Route::get('/orders/{orderId}', [OrderController::class, 'getOrderWithProducts']
 
 
 
-Route::get('orders/{orderId}', [OrderController::class, 'getOrderWithProducts']);
+// Route::get('orders/{orderId}', [OrderController::class, 'getOrderWithProducts']);
 
 
 
 
-
-
-
-
-
-
-
-Route::middleware('Checkrole')->get('/gettest', function(){
-    return 'test';
-});
-// Route::middleware('auth:api')->get('/gettest', function(){
-//     return 'test';
-// });
-Route::get('/testing', function(){
-    return 'hello test';
-});
-
-use App\Http\Controllers\CustomerOrderController;
-
-// Route::post('/customer-order', [CustomerOrderController::class, 'store']);
-
-
-
-//user
-Route::get('/getuser', [UserController::class, 'index']);
-Route::get('/getuser/{id}', [UserController::class, 'show']);
-Route::put('/updateuser/{id}', [UserController::class, 'update']);
-Route::post('/createUser', [UserController::class, 'store']);
-Route::post('/login', [UserController::class, 'login']);
-Route::delete('/removeuser/{id}', [UserController::class, 'destroy']);
-Route::delete('/removeuserBYEmail', [UserController::class, 'removeUserByEmail']);
