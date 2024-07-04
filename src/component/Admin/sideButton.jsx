@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/logo.jpg";
@@ -5,7 +6,6 @@ import logo from "../../assets/logo.jpg";
 const SideButton = () => {
   const location = useLocation();
   const [activeIcon, setActiveIcon] = useState(null);
-  const [showConfirm, setShowConfirm] = useState(false); // State to manage confirmation dialog
 
   useEffect(() => {
     const currentPath = location.pathname;
@@ -14,18 +14,7 @@ const SideButton = () => {
   }, [location]);
 
   const handleClick = (icon) => {
-    if (icon === "ri-logout-box-line") {
-      setShowConfirm(true); // Show confirmation dialog on logout button click
-    } else {
-      setActiveIcon(icon);
-    }
-  };
-
-  const handleLogout = () => {
-    // Perform logout actions here
-    // For example, clearing local storage, redirecting to login page, etc.
-    console.log("Logging out...");
-    // After logout actions, you might redirect to the login page or perform other cleanup
+    setActiveIcon(icon);
   };
 
   const menuItems = [
@@ -38,13 +27,12 @@ const SideButton = () => {
 
   return (
     <div className="w-[140px] bg-white h-screen flex flex-col items-center pt-6 absolute">
-      <Link to="/home">
-        <img
-          className="w-[70px] h-[70px] shadow-testShadow object-cover border border-black rounded-[10px] hover:scale-95"
-          src={logo}
-          alt="Logo"
-        />
-      </Link>
+      <Link to='/home'>
+      <img
+        className="w-[70px] h-[70px] shadow-testShadow object-cover border border-black rounded-[10px] hover:scale-95"
+        src={logo}
+        alt="Logo"
+      /></Link>
       <div className="flex flex-col justify-between h-full">
         <div className="flex flex-col items-center gap-7 pt-5">
           {menuItems.map(({ icon, label, to }) => (
@@ -69,6 +57,7 @@ const SideButton = () => {
             </Link>
           ))}
         </div>
+        <Link to='/'>
         <div
           className={`flex flex-col items-center pb-2 cursor-pointer transition-all duration-300 ${
             activeIcon === "ri-logout-box-line"
@@ -85,31 +74,7 @@ const SideButton = () => {
           >
             Log out
           </span>
-        </div>
-        {showConfirm && (
-          <div className="absolute inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center">
-            <div className="bg-white p-8 rounded-md shadow-lg">
-              <p className="text-lg mb-4">Are you sure you want to log out?</p>
-              <div className="flex justify-center gap-4">
-                <button
-                  className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
-                  onClick={() => {
-                    handleLogout();
-                    setShowConfirm(false);
-                  }}
-                >
-                  Logout
-                </button>
-                <button
-                  className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400"
-                  onClick={() => setShowConfirm(false)}
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+        </div></Link>
       </div>
     </div>
   );
