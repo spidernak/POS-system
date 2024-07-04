@@ -144,12 +144,6 @@ const Customerlist = () => {
             <h1>Total Customers:</h1>
             <div className="font-bold">{customers.length}</div>
           </div>
-          <Link
-            to="/admin/addcustomer"
-            className="flex items-center justify-center cursor-pointer bg-Blue w-[80px] h-[60px] rounded shadow-testShadow border border-gray-300"
-          >
-            <i className="ri-user-add-fill text-3xl text-white"></i>
-          </Link>
         </div>
         <div className="w-full flex-col flex">
           <div className="w-full flex bg-Blue py-5 rounded shadow-testShadow">
