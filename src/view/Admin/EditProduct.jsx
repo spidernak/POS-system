@@ -1,30 +1,55 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
-const EditProduct = ({ product, onClose }) => {
+const UpdateProduct = () => {
+  const { productId } = useParams();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     Product_name: "",
     Type_of_product: "",
     Image: null,
     size: "",
-    Price: 0,
-    Product_Quantity: 0,
+    Price: "",
+    Product_Quantity: ""
   });
   const [photoPreview, setPhotoPreview] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    setFormData({
-      Product_name: product.Product_name,
-      Type_of_product: product.Type_of_product,
-      Image: null,
-      size: product.size,
-      Price: product.Price,
-      Product_Quantity: product.Product_Quantity,
-    });
-    setPhotoPreview(product.Image_url);
-  }, [product]);
+    fetchProduct();
+  }, []);
+
+  const fetchProduct = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8005/api/listproducts/${productId}`);
+      console.log('API Response:', response.data); // Log entire response for debugging
+  
+      const productData = response.data['Product status']; // Accessing product data under 'Product status'
+  
+      if (productData) {
+        setFormData({
+          Product_name: productData.Product_name || '',
+          Type_of_product: productData.Type_of_product || '',
+          size: productData.size || '',
+          Price: productData.Price || '',
+          Product_Quantity: productData.Product_Quantity || ''
+        });
+  
+        if (productData.Image) {
+          setPhotoPreview(`http://localhost:8005/storage/${productData.Image}`);
+        } else {
+          setPhotoPreview('');
+        }
+      } else {
+        console.error("Product data is empty or undefined.");
+      }
+    } catch (error) {
+      console.error("Error fetching product:", error);
+    }
+  };
+  
+  
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -39,23 +64,22 @@ const EditProduct = ({ product, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const formDataToSend = new FormData();
-      formDataToSend.append("Product_name", formData.Product_name);
-      formDataToSend.append("Type_of_product", formData.Type_of_product);
-      formDataToSend.append("Image", formData.Image || "");
-      formDataToSend.append("size", formData.size);
-      formDataToSend.append("Price", formData.Price);
-      formDataToSend.append("Product_Quantity", formData.Product_Quantity);
-
-      const response = await axios.put(`http://localhost:8005/api/updatepro/${product.id}`, formDataToSend);
-      console.log("Product updated successfully:", response.data);
-      onClose(); // Close the modal on successful submission
+      const response = await axios.put(`http://localhost:8005/api/updatepro/${productId}`, formData);
+      console.log('Product updated successfully:', response.data);
       navigate("/admin/product");
+      // Optionally, navigate back to product list or show success message
     } catch (error) {
-      console.error("Error updating product:", error);
-      window.alert("An error occurred while updating the product. Please try again.");
+      if (error.response && error.response.status === 422) {
+        console.log('Validation error:', error.response.data);
+        // Handle validation errors, possibly display them to the user
+      } else {
+        console.error('Error updating product:', error);
+        // Handle other types of errors (network, server, etc.)
+      }
     }
   };
+  
+  
 
   return (
     <div className="w-screen h-screen flex absolute bg-homeBg font-inria-sans">
@@ -63,11 +87,11 @@ const EditProduct = ({ product, onClose }) => {
         <div className="w-full flex gap-5 items-center">
           <button
             className="flex items-center justify-center cursor-pointer hover:scale-105 bg-blue-500 text-white w-20 h-[50px] rounded shadow-lg border border-gray-300"
-            onClick={onClose}
+            onClick={() => navigate("/test")}
           >
             Back
           </button>
-          <h1 className="text-black text-3xl font-bold">Edit Product</h1>
+          <h1 className="text-black text-3xl font-bold">Update Product</h1>
         </div>
         <div className="w-full h-full py-5 px-10 flex bg-white shadow-lg rounded border">
           <form onSubmit={handleSubmit} className="w-full">
@@ -147,6 +171,7 @@ const EditProduct = ({ product, onClose }) => {
                 <div className="flex justify-start gap-2 mt-5">
                   <button
                     type="submit"
+                    onClick={handleSubmit}
                     className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     Update
@@ -161,4 +186,4 @@ const EditProduct = ({ product, onClose }) => {
   );
 };
 
-export default EditProduct;
+export default UpdateProduct;

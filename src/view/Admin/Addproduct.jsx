@@ -8,7 +8,7 @@ const ProductForm = ({ onClose }) => {
     Image: null,
     size: "",
     Price: "",
-    Product_Quantity: ""
+    Product_Quantity: "",
   });
   const [photoPreview, setPhotoPreview] = useState(null);
 
@@ -37,7 +37,7 @@ const ProductForm = ({ onClose }) => {
 
       const response = await fetch("http://localhost:8005/api/createpro", {
         method: "POST",
-        body: formDataToSend
+        body: formDataToSend,
       });
 
       const data = await response.json();
@@ -72,7 +72,11 @@ const ProductForm = ({ onClose }) => {
             <div className="flex gap-10 justify-center items-center">
               <div className="w-[300px] h-[340px] border rounded shadow-testShadow cursor-pointer hover:bg-gray-200">
                 {photoPreview ? (
-                  <img src={photoPreview} alt="Preview" className="h-full w-full object-cover rounded-lg" />
+                  <img
+                    src={photoPreview}
+                    alt="Preview"
+                    className="h-full w-full object-cover rounded-lg"
+                  />
                 ) : (
                   <div className="flex items-center justify-center h-full">
                     <span className="text-gray-400">No photo selected</span>
@@ -91,7 +95,9 @@ const ProductForm = ({ onClose }) => {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <label className="text-lg font-medium">Type of Product:</label>
+                  <label className="text-lg font-medium">
+                    Type of Product:
+                  </label>
                   <input
                     type="text"
                     name="Type_of_product"
@@ -111,17 +117,37 @@ const ProductForm = ({ onClose }) => {
                 </div>
                 <div className="flex flex-col">
                   <label className="text-lg font-medium">Size:</label>
-                  <select
-                    name="size"
-                    value={formData.size}
-                    onChange={handleChange}
-                    className="mt-1 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 w-[100px]"
-                  >
-                    <option value="small">Small</option>
-                    <option value="medium">Medium</option>
-                    <option value="large">Large</option>
-                  </select>
+                  <div className="mt-1 flex gap-3">
+                    <input
+                      type="radio"
+                      name="size"
+                      value="small"
+                      checked={formData.size === "small"}
+                      onChange={handleChange}
+                      className="mr-2"
+                    />
+                    <label className="flex items-center">Small</label>
+                    <input
+                      type="radio"
+                      name="size"
+                      value="medium"
+                      checked={formData.size === "medium"}
+                      onChange={handleChange}
+                      className="mr-2"
+                    />
+                    <label className="flex items-center">Medium</label>
+                    <input
+                      type="radio"
+                      name="size"
+                      value="large"
+                      checked={formData.size === "large"}
+                      onChange={handleChange}
+                      className="mr-2"
+                    />
+                    <label className="flex items-center">Large</label>
+                  </div>
                 </div>
+
                 <div className="flex flex-col">
                   <label className="text-lg font-medium">Price:</label>
                   <input
@@ -133,7 +159,9 @@ const ProductForm = ({ onClose }) => {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <label className="text-lg font-medium">Product Quantity:</label>
+                  <label className="text-lg font-medium">
+                    Product Quantity:
+                  </label>
                   <input
                     type="number"
                     name="Product_Quantity"

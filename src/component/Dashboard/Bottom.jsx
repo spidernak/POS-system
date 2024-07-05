@@ -33,7 +33,7 @@ const Bottom = ({ type, isVisible }) => {
 
   return (
     <div>
-      <div className={`w-full flex justify-start px-5 gap-5 bottom-component ${isVisibleClass}`}>
+      <div className={`w-full flex justify-start px-5 gap-5 bottom-component  ${isVisibleClass}`}>
         {isOpen && type === 'bestSelling' && (
           <div className="absolute flex flex-col ml-[140px] w-[45%] h-[450px] bg-white shadow-testShadow border rounded px-5">
             <div className="font-inria-sans flex gap-4 pt-2">

@@ -5,9 +5,12 @@ import axios from "axios";
 const EmployeeList = () => {
   const [users, setUsers] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
-  const [selectedUserId, setSelectedUserId] = useState(null);
-  const [selectedUserName, setSelectedUserName] = useState("");
-  const [imageFile, setImageFile] = useState(null);
+  const [formData, setFormData] = useState({
+    id: "",
+    name: "",
+    password: "",
+    role: "",
+  });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
@@ -37,53 +40,45 @@ const EmployeeList = () => {
   };
 
   const handleEditClick = (user) => {
-    setSelectedUserId(user.id);
-    setSelectedUserName(user.name);
+    setFormData({
+      id: user.id,
+      name: user.name,
+      role: user.role,
+    });
     setIsEditing(true);
   };
 
-  const handleImageChange = (e) => {
-    setImageFile(e.target.files[0]);
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+    setErrors({
+      ...errors,
+      [e.target.name]: "",
+    });
   };
 
-  const handleImageUpdate = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     try {
-      if (!imageFile) {
-        setErrors({ image: 'Please select an image file.' });
-        return;
-      }
-  
-      const formData = new FormData();
-      formData.append('image', imageFile);
-  
-      await axios.put(`http://localhost:8005/api/updateuserimage/${selectedUserId}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-  
-      fetchData(); // Assuming fetchData() fetches updated user data
-      cancelEdit();
-    } catch (error) {
-      console.error('Error updating image:', error);
-    }
-  };
-  
+      const { id, ...updatedFields } = formData;
+      await axios.put(`http://localhost:8005/api/updateuser/${id}`, updatedFields);
 
-  const cancelEdit = () => {
-    setIsEditing(false);
-    setImageFile(null);
-    setSelectedUserId(null);
-    setSelectedUserName("");
-    setErrors({});
+      setIsEditing(false);
+      fetchData();
+    } catch (err) {
+      console.error("Error updating user:", err);
+    }
   };
 
   const listHeaders = ["NO", "Name", "Email", "Gender", "Role", "Edit", "Delete"];
 
   return (
     <div className="w-screen h-screen flex absolute bg-homeBg">
-      <div className="w-full flex flex-col ml-[140px] px-5 py-5 ">
-        <div className="w-full flex gap-5 pb-5">
+      <div className="w-full flex flex-col ml-[140px] px-5 py-5 gap-5">
+        <div className="w-full flex gap-5">
           <div className="flex items-center border w-[290px] text-black text-xl justify-center font-inria-sans py-2 px-2 rounded shadow-testShadow">
             <h1>Total Employees:</h1>
             <div className="font-bold">{users.length}</div>
@@ -95,7 +90,7 @@ const EmployeeList = () => {
             <i className="ri-user-add-fill text-3xl text-white"></i>
           </Link>
         </div>
-        <div className="w-full">
+        <div className="w-full h-full flex-col flex">
           <div className="w-full flex bg-Blue py-5 rounded shadow-testShadow">
             {listHeaders.map((header, index) => (
               <div key={index} className="flex-1 text-center">
@@ -103,12 +98,11 @@ const EmployeeList = () => {
               </div>
             ))}
           </div>
-          
-        </div><div className="h-full shadow-testShadow scroll border border-t-none rounded-b-md">
+          <div className="h-full shadow-testShadow scroll border border-t-none rounded-b-md">
             {users.map((user, id) => (
               <div
                 key={user.id}
-                className="w-full max-h-[80px]  py-5 flex border-b text-black font-medium text-2xl font-inria-sans"
+                className="w-full max-h-[80px] px-5 py-5 flex border-b text-black font-medium text-2xl font-inria-sans"
               >
                 <div className="flex-1 text-center">{id + 1}</div>
                 <div className="flex-1 flex items-center text-center">
@@ -145,37 +139,61 @@ const EmployeeList = () => {
               </div>
             ))}
           </div>
+        </div>
       </div>
       {isEditing && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-5 rounded shadow-md w-96">
-            <h2 className="text-xl font-bold mb-4">Change Profile Image for {selectedUserName}</h2>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">Profile Image</label>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                className="mt-1 p-2 w-full border rounded"
-              />
-              {errors.image && <span className="text-red-500">{errors.image}</span>}
-            </div>
-            <div className="flex justify-end">
-              <button
-                type="button"
-                onClick={cancelEdit}
-                className="mr-2 px-4 py-2 bg-gray-500 text-white rounded"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={handleImageUpdate}
-                className="px-4 py-2 bg-blue-500 text-white rounded"
-              >
-                Update Image
-              </button>
-            </div>
+            <h2 className="text-xl font-bold mb-4">Edit User</h2>
+            <form onSubmit={handleSubmit}>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="mt-1 p-2 w-full border rounded"
+                />
+                {errors.name && <span className="text-red-500">{errors.name}</span>}
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="mt-1 p-2 w-full border rounded"
+                />
+                {errors.password && <span className="text-red-500">{errors.password}</span>}
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">Role</label>
+                <select
+                  name="role"
+                  value={formData.role}
+                  onChange={handleChange}
+                  className="mt-1 p-2 w-full border rounded"
+                >
+                  <option value="admin">Admin</option>
+                  <option value="cashier">Cashier</option>
+                </select>
+                {errors.role && <span className="text-red-500">{errors.role}</span>}
+              </div>
+              <div className="flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => setIsEditing(false)}
+                  className="mr-2 px-4 py-2 bg-gray-500 text-white rounded"
+                >
+                  Cancel
+                </button>
+                <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
+                  Update
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

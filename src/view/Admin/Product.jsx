@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+// eslint-disable-next-line no-unused-vars
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import AddProduct from './Addproduct';
-import ListType from "./listType"; // Assuming the correct component name is ListType
-import EditProduct from "./EditProduct";
+import ListType from "./listType";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -10,8 +11,7 @@ const ProductList = () => {
   const [productIdToDelete, setProductIdToDelete] = useState(null);
   const [showAddProduct, setShowAddProduct] = useState(false);
   const [showListType, setShowListType] = useState(false);
-  const [showEditProduct, setShowEditProduct] = useState(false);
-  const [currentProduct, setCurrentProduct] = useState(null);
+  const navigate = useNavigate();
   const headers = ["No", "Name", "Type", "Image", "Size", "Quantity", "Price", "Action"];
 
   useEffect(() => {
@@ -20,8 +20,8 @@ const ProductList = () => {
 
   const fetchData = async () => {
     try {
-      const result = await axios.get("http://localhost:8005/api/listproducts");
-      setProducts(result.data.Product_information);
+      const response = await axios.get("http://localhost:8005/api/listproducts");
+      setProducts(response.data.Product_information);
     } catch (error) {
       console.error("Error fetching product data:", error);
     }
@@ -31,11 +31,16 @@ const ProductList = () => {
     setShowAddProduct(true);
   };
 
+  const handleUpdate = (productId) => {
+    navigate(`/update-product/${productId}`);
+  };
+
   const handleDelete = async () => {
     try {
       await axios.delete(`http://localhost:8005/api/removepro/${productIdToDelete}`);
-      await fetchData(); // Refresh the product list after deletion
+      fetchData(); // Refresh product list after deletion
       setShowModal(false);
+      console.log('Product deleted successfully.');
     } catch (error) {
       console.error("Error deleting product:", error);
     }
@@ -51,9 +56,8 @@ const ProductList = () => {
     setProductIdToDelete(null);
   };
 
-  const handleUpdate = (product) => {
-    setCurrentProduct(product);
-    setShowEditProduct(true);
+  const listType = () => {
+    setShowListType(true);
   };
 
   const closeAddProduct = () => {
@@ -64,19 +68,15 @@ const ProductList = () => {
     setShowListType(false);
   };
 
-  const closeEditProduct = async () => {
-    setShowEditProduct(false);
-    await fetchData(); // Refresh product list after editing a product
-  };
-
   return (
     <div className="w-screen h-screen absolute flex bg-homeBg">
       <div className="w-full flex flex-col ml-[140px] px-5 py-5">
+
         <div className="w-full py-5 pb-0 flex flex-col bg-white shadow-testShadow border rounded-t-md">
           <div className="flex gap-5 px-5 items-center">
             <h1 className="text-3xl font-bold font-text bg-white text-blue-500 shadow-testShadow p-5 text-center rounded hover:scale-105 border">Product</h1>
             <div className="relative group">
-              <button className="bg-Blue p-5 text-center text-3xl rounded hover:scale-105 shadow-testShadow border text-white" onClick={handleCreate}>
+              <button className="bg-blue-500 p-5 text-center text-3xl rounded hover:scale-105 shadow-testShadow border text-white" onClick={handleCreate}>
                 <i className="ri-dossier-line"></i>
               </button>
               <div className="absolute top-10 translate-y-12 transform opacity-0 group-hover:opacity-100 bg-gray-700 text-white text-sm rounded p-1">
@@ -84,7 +84,7 @@ const ProductList = () => {
               </div>
             </div>
             <div className="relative group">
-              <button className="bg-Blue p-5 text-center text-3xl rounded hover:scale-105 shadow-testShadow border text-white" onClick={() => setShowListType(true)}>
+              <button className="bg-blue-500 p-5 text-center text-3xl rounded hover:scale-105 shadow-testShadow border text-white" onClick={listType}>
                 <i className="ri-article-line"></i>
               </button>
               <div className="absolute -top-0 left-[80px] transform opacity-0 group-hover:opacity-100 bg-gray-700 text-white text-sm rounded p-1">
@@ -92,9 +92,9 @@ const ProductList = () => {
               </div>
             </div>
           </div>
-          <div className="flex justify-between text-center w-full text-2xl mt-5 rounded shadow-testShadow bg-Blue">
-            {headers.map((header) => (
-              <div key={header} className="w-full border-t-2 text-white font-medium text-2xl font-inria-sans p-5">
+          <div className="flex justify-between text-center w-full text-2xl mt-5 rounded shadow-testShadow bg-blue-500 text-white">
+            {headers.map((header, index) => (
+              <div key={index} className="w-full border-t-2 font-medium p-5">
                 {header}
               </div>
             ))}
@@ -102,21 +102,21 @@ const ProductList = () => {
         </div>
         <div className="w-full h-full shadow-testShadow scroll bg-white border rounded-b-md">
           {products.map((product, index) => (
-            <div key={index} className="w-full  py-5 flex items-center border-b text-2xl font">
-              <div className="flex-1 flex justify-center text-center">{index + 1}</div>
+            <div key={index} className="w-full text-2xl font-inria-sans  py-3 flex border-b">
+              <div className="flex-1 text-center">{index + 1}</div>
               <div className="flex-1 text-center">{product.Product_name}</div>
               <div className="flex-1 text-center">{product.Type_of_product}</div>
-              <div className="flex-1 flex justify-center text-center">
+              <div className="flex-1 text-center">
                 <img
-                  src={product.Image_url} // Assuming product.Image_url is the URL to the image
-                  alt={product.Product_name}
-                  className="w-[90px] h-[90px] object-cover"
+                  src={`http://localhost:8005/storage/${product.Image}`}
+                  alt={product.Image}
+                  className="w-16 h-16 object-cover"
                 />
               </div>
               <div className="flex-1 text-center">{product.size}</div>
               <div className="flex-1 text-center">{product.Product_Quantity}</div>
               <div className="flex-1 text-center">${product.Price}</div>
-              <div className="flex-1 text-center">
+              <div className="flex-1 text-center flex justify-center gap-2">
                 <button className="text-blue-500" onClick={() => handleUpdate(product.id)}>Update</button>
                 <button className="text-red-500" onClick={() => confirmDelete(product.id)}>Delete</button>
               </div>
@@ -139,12 +139,6 @@ const ProductList = () => {
 
       {showAddProduct && <AddProduct onClose={closeAddProduct} />}
       {showListType && <ListType onClose={closeListType} />}
-      {showEditProduct && (
-        <EditProduct
-          product={currentProduct}
-          onClose={closeEditProduct}
-        />
-      )}
     </div>
   );
 };

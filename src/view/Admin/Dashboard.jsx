@@ -30,13 +30,13 @@ const Dashboard = () => {
         </div>
         <div className="flex text-3xl font-inria-sans">
           <button
-            className={`mx-2 py-2 px-4 w-[50%] h-[95px]  bg-Blue text-white rounded ${isVisibleBestSelling }`}
+            className={`mx-2 py-2 px-4 w-[50%] h-[95px] hover:scale-95  bg-Blue text-white rounded ${isVisibleBestSelling }`}
             onClick={handleShowBestSelling}
           >
             Best Selling
           </button>
           <button
-            className={`mx-2 py-2 px-4 w-[50%] h-[95px] bg-Blue text-white rounded ${isVisibleRecentlyAdd }`}
+            className={`mx-2 py-2 px-4 w-[50%] h-[95px] hover:scale-95 bg-Blue text-white rounded ${isVisibleRecentlyAdd }`}
             onClick={handleShowRecentlyAdd}
           >
             Recently Add

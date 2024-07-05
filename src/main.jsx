@@ -1,5 +1,3 @@
-/* eslint-disable react/no-deprecated */
-/* eslint-disable react/prop-types */
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./index.css";
@@ -21,6 +19,7 @@ import ListEmployee from "./view/Admin/listempl";
 import Addtype from "./view/Admin/addtype";
 import AdminHistory from "./view/Admin/History";
 import ListCustomer from "./view/Admin/listcustomer";
+import EditProduct from "./view/Admin/EditProduct"; // Ensure the correct import path
 import ProtectedRoute from "./ProtectRoute";
 import Unauthorized from "./unautorize";
 
@@ -30,12 +29,14 @@ const LayoutWithSideButton = ({ children }) => (
     <SideButton />
   </>
 );
+
 const AdminSideButton = ({ children }) => (
   <>
     {children}
     <AdminButton />
   </>
 );
+
 ReactDOM.render(
   <OrderProvider>
     <EmployeeProvider>
@@ -136,6 +137,14 @@ ReactDOM.render(
               element={
                 <AdminSideButton>
                   <AdminHistory />
+                </AdminSideButton>
+              }
+            />
+            <Route
+              path="/update-product/:productId"
+              element={
+                <AdminSideButton>
+                  <EditProduct />
                 </AdminSideButton>
               }
             />

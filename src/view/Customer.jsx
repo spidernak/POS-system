@@ -140,16 +140,10 @@ const Customerlist = () => {
     <div className="w-screen h-screen  flex absolute  overflow-hidden">
       <div className="w-full flex flex-col ml-[140px] px-5 py-5">
         <div className="w-full flex gap-5 pb-5">
-          <div className="flex items-center border w-[290px] text-black text-xl justify-center font-inria-sans py-2 px-2 rounded shadow-testShadow">
+          <div className="flex items-center border w-[290px] text-black text-2xl justify-center font-inria-sans p-5 rounded shadow-testShadow">
             <h1>Total Customers:</h1>
             <div className="font-bold">{customers.length}</div>
           </div>
-          <Link
-            to="/admin/addcustomer"
-            className="flex items-center justify-center cursor-pointer bg-Blue w-[80px] h-[60px] rounded shadow-testShadow border border-gray-300"
-          >
-            <i className="ri-user-add-fill text-3xl text-white"></i>
-          </Link>
         </div>
         <div className="w-full flex-col flex">
           <div className="w-full flex bg-Blue py-5 rounded shadow-testShadow">
@@ -230,15 +224,15 @@ const Customerlist = () => {
         </div>
         {isModalOpen && (
           <div className="fixed z-10 inset-0">
-            <div className="flex items-center ml-[140px] justify-center p-4 text-center">
+            <div className="flex items-center  ml-[140px] justify-center p-4 text-center">
               <div
                 className="fixed inset-0 transition-opacity"
                 aria-hidden="true"
               >
-                <div className="absolute inset-0 ml-[140px] bg-white opacity-80"></div>
+                <div className="absolute inset-0 ml-[140px] bg-homeBg opacity-100"></div>
               </div>
               <div className="rounded overflow-hidden transform transition-all w-full">
-                <div className="absolute w-full flex justify-between ">
+                <div className="absolute w-full flex  justify-between ">
                   <div className="text-black text-3xl font-bold font-text">
                     Customer Information
                   </div>
@@ -250,10 +244,10 @@ const Customerlist = () => {
                     <i className="ri-close-large-fill"></i>
                   </button>
                 </div>
-                <div className="bg-white px-4 mt-[70px] shadow-testShadow">
+                <div className="bg-white px-5 mt-[70px] shadow-testShadow">
                   <div className="">
                     <div className="flex items-start">
-                      <div className="flex py-5 w-full justify-between">
+                      <div className="flex p-5 px-5 w-full justify-between">
                         <p className="text-slate-800 text-3xl font-bold font-text">
                           Customer: {selectedCustomer}
                         </p>
@@ -272,8 +266,8 @@ const Customerlist = () => {
                     </div>
                   </div>
                 </div>
-                <div className="bg-white w-full h-screen ">
-                  <div className="flex gap-10 w-full  ">
+                <div className="bg-white shadow-testShadow  py-5 w-full h-[100vh] ">
+                  <div className="flex gap-10 w-full px-5 ">
                     {selectedCustomerOrders.map((order) => (
                       <div
                         key={order.id}
@@ -297,8 +291,8 @@ const Customerlist = () => {
                           </div>
                         </div>
                         {expandedOrderId === order.id && (
-                          <div className=" absolute w-full p-20  left-0 top-20 flex flex-col ">
-                            <div className="p-2 bg-white flex flex-col gap-10">
+                          <div className=" absolute w-full p-20 bg-black bg-opacity-50 rounded  left-0 top-20 flex flex-col ">
+                            <div className="p-2 bg-white rounded flex flex-col gap-10">
                               <div className="text-slate-800 font-medium text-3xl font-inria-sans flex justify-between border-b pb-10">
                                 <span
                                   className="  cursor-pointer"
