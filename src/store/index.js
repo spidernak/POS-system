@@ -1,8 +1,8 @@
-import coffee from "../assets/CategoryImage/coffee.png";
-import all from "../assets/CategoryImage/all.png";
-import juice from "../assets/CategoryImage/juice.png";
-import dessert from "../assets/CategoryImage/dessert.png";
-import burger from "../assets/CategoryImage/burger.png";
+import coffee from "../assets/product_Image/nachos2.jpg";
+import all from "../assets/product_Image/Food-Logo-Graphics-1-98.jpg";
+import juice from "../assets/product_Image/coffe-illustration-vector-white-background-61913706.webp";
+import dessert from "../assets/product_Image/dessert-logo-design-vector-icon-illustration-template_614185-5415.avif";
+import burger from "../assets/product_Image/food-logo-design-template-vector-30097152.jpg";
 
 export const menu = [
   { id: 10, title: "All", image: all },

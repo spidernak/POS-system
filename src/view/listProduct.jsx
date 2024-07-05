@@ -170,11 +170,11 @@ const ListProduct = () => {
                 key={i}
                 className="max-h-[90px] w-full  py-5 flex items-center border-b text-2xl font-inria-sans"
               >
-                <div className="flex-1 flex gap-2 ml-2 text-center">
+                <div className="flex-1 flex items-center gap-2 ml-2 text-center">
                   <img
-                    src='https://uk.ooni.com/cdn/shop/articles/20220211142645-margherita-9920.jpg?crop=center&height=915&v=1660843558&width=1200'
+                    src={`http://localhost:8005/storage/${product.Image}`}
                     alt={product.Product_name}
-                    className="w-[80px] h-[80px] rounded-[10px] overflow-hidden "
+                    className="w-[80px] h-[80px] object-cover rounded-[10px] overflow-hidden "
                   />
                   <div className="text-xl">{product.Product_name}</div>
                 </div>

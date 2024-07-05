@@ -197,7 +197,7 @@ const Cart = ({ cartItems, setCartItems, updateProductQuantities }) => {
                       <img
                         src={`http://localhost:8005/storage/${item.Image}`}
                         alt={item.Product_name}
-                        className="w-[80px] h-[80px] rounded-[10px]"
+                        className="w-[80px] h-[80px] object-cover rounded-[10px]"
                       />
                     </div>
                     <div className="flex flex-col text-xl font-inria-sans font-semibold">

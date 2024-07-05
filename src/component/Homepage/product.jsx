@@ -145,9 +145,9 @@ const Product = ({ addToCart, selectedCategory, searchTerm, highlightSearch }) =
   };
 
   return (
-    <div className="w-screen">
-      <div className="max-w-full ml-[140px] mr-[450px]">
-        <h1 className="text-black text-3xl pl-12 pb-10 font-bold font-text">
+    <div className="w-screen ">
+      <div className="max-w-full ml-[140px]   mr-[450px]">
+        <h1 className="text-black text-3xl pl-12 pb-10 font-bold font-inria-sans">
           {selectedCategory}
         </h1>
         <div className="flex flex-col w-full items-center gap-10 px-10">
@@ -155,12 +155,12 @@ const Product = ({ addToCart, selectedCategory, searchTerm, highlightSearch }) =
             {filteredProducts.map((product) => (
               <div
                 key={product.id}
-                className="cursor-pointer hover:scale-110 w-[220px] h-[270px] flex flex-col font-inria-sans items-center pt-2 bg-white rounded-md shadow-testShadow"
+                className="cursor-pointer hover:scale-110 w-[220px] h-[270px] flex flex-col  font-inria-sans items-center pt-2 bg-white rounded-md shadow-testShadow"
               >
                 <img
                   src={`http://localhost:8005/storage/${product.Image}`}
                   alt={product.Product_name}
-                  className="w-16 h-16 object-cover"
+                  className="h-[140px] object-cover border-dashed w-[210px] rounded border"
                 />
                 <div className="text-black font-semibold text-xl">
                   {highlightSearchTerm(product.Product_name)}

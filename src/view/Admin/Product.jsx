@@ -11,6 +11,8 @@ const ProductList = () => {
   const [productIdToDelete, setProductIdToDelete] = useState(null);
   const [showAddProduct, setShowAddProduct] = useState(false);
   const [showListType, setShowListType] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchFocus, setSearchFocus] = useState(false);
   const navigate = useNavigate();
   const headers = ["No", "Name", "Type", "Image", "Size", "Quantity", "Price", "Action"];
 
@@ -68,10 +70,25 @@ const ProductList = () => {
     setShowListType(false);
   };
 
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleSearchFocus = () => {
+    setSearchFocus(true);
+  };
+
+  const handleSearchBlur = () => {
+    setSearchFocus(false);
+  };
+
+  const filteredProducts = products.filter(product =>
+    product.Product_name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="w-screen h-screen absolute flex bg-homeBg">
       <div className="w-full flex flex-col ml-[140px] px-5 py-5">
-
         <div className="w-full py-5 pb-0 flex flex-col bg-white shadow-testShadow border rounded-t-md">
           <div className="flex gap-5 px-5 items-center">
             <h1 className="text-3xl font-bold font-text bg-white text-blue-500 shadow-testShadow p-5 text-center rounded hover:scale-105 border">Product</h1>
@@ -91,6 +108,22 @@ const ProductList = () => {
                 List type of products
               </div>
             </div>
+            <div className="relative w-[415px] h-[65px] border rounded text-2xl font-inria-sans font-medium flex ml-3">
+              <input
+                type="text"
+                placeholder="Search"
+                className={`h-full w-full py-3 pl-4 pr-10 shadow-testShadow border text-2xl font-inria-sans font-medium text-[#333333] outline-none rounded-md border-none ${
+                  searchFocus ? "" : ""
+                }`}
+                value={searchTerm}
+                onChange={handleSearchChange}
+                onFocus={handleSearchFocus}
+                onBlur={handleSearchBlur}
+              />
+              <i
+                className="ri-search-line cursor-pointer absolute right-3 top-1/2 transform -translate-y-1/2"
+              ></i>
+            </div>
           </div>
           <div className="flex justify-between text-center w-full text-2xl mt-5 rounded shadow-testShadow bg-blue-500 text-white">
             {headers.map((header, index) => (
@@ -101,24 +134,27 @@ const ProductList = () => {
           </div>
         </div>
         <div className="w-full h-full shadow-testShadow scroll bg-white border rounded-b-md">
-          {products.map((product, index) => (
-            <div key={index} className="w-full text-2xl font-inria-sans  py-3 flex border-b">
+          {filteredProducts.map((product, index) => (
+            <div key={index} className="w-full text-2xl font-inria-sans h-[100px] items-center py-3 flex border-b">
               <div className="flex-1 text-center">{index + 1}</div>
               <div className="flex-1 text-center">{product.Product_name}</div>
               <div className="flex-1 text-center">{product.Type_of_product}</div>
-              <div className="flex-1 text-center">
+              <div className="flex-1 text-center flex justify-center">
                 <img
                   src={`http://localhost:8005/storage/${product.Image}`}
                   alt={product.Image}
-                  className="w-16 h-16 object-cover"
+                  className="w-[80px] h-[80px] object-cover rounded"
                 />
               </div>
               <div className="flex-1 text-center">{product.size}</div>
               <div className="flex-1 text-center">{product.Product_Quantity}</div>
               <div className="flex-1 text-center">${product.Price}</div>
               <div className="flex-1 text-center flex justify-center gap-2">
-                <button className="text-blue-500" onClick={() => handleUpdate(product.id)}>Update</button>
-                <button className="text-red-500" onClick={() => confirmDelete(product.id)}>Delete</button>
+                <button className="text-blue-500" onClick={() => handleUpdate(product.id)}><i
+                    className="ri-ball-pen-line text-[#4692DD] text-3xl cursor-pointer"
+                    
+                  ></i></button>
+                <button className="text-red-500 text-3xl cursor-pointe" onClick={() => confirmDelete(product.id)}><i className="ri-delete-bin-line"></i></button>
               </div>
             </div>
           ))}
